@@ -1,1 +1,1 @@
-**See [documentation\readme.html](http://htmlpreview.github.io/?https://raw.githubusercontent.com/SpellholdStudios/BG2_Improved_GUI/main/bg2improvedgui/documentation/readme.html) for full README**
+**See [documentation\readme.html](https://spellholdstudios.github.io/BG2_Improved_GUI/bg2improvedgui/documentation/readme.html) for full README**
