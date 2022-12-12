@@ -1,0 +1,159 @@
+@10  = ~Core (updated Tobex.dll)~
+@-10000 = ~Installing~
+@-10001 = ~Already applied, skipping...~
+@-10002 = ~Required bytes in BGMain.exe don't match, aborting...~
+@-10003 = ~Tobex not installed, ERROR !~
+
+@100 = ~Loot Panel~
+@110 = ~Classic EE mode~
+@120 = ~Collect from all nearest bodies as one click action~
+
+@200 = ~Colorize icon of not memorized scrolls~
+
+@300 = ~Hide 'Write magic' button for already known spells and for opposition schools~
+
+@400 = ~Show Hit Points on NPC/Party ('tab' pressed)~
+@420 = ~Enemy~
+@410 = ~Enemy + Ally/Summon/Charmed~
+@430 = ~Enemy + Ally/Summon/Charmed + Party~
+@440 = ~Enemy + Neutral~
+@450 = ~Enemy + Neutral + Ally/Summon/Charmed~
+@470 = ~Ally/Summon/Charmed~
+@480 = ~Ally/Summon/Charmed + Party~
+@490 = ~All NPC + Party~
+
+@550 = ~THAC0 and Damage info on Inventory screen~
+@500 = ~Default background picture~
+@510 = ~Background picture by 1pp Mod~
+@520 = ~Background picture by Sir-Kill~
+@530 = ~Weapon Damage info on Record screen~
+@599 = ~Skipped, not compatible with TutuGUI~
+
+@600 = ~Dark portraits on party when dragging not allowed item + Yellow Border if Char too far for Item Transfer~
+
+@700 = ~Show Total Roll on Character Generation screen~
+
+@800 = ~Journal with folding quests~
+@810 = ~Large text area~
+@820 = ~Original text area~
+
+@900 = ~Grayscale background on Pause~
+@910 = ~No Icon, switch by keyboard~
+@920 = ~Static GUI icon + switch by keyboard~
+
+@1000 = ~Smart Hand Off Slot~
+@1010 = ~Disable Equipping Off Hand Weapon for BG1~
+
+@1100 = ~Show Character's active effects on right mouse click~
+@1110 = ~Casted spells~
+@1120 = ~Casted spells + show remaining time~
+@1125 = ~Casted spells + show remaining time only for spells casted by Party (recommended)~
+@1130 = ~Equipped items & Casted spells~
+@1140 = ~Equipped items & Casted spells, show remaining time~
+@1150 = ~Equipped items & Casted spells, show remaining time only for spells casted by Party~
+
+@1200 = ~Extended Items/Quest/Spell/WorldMap messages~
+
+@1300 = ~Extended roll/damage combat text~
+@1310 = ~Type of damage (recommended)~
+@1320 = ~Type of damage + THAC0 + Armor Class + Damage/Saving throw calculation~
+
+@1400 = ~Do not clear Drained Spell Slots~
+
+@1500 = ~Show Hit Points/Action on Portrait~
+@1510 = ~Hit Points ('tab' pressed)~
+@1520 = ~Hit Points (always)~
+@1530 = ~Action ('tab' pressed)~
+@1540 = ~Action (always)~
+@1550 = ~Hit Points + Action ('tab' pressed)~
+@1560 = ~Hit Points + Action (always)~
+@1570 = ~Hit Points (always) + Action ('tab' pressed)~
+@1580 = ~Hit Points ('tab' pressed) + Action (always) (recommended)~
+
+@1710 = ~Harder Difficulty Modes~
+@1600 = ~Legacy of Bhaal Difficulty Mode, set Stats as ~
+@1610 = ~Enhanced Edition's Legacy of Bhaal (very hard)~
+@1620 = ~Fury of Bhaal (weakened version Legacy of Bhaal)~
+@1630 = ~Icewind Dale's Heart of Fury~
+@1690 = ~Party's Summons get Legacy of Bhaal Bonuses (recommended)~
+@1700 = ~Additional Experience Points for kills on Legacy of Bhaal difficulty, (200% + 1000)~
+
+@1720 = ~Block Door/Portals/Area Escape if enemy is in sight (area difficulty tweak)~
+
+@1730 = ~Allow enemy to bump invisible/invulnerable party members (difficulty tweak)~
+@1740 = ~Enemy cannot pass Otiluke's Sphere and other Hold effects~
+@1750 = ~Enemy/Party ignores Otiluke's Sphere and other Hold effects (beta)~
+
+@1800 = ~New Shaman Class and Spell Book~
+
+@1900 = ~BG1 Style Greeting~
+@1910 = ~Apply only on BG1 part of BGT~
+@1920 = ~Apply on BG1+BG2~
+
+@2000 = ~Highlight Active Zones/Points~
+@2010 = ~Pushable actions~
+@2020 = ~Pushable actions + Information plates~
+@2030 = ~Pushable actions + Information plates + Transitions/Exits~
+@2040 = ~Pushable actions + Information plates + Transitions/Exits + Door Entrances/Enters~
+
+@2100 = ~Mouse Cursor 30Hz->60Hz Render Rate~
+@2110 = ~Default render~
+@2120 = ~Experimental render, reduced GPU load at Window mode~
+
+@2200 = ~Fast LOAD/SAVE Screen~
+
+@2300 = ~x2 Scaled Graphics for HD Resolutions (1280x960 and above)~
+@2310 = ~GUI only~
+@2320 = ~GUI + Cursor/Tooltips~
+@2330 = ~GUI + Cursor/Tooltips + Main Game Window~
+
+@2400 = ~x2 Scaled Graphics for Widescreen Mod, select only if Widescreen Mod was installed with special half resolution~
+@2401 = ~Skipped, Widescreen Mod not installed~
+
+@2500 = ~Shift Subtitles Below Movie Frame~
+
+@2600 = ~Improved Store/Bag Interface~
+
+@2700 = ~Exchange "Turn Undead" and "Pick Pockets" buttons for Cleric/Thief multiclass~
+
+@2800 = ~Disable 'Special Abilities' button if all abilities are used~
+
+@2900 = ~Spell Sequencer Panel~
+
+@3000 = ~Innate/Ability/Spell Description Screen on Right Click (includes Icon/Item Abilities/Tooltip fixes and Innate/Ability text update by Prozh)~
+
+@3100 = ~Disable Portrait Icons Added by Class Abilities/Equipped Items~
+
+@3200 = ~Custom Hotkeys~
+
+@3300 = ~Colored Selection Circles~
+@3310 = ~All accessable colors~
+@3320 = ~Exclude Reserved colors (npc red/npc blue/panic yellow/...)~
+
+@3400 = ~New Spell Selection Overlay Menu~
+
+@3500 = ~Borderless World Map~
+
+@3600 = ~Show Float NPC Names ('Alt' key)~
+
+@3700 = ~Auto Switch Spell Book between Priest and Mage~
+
+@3800 = ~Additional Character Information on Record Screen (intoxication, fatigue, luck, casting speed, thac0 specialization bonus)~
+@3810 = ~Show always~
+@3820 = ~Show when above threshold (intoxication >50, fatigue >7, luck >0, casting speed >0)~
+
+@3900 = ~Normalize Sound Volume~
+@3910 = ~All sounds, including effects~
+@3920 = ~Creature voices/messages/effects only~
+@3930 = ~Print Filename of Normalized Sound (diagnostic mode)~
+
+@4000 = ~Add Pause To Saved Game~
+
+@4100 = ~Additional Icons on Portrait (improved invisibility, blur/mirror image, morale break)~
+
+@4200 = ~Restore BG1 Casting Sounds~
+@4210 = ~BG1 part of BGT only~
+@4220 = ~Low level 1-5 spells only, BG1+BG2~
+
+@4280 = ~BG2 clear voice(without background effect/noise) Casting Sounds for Innate Casting~
+@4290 = ~Neverwinter Nights Casting Sounds for Wizard Spell Level 9(+HLA) and Priest Spell Level 7(+HLA)~

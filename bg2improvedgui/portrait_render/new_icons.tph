@@ -1,0 +1,23 @@
+DEFINE_ACTION_FUNCTION ~NEWICONS~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_newicons.txt"
+BUT_ONLY
+
+STRING_SET 3713 @3713
+
+COPY_EXISTING ~statdesc.2da~ ~override~
+    COUNT_2DA_ROWS 2 rows
+    FOR (index = 0 ; index < rows ; ++index) BEGIN
+        READ_2DA_ENTRY index 0 2 IconNum
+        
+        PATCH_IF ("%IconNum%" STRING_EQUAL_CASE "61") BEGIN  // unused Cloak of Fear icon   -> Mirror Image/Blur
+            SET_2DA_ENTRY index 1 2 ~3713~  // Mirror Image/Blur
+        END
+        PATCH_IF ("%IconNum%" STRING_EQUAL_CASE "109") BEGIN // unused Detecting Traps icon -> Improved invisibility
+            SET_2DA_ENTRY index 1 2 ~12021~ // Improved invisibility
+        END
+    END
+BUT_ONLY
+
+END

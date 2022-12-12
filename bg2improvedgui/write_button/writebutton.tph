@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~WRITE_BUTTON~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/write_button/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

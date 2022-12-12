@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~DISABLEOFFWEAPON~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/handoff_slot/files/TobEx_ini_disableweapon.txt"
+BUT_ONLY
+
+END

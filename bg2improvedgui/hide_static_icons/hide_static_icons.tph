@@ -1,0 +1,10 @@
+DEFINE_ACTION_FUNCTION ~HIDEICONS~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/hide_static_icons/files/TobEx_ini.txt"
+BUT_ONLY
+
+INCLUDE ~bg2improvedgui/keyboard_shortcuts/keyboard_shortcuts.tph~
+LAUNCH_ACTION_FUNCTION  ~SHORTCUTS~ END
+
+END // FUNCTION

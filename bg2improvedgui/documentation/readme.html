@@ -1,0 +1,1531 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+/*<![CDATA[*/
+<!-- 
+    body {
+        margin: 0;
+        padding: 0;
+        cursor: default;
+        text-align: center;
+        color: #000;
+        background: #e3e3db url('images/shsbkgd.jpg');
+    }
+
+    #wrap {
+        text-align: left;
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 88%;
+        font-family: Verdana, Tahoma, Arial, sans-serif;
+        font-size: 12px;
+        color: #333;
+    }
+
+    #header {
+        text-align: center;
+        background: #e5e5e5;
+        border: 1px solid #781808;
+        border-top: 5px solid #781808;
+        border-bottom: 5px solid #781808;
+        padding: 5px 0 13px 0;
+    }
+    #header .about {
+        margin: 7px 0 0 0;
+        padding: 0;
+        font-style: italic;
+        color: #555;
+    }
+    #header .menu {
+        font-weight: bold;
+        margin: 0;
+        color: #999;
+    }
+    #header .menu a:link,
+    #header .menu a:visited {
+        color: #333;
+    }
+    
+    #footer {
+        text-align: center;
+        background: #e5e5e5;
+        border: 1px solid #781808;
+        border-top: 5px solid #781808;
+        border-bottom: 5px solid #781808;
+        font-size: 75%;
+        padding: 5px 0 13px 0;
+    }
+
+    #maindiv {
+        margin: 0 auto;
+        margin-top: -20px;
+    }
+
+    #maindiv .content {
+        counter-increment: kman;
+        counter-reset: h2;
+        background-color: #e8e8e6;
+        padding: 0 0 25px 0;
+        margin: 50px auto;
+        border-width: 1px 1px 4px 10px;
+        border-style: solid;
+        border-color: #781808;
+        position: relative;
+        display: block;
+    }
+    #maindiv .content::before {
+        content: counter(kman, lower-roman);
+        font-size: 100%;
+        font-weight: bold;
+        text-align: center;
+        color: #eee;
+        background-color: #781808;
+        width: 35px;
+        top: 0px;
+        left: 0px;
+        display: block;
+    }
+
+    #maindiv .important {
+        font-size: 95%;
+        font-family: Verdana;
+        text-align: left;
+        background-color: #F1F1F1;
+        border-top: solid 1px #aaa;
+        border-bottom: solid 1px #aaa;
+        border-left: solid 1px #aaa;
+        border-right: solid 1px #aaa;
+        padding: 10px;
+        margin: 20px auto;
+        width: 80%;
+        line-height: 160%;
+    }
+    #maindiv .important::before {
+        display: none;
+    }
+    #maindiv .important p {
+        width: 100%;
+        font-size: 100%;
+        text-indent: 0px;
+        margin: 5px 0 10px 0;
+    }
+    #maindiv .important ol {
+        margin: -10px 0 0 20px;
+    }
+    #maindiv .important ul {
+        margin: -10px 0 0 15px;
+    }
+
+    #maindiv p {
+        font-size: 100%;
+        font-style: normal;
+        line-height: 150%;
+        padding: 0px;
+        margin: 10px auto;
+        width: 90%;
+        display: block;
+    }
+
+    #maindiv address {
+        font-size: 95%;
+        font-style: normal;
+        font-weight: bold;
+        text-decoration: none;
+        color: #BBB;
+        background-color: #781808;
+        padding: 3px 0px 0px;
+        margin: 0px;
+        width: 100%;
+        position: absolute;
+        bottom: -1px;
+        left: 0px;
+        display: block;
+        text-align: right;
+    }
+    #maindiv address a:active {
+        color: #fff;
+        text-decoration: line-through;
+        border: none;
+    }
+    #maindiv address a:focus,
+    #maindiv address a:hover {
+        text-decoration: none;
+        color: #F1F1F1;
+        border: 0;
+    }
+    #maindiv address a:link,
+    #maindiv address a:visited {
+        font-weight: bold;
+        text-decoration: underline;
+        background-color: transparent;
+        color: #eaeaea !important;
+        padding-right: 5px;
+        padding-left: 6px;
+    }
+
+
+    /*  Lists  */
+    #maindiv ol {
+        margin: -10px 0 0 35px;
+        *margin-left: 70px;
+    }
+    #maindiv ol li {
+        line-height: 150%;
+    }
+    #maindiv ul {
+        line-height: 170%;
+        margin-left: 4%;
+        width: 87%;
+    }
+    #maindiv ul li {
+        line-height: 150%;
+    }
+    #maindiv ul li ul {
+        margin: 0px;
+        width: 96%;
+    }
+    #maindiv ul li ul li {
+    }
+    #maindiv ul li a:link,
+    #maindiv ul li a:visited,
+    #maindiv ul li ul li a:link,
+    #maindiv ul li ul li a:visited {
+        color: #781808;
+        text-decoration: none;
+        font-weight: normal;
+    }
+
+    .t1 {
+        font-weight: bold;
+        width: 26%;
+        text-align: right;
+        clear: right;
+        float: left;
+        *float: none;
+        *margin-left: 65px;
+        line-height: 22px;
+    }
+    .t2 {
+        text-align: left;
+        width: 73%;
+        float: right;
+        *float: none;
+        line-height: 22px;
+    }
+
+
+    /*  Liens internet  */
+    a:hover,
+    a:active {
+        color: #222;
+        border-bottom: 1px solid black;
+    }
+    a:link,
+    a:visited {
+        color: #781808;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    h1 {
+        font-size: 250%; /* 225 */
+        color: #444;
+        padding: 10px 0 15px 0; /* 5 0 5 0 */
+        margin: 0;
+        width: 100%;
+    }
+    h2 {
+        display: block;
+        font-family: Verdana, Trebuchet MS, Arial, serif;
+        text-align: left;
+        text-indent: 30px;
+        padding: 0px;
+        margin: 20px 0 0 0;
+        border-bottom: dotted 2px #d0d0d0;
+        border-top: dotted 2px #d0d0d0;
+        background: #deded9;
+        font-size: 160%;
+    }
+    h2::first-letter {
+        color: #781808;
+        background-color: transparent;
+    }
+    h3,
+    h4,
+    h5 {
+        margin: 10px 40px 10px 40px;
+        padding: 0;
+    }
+    h3 {
+        font-size: 125%;
+        font-style: italic;
+    }
+    h4 {
+        font-size: 125%;
+    }
+    h5 {
+        font-size: 100%;
+    }
+    h6 {
+        width: 100%;
+        margin: 10px 0 15px 0;
+        background-color: #ECECEC;
+        text-align: left;
+        text-indent: 30px;
+        font-size: 100%;
+        font-style: italic;
+        padding-top: 1px;
+        padding-bottom: 1px;
+        border-bottom: solid 1px #bbb;
+        border-top: solid 1px #bbb;
+    }
+
+    .screen {background-size:contain;background-repeat:no-repeat}
+    .screen img{max-width:100%; opacity:1;transition: opacity 1.25s ease-in-out;
+        -moz-transition: opacity 1.25s ease-in-out;
+        -webkit-transition: opacity 1.25s ease-in-out;
+    }
+    .screen img:hover{max-width:100%; opacity:0}
+
+    h7 {
+        display: block;
+        font-family: Verdana, Trebuchet MS, Arial, serif;
+        text-align: left;
+        padding: 0px;
+        margin: 20px 0 0 0;
+        border-bottom: dotted 2px #d0d0d0;
+        border-top: dotted 2px #d0d0d0;
+        background: #deded9;
+        font-size: 160%;
+    }
+    h7::first-letter {
+        color: #781808;
+        background-color: transparent;
+    }
+-->
+/*]]>*/
+    </style>
+    <title>
+        Spellhold Studios - BG2 Improved GUI
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="images/shsweb.ico" rel="icon" type="image/bmp" />
+
+  </head>
+
+  <body>
+    <div id="wrap">
+      <a name="top" id="top"></a>
+      <div id="header">
+
+        <h1>BG2 Improved GUI</h1>
+
+      <span style="font-style: italic;"><strong>A Spellhold Studios mod for Baldur's Gate II:ToB, Baldur's Gate Trilogy.</strong></span>
+        <hr style="margin: 10px 0 10px 0; padding: 0; height: 1px; border: 0; color: #aaa; background-color: #aaa;" />
+
+        <p class="about">
+            Author: Insomniator
+        </p>
+        <p class="about">
+            <a href="http://www.spellholdstudios.net/">Mod Website</a> &#8226; <a href="http://www.shsforums.net/topic/60986-bg2-improved-gui/">Mod Forum</a> &#8226; <a href="http://www.shsforums.net/files/file/1265-bg2-improved-gui/">Download</a> &#8226; <a href="https://github.com/SpellholdStudios/BG2_Improved_GUI/">GitHub</a> &#8226;  Version 5.5
+        </p>
+        <hr style="margin: 10px 0 10px 0; padding: 0; height: 1px; border: 0; color: #aaa; background-color: #aaa;" />
+
+        <p class="menu">
+            <a href="#intro">Overview</a> | <a href="#compat">Compatibility</a> | <a href="#requirements">Requirements</a> | <a href="#installation">Installation Order</a> | <a href="#compon">Components</a> | <a href="#credits">Credits</a> | <a href="#version">Version History</a>
+        </p>
+        
+      </div>
+
+    <div id="maindiv">
+<!-- ================== I n t r o d u c t i o n ================== -->
+      <a name="intro" id="intro"></a>
+      <div class="content">
+
+        <h2>Overview</h2><br>
+
+        <p>
+            This mod is a collection of GUI/Sound/Engine improvements and tweaks to make Baldur's Gate II more friendly and easy to play. Many GUI components backported from BeamDog's Baldur's Gate I/II: Enhanced Edition
+        </p>
+
+        <p>
+            <strong>Key features</strong>
+        </p>
+        <ul style="margin-left: 4%;">
+        <li><a href="#lootpanel">Loot panel</a></li>
+        <li><a href="#coloricon">Colorize icon of not memorized scrolls</a></li>
+        <li><a href="#default"  >Hide "Write magic" button for already known spells and for opposition schools</a></li>
+        <li><a href="#showhp"   >Show HitPoints on NPC/Party when pressed TAB key</a></li>
+        <li><a href="#thacinfo" >THAC0 and Damage info on Inventory screen</a></li>
+        <li><a href="#thacrec"  >Weapon Damage Range on Character Sheet</a></li>
+        <li><a href="#thacinfo" >Dark portraits on party when dragging not allowed items</a></li>
+        <li><a href="#totalroll">Total Roll info on Character creation screen</a></li>
+        <li><a href="#journal"  >Journal with fold/unfold quests</a></li>
+        <li><a href="#grayscale">Grayscale background on Pause</a></li>
+        <li><a href="#offhand"  >Smart Hand off slot</a></li>
+        <li><a href="#offhandb1">Disable Equipping Off Hand Weapon for BG1</a></li>
+        <li><a href="#rclickeff">Show NPC's active effects on right mouse click</a></li>
+        <li><a href="#eventtext">Extended Items/Quest/Spell/WorldMap messages</a></li>
+        <li><a href="#combtext" >Extended roll/damage combat text</a></li>
+        <li><a href="#drainslot">Do not clear drained spell slots</a></li>
+        <li><a href="#portactio">Show Hit Points/Action on Portrait</a></li>
+        <li><a href="#nightmare">Legacy of Bhaal/Heart of Fury difficulty mode</a></li>
+        <li><a href="#noescape" >Block Door/Portals/Area Escape if enemy is in sight (difficulty tweak)</a></li>
+        <li><a href="#allowbump">Allow enemy to bump invisible/invulnerable party members (difficulty tweak)</a></li>
+        <li><a href="#greating" >Restore BG1 Style Greeting</a></li>
+        <li><a href="#actzones" >Highlight Active Zones/Points</a></li>
+        <li><a href="#60hz"     >Double Mouse Render Rate</a></li>
+        <li><a href="#fastload" >Fast LOAD/SAVE Screen</a></li>
+        <li><a href="#x2gui"    >x2 Scaled Graphics for HD Resolutions</a></li>
+        <li><a href="#subtitles">Shift Subtitles Below Movie Frame</a></li>
+        <li><a href="#storeimp" >Improved Store&Bag Interface</a></li>
+        <li><a href="#default"  >Exchange "Turn Undead" and "Pick Pockets" buttons for Cleric/Thief multiclass</a></li>            
+        <li><a href="#disababil">Disable 'Special Abilities' button if all abilities are used</a></li>
+        <li><a href="#seqpanel" >Spell Sequencer Panel</a></li>
+        <li><a href="#spellinfo">Innate/Ability/Spell Description Screen on Right Click</a></li>            
+        <li><a href="#staticon" >Disable Portrait Icons Added by Class Abilities/Equipped Items</a></li>            
+        <li><a href="#hotkeys"  >Custom hotkeys</a></li>
+        <li><a href="#colcircle">Colored Selection Circles</a></li>
+        <li><a href="#spellmenu">New Spell Selection Overlay Menu</a></li>
+        <li><a href="#worldmap" >Borderless World Map</a></li>
+        <li><a href="#floatname">Show Float NPC Names ('Alt' key)</a></li>
+        <li><a href="#default"  >Auto Switch Spell Book between Priest and Mage</a></li>
+        <li><a href="#recinfo"  >Additional Character Information on Record Screen (intoxication, fatigue, luck, casting speed, thac0 specialization bonus)</a></li>
+        <li><a href="#normvol"  >Normalize Sound Volume</a></li>
+        <li><a href="#savepause">Add Pause To Save Game</a></li>
+        <li><a href="#newicons" >Additional Icons on Portrait (improved invisibility, blur/mirror image, morale break)</a></li>
+        <li><a href="#castbg1"  >Restore BG1 Casting Sounds</a></li>
+        <li><a href="#castbg2"  >BG2 clear voice(without background effect/noise) Casting Sounds for Innate Casting</a></li>
+        <li><a href="#castnwn"  >Neverwinter Nights Casting Sounds for Wizard Spell Level 9(+HLAs) and Priest Spell Level 7(+HLAs)</a></li>
+        </ul>
+
+        <address>
+            <span class="footer">Overview</span> &#8226;<a href="#top">BACK TO TOP</a>
+        </address>
+      </div>
+
+<!-- ================= C o m p a t i b i l i t y ================= -->
+      <a name="compat" id="compat"></a>
+      <div class="content">
+
+        <h2>Compatibility</h2><br>
+
+        <p>
+            Mod is compatible with many GUI/Engine mods:
+        </p>
+        <ul>
+            <li>The original Baldur's Gate II with the Throne of Bhaal (ToB) expansion</li>
+            <li>The conversion projects <a href="http://www.shsforums.net/index.php?showforum=261"><strong>Baldur's Gate Trilogy (BGT)</strong></a></li>
+            <li><a href="https://www.gibberlings3.net/mods/tools/widescreen/"><strong>Widescreen Mod</strong></a></li>
+            <li><a href="http://www.shsforums.net/forum/159-1pp/"><strong>1pp GUI additions for BGII</strong></a></li>
+            <li><a href="http://www.shsforums.net/forum/594-infinity-animations/"><strong>Infinity Animation</strong></a></li>
+        <li><a href="https://www.pocketplane.net/bg1tutu-enhancements/"><strong>TutuGUI</strong></a> (<a href="#default">THAC0 & Damage Info</a> component will be disabled because TutuGUI's inventory screen has different GUI layout)</strong></a></li>
+            <li><a href="http://www.shsforums.net/topic/58704-hd-gui/"><strong>BG2 GUI in 1280x720</strong></a></li>
+            <li><a href="http://www.shsforums.net/topic/61072-tobex-afterlife/"><strong>TobEx AfterLife</strong></a></li>
+        </ul>
+
+        <p>
+            Mod is NOT compatible with mods:
+        </p>
+        <ul>
+            <li><a href="http://www.shsforums.net/forum/618-w-gui/"><strong>W_GUI</strong></a> (components: Loot panel, THAC0 and Damage info on Inventory screen, Journal with fold/unfold quests, Legacy of Bhaal difficulty mode, Total Roll info on Character creation screen, Borderless World Map)</li>
+        </ul>
+        
+        <address>
+            <span class="footer">Compatibility</span> &#8226;<a href="#top">BACK TO TOP</a>
+        </address>
+      </div>
+      
+<!-- ================= Requirements ================= -->      
+      <a name="requirements" id="requirements"></a>
+      <div class="content">
+
+        <h2>Requirements</h2><br>
+
+        <ul>
+        <li>Baldur's Gate II Throne of Bhaal (ToB) expansion with official patch <strong>v2.5.26498</strong></li>
+        <li>Installed TobEx <a href="http://www.shsforums.net/forum/606-tobex/"><strong>original v26</strong></a> or <a href="http://www.shsforums.net/topic/60882-a-release/"><strong>modded v28</strong></a>, mod will replace installed <strong>tobex.dll</strong> with custom version</li>
+        </ul>
+        
+        <address>
+            <span class="footer">Requirements</span> &#8226;<a href="#top">BACK TO TOP</a>
+        </address>
+      </div>      
+
+<!-- ================== I n s t a l l a t i o n ================== -->
+      <a name="installation" id="installation"></a>
+      <div class="content">
+
+        <h2>Installation Order</h2><br>
+        
+        <p>Install before mods: (components: Innate/Ability/Spell Description Screen on Right Click)</p>
+        <ul><strong>
+        <li>Item Revisions</li>
+        <li>Spell Revisions</li>        
+        <li>Item Upgrade</li>
+        <li>BG1 Textpatch Revised</li>
+        <li>BG2 Textpatch Revised</li>
+        <li>Cursed Items Revision</li>
+        <li>Any other mod with item/spell text updates</li>
+        </strong></ul>
+        
+        <p>Install after mods:</p>
+        <ul><strong>
+        <li>TobEx</li>
+        <li>BG2 Fixpack</li>        
+        <li>TobEx AfterLife</li>
+        <li>Widescreen mod</li>
+        <li>TutuGUI</li>
+        <li>BG2 GUI in 1280x720</li>
+        <li>1pp</li>
+        <li>Infinity Animations</li>
+        <li>BGT (components: Legacy of Bhaal/Heart of Fury difficulty mode)</li>
+        </strong></ul>
+
+        <address>
+            <span class="footer">Installation Order</span> &#8226;<a href="#top">BACK TO TOP</a>
+        </address>
+      </div>
+
+<!-- =================== C o m p o n e n t s ==================== -->
+      <a name="compon" id="compon"></a>
+        <div class="content">
+        <h2>Components</h2><br>
+
+<!-- ============================================================================== -->
+        <a name="lootpanel" id="lootpanel"></a>
+        <p><h7>
+Loot panel
+        </h7></p><br>
+        <center><img src="images/loot.png" /></center>
+
+        <p>Difference vs Baldur's Gate I/II Enhanced Edition:</p>            
+        <ul>
+        <li>Panel is extension of original container screen, it cannot be visible always on main screen, still need open any container around</li>
+        <li>Has two modes:
+        <ul><strong>
+            <li style="margin-left:-4%; margin-right:-8%;">Classic (like Enhanced Edition)</li>
+            <li style="margin-left:-4%; margin-right:-8%;">Grouping items, one click to pickup same item type from all corpses</li>
+        </strong></ul>
+        </li>
+        </ul>
+        <p>
+            In file "TobEx_ini\<strong>TobExTweak.ini</strong>" you can tune options:
+        </p>
+        <ul>    
+            <li><strong>UI:Loot Panel Item Grouping</strong>=1
+            <p>Switch between Classic and Group modes without reeinstalling component</p></li>
+            <li><strong>UI:Loot Panel Sorting Unidentified First</strong>=1
+            <p>Enable priority sorting, unidentified items will be always show first</p></li>
+            <li><strong>UI:Loot Panel Sorting Order</strong>=33, 34, 5, 14
+            <p>Set sorting order by priority numbers, numbers coded in file "documentation\<strong>loot_groups_table.txt"</strong>, for this example priority is Gold=>Gems=>Arrows=>Bullets=>All Other</p></li>
+        </ul><br>
+        
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; align = right; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="coloricon" id="coloricon"></a>
+        <p><h7>
+Colorize icon of not memorized scrolls
+        </h7></p><br>
+        
+        <p>
+        Add green border for "ready to memorize" scrolls, you can change icon effect by replacing file STORTIN3.BAM to yours
+        </p>
+        <center><img src="images/green scroll.png"  /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="showhp" id="showhp"></a>
+        <p><h7>
+Show HitPoints on NPC/Party when pressed TAB key
+        </h7></p><br>
+        
+        <p>Available options:</p>
+        <ul>
+        <li>Enemy</li>
+        <li>Enemy + Ally/Summon/Charmed</li>
+        <li>Enemy + Ally/Summon/Charmed + Party</li>
+        <li>Enemy + Neutral</li>
+        <li>Enemy + Neutral + Ally/Summon/Charmed</li>
+        <li>Ally/Summon/Charmed</li>
+        <li>Ally/Summon/Charmed + Party</li>
+        <li>All NPC + Party</li>
+        </ul>
+        
+        <center><img src="images/show hp.jpg" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="thacinfo" id="thacinfo"></a>
+        <p><h7>
+THAC0 and Damage info on Inventory screen
+        </h7><h7>
+Dark portraits on party when dragging not allowed items
+        </h7></p><br>
+        <center><img src="images/thac.png" /></center>
+
+        <p>
+        <center><strong>Alternative Inventory background picture by Sir-Kill:</strong></center>
+        </p>
+        <center><img src="images/thac-sir_kill.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="thacrec" id="thacrec"></a>
+        <p><h7>
+Weapon Damage Range on Character Sheet
+        </h7></p><br>
+        <center><img src="images/thac on record.png" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="totalroll" id="totalroll"></a>
+        <p><h7>
+Total Roll info on Character creation screen
+        </h7></p><br>
+        
+        <center><img src="images/totalroll.png" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="journal" id="journal"></a>
+        <p><h7>
+Journal with fold/unfold quests
+        </h7></p><br>
+        
+        <p>
+        <center><strong>Normal:</strong></center>
+        </p>
+        <center><img src="images/journal.png" /></center>
+            
+        <p>
+        <center><strong>Large text area mode:</strong></center>
+        </p>
+        <center><img src="images/journal large.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="grayscale" id="grayscale"></a>
+        <p><h7>
+Greyscale background on Pause
+        </h7></p><br>        
+          
+        <p>Available options:</p>
+        <ul>
+        <li>No Icon, switchable by key <strong>Numpad +</strong></li>
+        <li>Static GUI icon + switchable by key</li>
+        </ul>
+        
+        <p>Effect like TimeStop, but only background is greyed, switchable by clicking on icon or hotkey
+        </p>
+        
+        <p>
+        <center><strong>Static GUI icon:</strong></center>
+        </p>
+        <center><img src="images/greyscale.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="offhand" id="offhand"></a>
+        <p><h7>
+Smart Hand off slot
+        </h7></p><br>        
+            
+        <p>Allow fit weapon/shield in hand off slot even when item in main hand has restrictions to hand off.
+You can drag to main hand slot for example Two-Hand Sword and to Off hand slot any Shield, but shield will be disabled. Option usefull for switching between main hand' weapon slots, if selected item has no restrictions, hand off slot will be activated again. If you save game with incompatible items, you can't load it later if this compenent will be uninstall
+        </p>
+        <center><img src="images/smart offhand.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="offhandb1" id="offhandb1"></a>
+        <p><h7>
+Disable Equipping Off Hand Weapon for BG1
+        </h7></p><br>
+            
+        <p>
+            Restoraton of original BG1 feature for BGT, allows party equip only Shields in Off Hand. NPCs always can equip weapon in off-hand because NPCs from BG1 MODs may have weapons in both hands. In BG2 this component automaticaly deactivated.
+        </p>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+        
+<!-- ============================================================================== -->
+        <a name="rclickeff" id="rclickeff"></a>
+        <p><h7>
+Show NPC's active effects on right mouse click
+        </h7></p><br>
+        
+        <p>Available options:</p>
+        <ul>
+        <li>Casted spells</li>
+        <li>Casted spells + show remaining time</li>
+        <li>Casted spells + show remaining time only for spells casted by Party</li>
+        <li>Equipped items & Casted spells</li>
+        <li>Equipped items & Casted spells, show remaining time</li>
+        <li>Equipped items & Casted spells, show remaining time only for spells casted by Party</li>
+        </ul>
+        
+        <p>Componet make game little easy in "mage battle", you can get info about active effect/spells on enemy (or any NPC). No more need to search chat window back to see which mage what casted.<br>
+You can filter print of unwanted effect types, in file "TobEx_ini\<strong>TobExTweak.ini</strong>" edit line <strong>UI:Log Active Buffs Filter List=</strong>, add numbers from file "documentation\<strong>icon_effects_table.txt</strong>". Don't need filter numbers starting with ";" symbol, they already internaly filtered. Example: <strong>UI:Log Active Buffs Filter List=24, 25</strong> - no info about "Protection from Acid" and "Protection from Cold"
+    </p>
+
+        <center><img src="images/active spells.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="eventtext" id="eventtext"></a>
+        <p><h7>
+Extended Items/Quest/Spell/WorldMap messages
+        </h7></p><br>
+            
+        <p>
+            Quest messages:
+        </p>
+        <ul>
+        <li>New Quest added</li>
+        <li>New Quest event sound</li>
+        <li>Quest updated</li>
+        <li>Quest done event sound</li>
+        <li>Storyline updated</li>
+        </ul>                    
+        <p>
+        You can change quest sounds by replacing files <strong>TADA.wav</strong> & <strong>FOLSTART.wav</strong> to yours
+        </p>
+        <center><img src="images/quest_events.png" /></center>
+        <br>
+        <p>
+            Item/Spell/Worldmap messages:
+        </p>
+        <ul>
+        <li>Unhided/hided Worldmap Area</li>
+        <li>Gained/lost/dropped Item</li>
+        <li>Interrupted spell</li>
+        </ul> 
+        <center><img src="images/item_events.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="combtext" id="combtext"></a>
+        <p><h7>
+Extended roll/damage combat text
+        </h7></p><br>
+        
+        <center><strong>Simple mode: Damage type</strong></center>
+        <center><img src="images/damage type.png" /></center>
+        <br>
+        
+        <center><strong>Full mode 1: Attack Roll</strong></center>
+        <center><img src="images/thac calc.png" /></center>
+        <p>
+            <strong>Attack Roll</strong> "12 + 2 = 14 > 20 - 10 = 10 Hit" explanation:
+        </p>
+        <ul>
+        <strong>12</strong> - Hit(THAC0) Roll<br>
+        <strong>+2</strong> - Hit(THAC0) Bonus<br>
+        <strong>20</strong> - THAC0 Base of attacker<br>
+        <strong>10</strong> - Armor Class of victim<br>
+        </ul>        
+        <br>
+        
+        <center><strong>Full mode 1: Unsuccessful Effect Roll</strong></center>
+        <center><img src="images/effect roll.png" /></center>
+        <p>
+            <strong>Unsuccessful Effect Roll</strong> "13 + 6 >= 19" explanation:
+        </p>
+        <ul>
+        <strong>13</strong> - Effect Roll<br>
+        <strong>+6</strong> - Effect Saving Throw Bonus<br>
+        <strong>19</strong> - Victim's Saving Throw vs Effect type(death/wand/...)<br>
+        </ul>        
+        <br>
+        
+        <center><strong>Full mode 2: Attack Roll + Damage Roll:</strong></center>
+        <center><img src="images/damage calc.png" /></center>
+        
+        <p>
+            <strong>Damage</strong> "7 = (13 - 15%) * 0.75" explanation:
+        </p>
+        <ul>
+        <strong>13</strong> - Damage Roll<br>
+        <strong>15</strong> - Resistance (piercing) in %<br>
+        <strong>0.75</strong> - Game Difficulty modifier (NORMAL, -25% damage)<br>
+        </ul>            
+        
+        <p>
+        Extended combat text is automaticaly disabled if "<strong>Feedback->To Hit Rolls</strong>" game option setting is <strong>Off</strong>
+        </p>
+        <p>        
+        To enable original Hit/Damage Roll information (very verbose, mainly designed for debug purpose) add hidden option "<strong>Extra Combat Info=1</strong>" to baldur.ini [Game Options] and enable "<strong>Restore Extra Combat Info Text=1</strong>" in TobExCore.ini [Debug]
+        </p>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="drainslot" id="drainslot"></a>
+        <p><h7>
+Do not clear drained spell slots
+        </h7></p><br>
+        
+        <p>
+            Keep spells on own places (but out of selection border) when levels was drained, after restoration spells will be in their former places. Quickslots with drained spells are still erased, you need reassign quickslots again
+        </p>        
+        <center><img src="images/drained.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="portactio" id="portactio"></a>
+        <p><h7>
+Show Hit Points/Action on Portrait
+        </h7></p><br>
+
+        <p>
+            Show only current spell or activated item from quickslots/inventory, not weapon
+        </p>
+        
+        <center><img src="images/action on portrait.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="nightmare" id="nightmare"></a>
+        <p><h7>
+Legacy of Bhaal/Heart of Fury difficulty mode
+        </h7></p><br>
+            
+        <p>
+            Available only at start new game, you cannot change difficulty later.
+        </p>
+        <center><img src="images/nightmare.png" /></center>
+        
+        <br>
+        <center><strong>Legacy of Bhaal</strong></center>
+        <p>Neutral/Enemy get Bonuses:</p>
+        <ul>
+        <li>-5 THAC0</li>
+        <li>-11 Armor Class</li>
+        <li>+1 Attacks Per Round</li>
+        <li>-5 Saving Throw vs Death/Wands/Polymorph/Breath/Spell</li>
+        <li>300% HitPoints + extra 80</li>
+        <li>Never break Morale</li>
+        <li>+12 Levels in all available Classes</li>
+        </ul>
+        <p>Party get Penalty:</p>
+        <ul>
+        <li>+2 Monsters at Rest Encounter</li>
+        </ul>
+        <p>Party get Bonuses (optional, selectable at installer):</p>
+        <ul>
+        <li>200% Experience Point for kills + extra 1000</li>
+        <li>Party's Summon get most bonuses as Enemy</li>
+        <li>+75 Gold for kills</li>
+        </ul>
+        
+        <center><strong>Heart of Fury (Icewind Dale)</strong></center>
+        <p>Neutral/Enemy get Bonuses:</p>
+        <ul>
+        <li>-5 THAC0</li>
+        <li>+1 Attacks Per Round</li>
+        <li>-1 Saving Throw vs Death/Wands/Polymorph/Breath/Spell</li>
+        <li>300% HitPoints + extra 80</li>
+        <li>Never break Morale</li>
+        <li>+12 Levels in all available Classes</li>
+        <li>Faster Movement Rate</li>
+        </ul>        
+        <p>Party get Bonuses:</p>
+        <ul>
+        <li>200% Experience Point for kills + extra 1000</li>
+        <li>Party's Summon get most bonuses as Enemy</li>
+        <li>+75 Gold for kills</li>
+        </ul>        
+
+        <center><strong>Fists of Fury (by Azazello)</strong></center>
+        <p>Neutral/Enemy get Bonuses:</p>
+        <ul>
+        <li>-5 THAC0</li>
+        <li>-8 Armor Class</li>        
+        <li>+1 Attacks Per Round</li>
+        <li>-3 Saving Throw vs Death/Wands/Polymorph/Breath/Spell</li>
+        <li>300% HitPoints + extra 65</li>
+        <li>Never break Morale</li>
+        <li>+6 Levels in all available Classes</li>
+        </ul>
+        <p>Party get Penalty:</p>
+        <ul>
+        <li>+1 Monsters at Rest Encounter</li>
+        </ul>        
+        <p>Party get Bonuses:</p>
+        <ul>
+        <li>200% Experience Point for kills + extra 1000</li>
+        <li>Party's Summon get most bonuses as Enemy</li>
+        <li>+75 Gold for kills</li>
+        </ul>        
+      
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="noescape" id="noescape"></a>
+        <p><h7>
+Block Door/Portals/Area Escape if enemy is in sight (difficulty tweak)
+        </h7></p><br>
+
+        <p>
+            Eliminates exploit when player enter room with many enemies, get agro, leave area, some enemies follow the player and split up between areas. Now you cannot escape area if any enemy is in sight. You must kill all enemies or use other tactics to lure enemies away from the exit
+        </p>
+        <center><img src="images/no escape.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>        
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="allowbump" id="allowbump"></a>
+        <p><h7>
+Allow enemy to bump invisible/invulnerable party members (difficulty tweak)
+        </h7></p><br>
+
+        <p>
+            Eliminates exploit when player block narrow passage with invisible chars and uses ranged weapon to easy kill. Now enemy will bump your invisible chars to clean road
+        </p>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>        
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="greating" id="greating"></a>
+        <p><h7>
+Restore BG1 Style Greeting
+        </h7></p><br>
+        
+        <p>
+            In BG1 dialogue starts with greeting, then char moves closer to companion and continue speaking.
+            In BG2 greeting happens after moving, text of greeting immediately overlapped by dialogue. Component restores BG1 behaviour for BG2 engine.
+        </p>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>        
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="actzones" id="actzones"></a>
+        <p><h7>
+Highlight Active Zones/Points
+        </h7></p><br>
+
+        <p>
+            Simple "anti pixel hunting mode", may not work on custom maps with non standart cursor
+        </p>
+        <p>Available options:</p>
+        <ul>
+        <li>Pushable actions</li>
+        <li>Pushable actions + Information plates</li>
+        <li>Pushable actions + Information plates + Transitions/Exits</li>
+        <li>Pushable actions + Information plates + Transitions/Exits + Door Entrances/Enters</li>
+        </ul>        
+        <center><img src="images/active point.png" /></center>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>        
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="60hz" id="60hz"></a>
+        <p><h7>
+Double Mouse Render Rate
+        </h7></p><br>
+            
+        <p>
+            Engine shows mouse at standart 30Hz rate, it is too low to be good, component increase frequency to 60Hz to remove mouse "lagness". Basicaly it double rendering rate of all graphics, if you have slow 2D/OpenGL drivers take care about final framerate. Intel integrated drivers have relatively slow 2D (if you don't like switched to OpenGL), to increase framerate Please play at 16-bit color mode and switch to Software BLTs in Graphics setting
+        </p>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>        
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="fastload" id="fastload"></a>
+        <p><h7>
+Fast LOAD/SAVE Screen
+        </h7></p><br>
+            
+        <p>
+            Removes unnecessary time delays on LOAD/SAVE screens.
+        </p>
+
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="x2gui" id="x2gui"></a>
+        <p><h7>
+x2 Scaled Graphics for HD Resolutions
+        </h7></p><br>
+        
+        <p>Available options:</p>
+        <ul>
+        <li>GUI only</li>
+        <li>GUI + Cursor/Tooltips</li>
+        <li>GUI + Cursor/Tooltips + Main Game Window (Beta)</li>
+        </ul>  
+
+        <p>
+            Restoration of original(broken and unfinished) BG2's feature, works at resolution 1280x960(fully tested), 1600x1200, 2048x1536. Restored only DirectDraw2D 16/32-bit + OpenGL 32-bit modes, 24-bit colors mode was not restored.<br>
+        <br>
+            Can be used together with <strong>Widescreen Mod</strong> at any resolution, require installing Widescreen Mod in special mode - divided resolution. When Widescreen Mod ask for X(width) and Y(height) enter "divided by 2" numbers, for example for resolution <strong>1920x1080</strong> enter <strong>X=960</strong>, <strong>Y=540</strong>.
+        </p>
+        <center><strong>Original non-scaled 1280x960 picture (widescreen mod)</strong></center>
+        <center><a href="images/1280_widescreen.png"><img style="width: 90%; object-fit: contain" src="images/1280_widescreen.png"/></a></center>
+        <br>
+        <br>
+        <center><strong>x2 Scaled 1280x960 GUI + Cursor/Tooltips</strong></center>
+        <center><a href="images/1280_GUI_x2.png"><img style="width: 90%; object-fit: contain" src="images/1280_GUI_x2.png" /></a></center>
+        <br>
+        <br>
+        <center><strong>x2 Scaled 1280x960 GUI + Cursor/Tooltips + Main Game Window</strong></center>
+        <center><a href="images/1280_All_x2.png"><img style="width: 90%; object-fit: contain" src="images/1280_All_x2.png" /></a></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="subtitles" id="subtitles"></a>
+        <p><h7>
+Shift Subtitles Below Movie Frame
+        </h7></p><br>
+        
+        <center><strong>Original</strong></center>
+        <center><img src="images/subtitles orig.png" /></center>        
+        <br>
+        <center><strong>Shifted down</strong></center>
+        <center><img src="images/subtitles shifted.png" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="storeimp" id="storeimp"></a>
+        <p><h7>
+Improved Store&Bag Interface
+        </h7></p><br>
+        
+        <p>
+        <ul>
+        <li>'Shift' key + Click select all stack</li>
+        <li>Opened Bag/Book on Right side will hide unsuitable items on Left side (e.g. Store will show only ammos if you open 'Ammo Belt' on left)</li>
+        </ul>
+        </p>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="disababil" id="disababil"></a>
+        <p><h7>
+Disable 'Special Abilities' button if all abilities are used
+        </h7></p><br>
+        <center><img src="images/disable abil button.png" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="seqpanel" id="seqpanel"></a>
+        <p><h7>
+Spell Sequencer Panel
+        </h7></p><br>
+        <center><img src="images/spell sequencer.png" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="spellinfo" id="spellinfo"></a>
+        <p><h7>
+Innate/Ability/Spell Description Screen on Right Click
+        </h7></p><br>
+        <p>
+            This component was added due to the huge work of <a href="http://www.shsforums.net/user/38456-prozh">Prozh</a> to add Icon/Item Abilities/Tooltip fixes and Innate/Ability text update.
+        </p>
+        
+        <center><img src="images/innate screen.jpg" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>        
+
+<!-- ============================================================================== -->
+        <a name="staticon" id="staticon"></a>
+        <p><h7>
+Disable Portrait Icons Added by Class Abilities/Equipped Items
+        </h7></p><br>
+        <p>
+        Shows only temporary effects from spell and global character's states like Panic/Maze/etc.
+        Switchable by hotkey to 3 modes:
+        <ul>
+        <li>Show all icons like vanilla</li>
+        <li>Show icons from all active effects</li>
+        <li>Show only icons with 142(Display portrait icon) effect opcode</li>
+        </ul>
+        </p>
+        <p>
+        Mode switchable by key <strong>Numpad  /</strong>
+        </p>
+        <center><img src="images/disable static icons.png" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="hotkeys" id="hotkeys"></a>
+        <p><h7>
+Custom hotkeys
+        </h7></p><br>
+        <p>
+        Automaticaly installing component
+        <ul>
+        <li><strong>Numpad /</strong>  Change "Hide static icons" mode</li>
+        <li><strong>Numpad *</strong>  Show/Hide HP on Portrait</li>
+        <li><strong>Numpad -</strong>  Enable/Disable new Spell Menu</li>
+        <li><strong>Numpad +</strong>  Enable/Disable Greyscale background</li>
+        </ul>
+        </p>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="colcircle" id="colcircle"></a>
+        <p><h7>
+Colored Selection Circles
+        </h7></p><br>
+        <center><img src="images/color circles.jpg" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="spellmenu" id="spellmenu"></a>
+        <p><h7>
+New Spell Selection Overlay Menu
+        </h7></p><br>
+        <p>
+        Idea and icons by <a href="https://forums.beamdog.com/discussion/68958/mod-bubbs-spell-menu-v4-5-3/">Bubb</a>
+        </p>
+        <center><img src="images/spell menu.jpg" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="worldmap" id="worldmap"></a>
+        <p><h7>
+Borderless World Map
+        </h7></p><br>
+        <p>
+        Removes left/right/bottom borders on resolutions 800x600 and higher
+        </p>
+        <center><strong>1024x768</strong></center>
+        <center><a href="images/worldmap.jpg"><img style="width: 90%; object-fit: contain" src="images/worldmap.jpg"/></a></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="floatname" id="floatname"></a>
+        <p><h7>
+Show Float NPC Names ('Alt' key)
+        </h7></p><br>
+        <center><img src="images/float names.jpg" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="recinfo" id="recinfo"></a>
+        <p><h7>
+Additional Character Information on Record Screen
+        </h7></p><br>
+        <p>
+        <ul>
+        <li>Intoxication</li>
+        <li>Fatigue</li>
+        <li>Luck</li>
+        <li>Casting speed</li>
+        <li>Thac0 specialization bonus</li>
+        </ul>
+        </p>
+        <center><img src="images/extra record info.jpg" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="normvol" id="normvol"></a>
+        <p><h7>
+Normalize Sound Volume
+        </h7></p><br>
+        <p>
+        Auto volume-up sounds to max available value, mainly usefull for voices because they was recorded at low values. If you hear too loud some of sound, you can filter it personaly, first enable component "Print Filename of Normalized Sound (diagnostic mode)", then add printed filename to "<strong>overrides/EXCLNORM.2DA</strong>" (see "documentation\<strong>EXCLNORM.2DA</strong>", i already excluded most of dog/wolf barks)
+        </p>
+    
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="savepause" id="savepause"></a>
+        <p><h7>
+Add Pause To Save Game
+        </h7></p><br>
+        <p>
+        If the game was paused during saving, the pause will be activated automatically when loading this savegame
+        </p>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="newicons" id="newicons"></a>
+        <p><h7>
+Additional Icons on Portrait
+        <p>
+        <ul>
+        <li>Improved invisibility</li>
+        <li>Blur/mirror image</li>
+        <li>Morale break</li>
+        </ul>
+        </p>
+
+        </h7></p><br>
+        <center><img src="images/new icons.jpg" /></center>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="castbg1" id="castbg1"></a>
+        <p><h7>
+Restore BG1 Casting Sounds
+        </h7></p><br>
+        <p>
+        Restore original BG1 Casting Sounds for BG1 part or all low-level(1-5) spells
+        </p>
+        
+        <p>Uses "BG1_" prefix for additional CAS_/CHA_ files. Filename mapping:
+        <ul>
+        <strong>BG1 -> BG2</strong><br>
+        CAS_M0*  -> CAS_M0*     Mage   Post Casting Sound<br>
+        CAS_P0*  -> CAS_P0*     Priest Post Casting Sound<br>
+        <br>
+        CAS_PM*F -> CHA_FM0*    Female Mage Casting Voice<br>
+        CAS_PM*M -> CHA_MM0*    Male   Mage Casting Voice<br>
+        CAS_PP*F -> CHA_FP0*    Female Priest Casting Voice<br>
+        CAS_PP*M -> CHA_MP0*    Male   Priest Casting Voice<br>
+        <br>
+        CAS_P0*N -> CHA_SP0*    Silence/Short Priest Casting Voice<br>
+        CAS_P0*N -> CHA_SM0*    Silence/Short Mage   Casting Voice (same BG1 soundset as Priest)
+        </ul>
+        </p>
+         
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="castbg2" id="castbg2"></a>
+        <p><h7>
+BG2 clear voice Casting Sounds for Innate Casting
+        </h7></p><br>
+        <p>
+        Restore unused BG2 Casting Sounds <strong>CAS_PM*F/M</strong>, <strong>CAS_PP*F/M</strong>, assign to Innate Casting
+        </p>
+            
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="castnwn" id="castnwn"></a>
+        <p><h7>
+Neverwinter Nights Casting Sounds for High Spell Levels
+        </h7></p><br>
+        <p>
+        Assign NWN Casting Sounds <strong>vs_chant_*_hf/m.WAV & vs_chant_*_lf/m.WAV</strong> to Wizard Spell Level 9(+HLAs) and Priest Spell Level 7(+HLAs). Due limited available Level 9/HLA slots, spell school is ignored and sounds play with random selection
+        </p>
+        
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+
+<!-- ======================= C r e d i t s ====================== -->
+      <a name="credits" id="credits"></a>
+      <div class="content">
+
+        <h2>Credits</h2><br>
+
+            <span class="t1">Author:</span> <span class="t2"><a href="http://www.shsforums.net/user/41628-insomniator/">Insomniator</a></span><br>
+            <span class="t1">Original TobEx source code:</span> <span class="t2"><a href="http://www.shsforums.net/forum/606-tobex/">Ascension64</a></span><br>            
+            <span class="t1"><acronym title="Weimer Dialogue Utility">WeiDU</acronym> coding:</span> <span class="t2"><a href="http://www.shsforums.net/user/41628-insomniator/">Insomniator</a></span><br>
+
+        <hr style="clear: both; width: 90%; color: transparent; background-color: transparent; " />
+
+        <h5>Special Acknowledgements to:</h5>
+
+          <ul class="version-list c1">
+            <li><a href="http://www.spellholdstudios.net/">Spellhold Studios</a> team for hosting the mod (<a href="http://www.shsforums.net">Forums</a>)</li>
+            <li><a href="http://www.shsforums.net/forum/606-tobex/">Ascension64 </a> for TobEx and BG2 Engine Reverse Enginering</li>
+            <li><a href="http://www.shsforums.net/forum/606-tobex/">Ascension64 </a> for TobEx0018.tpa as .CHU patching WeiDU example code</li>
+            <li>Everyone else from the <a href="http://www.shsforums.net/">Spellhold Studios</a> forums, and the other Infinity Engine gaming and modding communities who offered their help and support.</li>
+          </ul><br>
+
+        <h5>Programs/tools used in creation:</h5>
+
+          <ul class="version-list c1">
+            <li>
+              <a href="https://github.com/WeiDUorg/weidu/"><acronym title="Weimer Dialogue Utility">WeiDU</acronym></a>, by Wes Weimer, the bigg and Wisp.
+            </li>
+            <li>
+              <a href="https://github.com/Argent77/NearInfinity/">Near Infinity</a>, by Jon Olav Hauglid, FredSRichardson, and Argent77.
+            </li>
+          </ul><br>
+          
+        <h5>Compilation</h5>
+        <p>Folder "src" is modified sources of TobEx v28, merge with original TobEx filetree</p>
+        <br>
+
+        <h5>Copyrights</h5>
+            <ul class="version-list c1">
+            <li>
+            Number Icons by Bubb from <a href="https://forums.beamdog.com/discussion/68958/mod-bubbs-spell-menu-v4-5-3/">Bubb's Spell Menu</a>
+            </li>
+            <li>
+            TADA.wav, FOLSTART.wav, Speech On.wav, Speech Off.wav by Microsoft Windows
+            </li>
+            </ul>
+            
+          <div class="important" style="border-color: #781808;">
+            <p>BG2 Improved GUI is not developed, supported, or endorsed by BioWare&trade; or Interplay/BlackIsle, Overhaul, Beamdog or the Wizards of the Coast. It was developed by Author, based on material from the game Baldur's Gate II and its expansion.</p>
+            <p>Most mod content is &copy;Author.</p>
+            <p>Baldur's Gate II: Shadows of Amn and Baldur's Gate II: Throne of Bhaal &copy; TSR, Inc. The BioWare Infinity Engine is &copy; BioWare Corp. All other trademarks and copyrights are property of their respective owners.</p>
+
+            <p>This mod was created to be freely enjoyed by all Baldur's Gate II players, and its content is free of rights.</p>
+
+            <p>If there are any copyright issues or this statement needs revision, then please contact me and advise me what to do about it. Most notably, if you see any artwork in this mod that might conflict with Copyright rules, please let me know as soon as possible, and I will remove the conflicting content immediately.</p>
+          </div>
+
+          <div class="important" style="border-width: 1px 2px 1px 2px; border-style: solid; border-color: #781808;">
+            <p>This work (including all code and documentation) is licensed under a <a href="http://creativecommons.org/licenses/by-nc/3.0/">Creative Commons Attribution-Noncommercial 3.0 Unported License</a>. You are free to share (copy, distribute and transmit) and to remix (adapt) this work, except for commercial purposes. See the <a href="http://creativecommons.org/licenses/by-nc/3.0/legalcode">Creative Commons Public License</a> for more details. Please post any changes or updates at the mod's <a href="http://www.shsforums.net/topic/60986-bg2-improved-gui/">forum</a>.</p>
+            <p style ="width: 100%;">All copyrights and trademarks are the property of their respective owners.</p>
+          </div>
+
+        <address>
+            <span class="footer">Credits</span> &#8226;<a href="#top">BACK TO TOP</a>
+        </address>
+      </div>
+
+<!-- ============== V e r s i o n   H i s t o r y =============== -->
+      <a name="version" id="version"></a>
+      <div class="content">
+
+        <h2>Version History</h2><br>
+
+        <h6>Version 5.5</h6>
+          <ul>
+            <li>Added: x2 Full Scaled Graphics mode</li>
+            <li>Added: HTML Documentation</li>
+            <li>Added: NWN casting sounds for HLA/High Level spells</li>
+            <li>Fixed: Custom hotkeys component removed from installer</li>
+          </ul>
+        <h6>Version 5.4</h6>
+          <ul>
+            <li>Fixed: Changed installer markers to "MOD_IS_INSTALLED"</li>
+            <li>Fixed: Removed Wing(Ready) sound for Infinity Animation's 0x0100/0x0A00 non-Wyvern IDs</li>
+            <li>Fixed: Removed unnecessary Blur icon for off/def Spin modes</li>
+            <li>Fixed: Color party foot circle in Panic/Charm state</li>
+            <li>Added: Optional "Hide Static Icons on Portrait" mode</li>
+            <li>Added: BG1 casting sounds for BG1 part or any low-level spells</li>
+          </ul>
+        <h6>Version 5.3</h6>
+          <ul>
+            <li>Added: Block Door/Portals/Area Escape if enemy is in sight (difficulty tweak)</li>
+            <li>Added: Allow enemy to bump invisible/invulnerable party members (difficulty tweak)</li>
+          </ul>
+         
+        <h6>Version 5.1</h6>
+          <ul>
+            <li>Mod: Greyscale state embedded to savegame</li>
+            <li>Mod: Greyscale Icon-less mode, keyboard switch</li>
+            <li>Fixed: Item Drop Event text message</li>
+            <li>Fixed: Spell Description Screen for choice mode</li>
+            <li>Fixed: THAC0 calculation on Inventory screen</li>
+            <li>Fixed: Store Interface double clicks</li>
+            <li>Fixed: Extended Event Text crash when Expanded Action disabled</li>
+            <li>Fixed: SpellMenu disabled icons</li>
+            <li>Fixed: SpellMenu bug with fog of war</li>
+          </ul>
+        <h6>Version 5.0</h6>
+          <ul>
+            <li>Added: Innate/Ability/Spell Description Screen on Right Click</li>
+            <li>Added: Colored Selection Circles</li>
+            <li>Added: New Spell Selection Overlay Menu</li>
+            <li>Added: Borderless World Map</li>
+            <li>Added: Show Float NPC Names ('Alt' key)</li>
+            <li>Added: Auto Switch Spell Book between Priest and Mage</li>
+            <li>Added: Additional Character Information on Record Screen (intoxication, fatigue, luck, casting speed)</li>
+            <li>Added: Normalize Sound Volume</li>
+            <li>Added: Add Pause To Save Game</li>
+            <li>Added: Additional Icons on Portrait (improved invisibility, blur/mirror image)</li>
+          </ul>
+        <h6>Version 4.x</h6>
+          <ul>
+            <li>V4.06 Added: Custom hotkeys</li>
+            <li>V4.06 Added: Hide Static(by equipped items) Icons on Portrait</li>
+            <li>V4.06 Added: Crashdump saving utility</li>
+            <li>V4.06 Fixed: Double Mouse Rate regression bug</li>
+            
+            <li>v4.05 Fixed: ScrollBars on resolution other 640x480</li>
+            <li>v4.05 Fixed: Hand-Off weapon thac0 issue</li>
+            <li>v4.05 Fixed: AttacksPerRound calculation for Legacy Of Baal</li>
+            
+            <li>v4.04 Added: Mouse wheel scrolls on some panels</li>
+            <li>v4.04 Added: Spell Sequencer Panel</li>
+            <li>v4.04 Added: Hide 'Special Abilities' button</li>
+            <li>v4.04 Added: Exchange "Turn Undead" and "Pick Pockets" buttons for Cleric/Thief multiclass</li>
+            <li>v4.04 Added: Improved Store&Bag Interface</li>
+            
+            <li>v4.03 Added: Shift Subtitles Below Movie Frame</li>
+            <li>v4.03 Added: Scaled GUI</li>
+            <li>v4.03 Added: Heart of Fury/Fists of Fury difficulty modes</li>
+            <li>v4.03 Fixed: Cleric Summons don't get difficulty bonuses</li>
+            
+            <li>v4.02 Fixed: Damage range info for "luck-related" active effects: KAI/Fatigue/...</li>
+            
+            <li>v4.01_fix Fixed: BG1 Style Greeting</li>
+            <li>v4.01 Added: Highlight Active Zones/Points</li>
+            <li>v4.01 Added: Double Mouse Render Rate</li>
+            <li>v4.01 Added: BG1 Style Greeting</li>
+            <li>v4.01 Added: Fast ProgressBar Screen</li>
+            
+            <li>v4.00 Added (Tobex): Character Behind Polygon Fix</li>
+            <li>v4.00 Added (Tobex): Trap Disarm Distance Fix</li>
+            <li>v4.00 Added: Bonus stats highlighted as Green on Character Record screen</li>
+            <li>v4.00 Added: Legacy of Bhaal difficulty mode</li>
+            <li>v4.00 Added: Yellow Border on Portrait if Party Member too far for Item Transfer</li>
+            <li>v4.00 Fixed: Action on Portrait now switch icons if used item has multieffects</li>
+          </ul>
+         <h6>Version 3.x</h6>
+          <ul>
+            <li>v3.19 Added: Show Hit Points/Action on Portrait</li>
+            <li>v3.18 Added: Extended roll/damage combat text</li>
+            <li>v3.18 Added: Do not clear Drained Spells</li>
+            <li>v3.18 Added: New option to hide Enemy's spells remaining time</li>
+            <li>v3.17 Fixed: THAC0&Damage info on inventory screen in fatigue mode</li>
+            <li>v3.17 TobEx: show mage robe for BG1 Type Chars</li>
+            
+            <li>v3.16 Fixed: support extended Infinity Animation's animation_id, support widescreen mod >1024 resolutions</li>
+            <li>v3.16 Added: compatibility with GUI_720 mod</li>
+            <li>v3.15 Fixed: right mouse click crash on non-NPC, Total Roll placement for TutuGUI</li>
+            <li>v3.14 Added: TutuGUI's Loot Panel Backgrounds, more Grey Background installation options</li>
+            <li>v3.13 Added: Sound notification to Quest events</li>
+            <li>v3.13 Added: Inventory Background by Sir-Kill</li>
+            <li>v3.13 Rewritten EffectOpcode.cpp to restore Ability Scores(Charisma/...) and Thief(Stealth/...) Modification Fixes due wrong ToBex's "signed char" type</li>
+            <li>v3.13 Edited TobEx sources with mismatched signed/unsigned integer math to pass most /W3 compiler warnings</li>
+            <li>v3.12 Fixed: added quests split to 4 types</li>
+            <li>v3.11 Added: extended messages about item/quest events</li>
+            <li>v3.10 Improved compatibility with bugged mods - same journal entry in open and done sections, shield items with empty animation</li>
+            <li>v3.9 Fixed: reverted ClearAllActions(1) to original(but still bugged) tobex' version, Steal screen crash due mistyped "pop eax"</li>
+            <li>v3.7 Minor bugfixes</li>
+            <li>v3.7 Added: Show NPC's active effects on right mouse click</li>
+            <li>v3.6 Fixed: Unlimited Hand-Off errors, brighter colorize icon border</li>
+            <li>v3.5 Fixed: Greyscale button placement, Hand-Off effects removal</li>
+            <li>v3.4 Added: Unlimited Hand off slot</li>
+            <li>v3.3 Greyscale background now has switch button on main game screen, fixed null damage range for magic weapons</li>
+            <li>v3.2 New HP-on-NPC options, better journal positioning, tooltips on new buttons</li>
+            <li>v3.1 Added: Greyscale background on Pause</li>
+            <li>v3.0 Added: Journal with fold/unfold quests</li>
+          </ul>
+        <h6>Version 2.x</h6>
+          <ul>
+            <li>v2.5 Added: Total Roll info on Character creation screen</li>
+            <li>v2.4 Added: THAC0 Info on Inventory screen, Dark portraits when draggin items</li>
+            <li>v2.3 Added: colorize spell icon, hide "writemagic button"</li>
+            <li>v2.2 Renamed to BG2 Improved GUI</li>
+            <li>v2.1 Loot panel: fixed items with lowcase icon resource names</li>
+            <li>v2 Loot panel: added configurable sorting</li>
+          </ul>
+        <h6>Version 1.x</h6>
+          <ul>    
+            <li>v1.1 Loot panel: added missed sources</li>
+            <li>v1 Loot panel: Initial release, Beta</li>
+          </ul>   
+          
+        <address>
+            <span class="footer">Version History</span> &#8226;<a href="#top">BACK TO TOP</a>
+        </address>
+      </div>
+
+    </div>
+  </body>
+</html>

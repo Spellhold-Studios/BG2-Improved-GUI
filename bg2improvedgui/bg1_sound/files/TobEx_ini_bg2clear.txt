@@ -1,0 +1,1 @@
+UI:BG2 Clear Casting Voice=1

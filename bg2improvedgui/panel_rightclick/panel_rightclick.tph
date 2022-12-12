@@ -1,0 +1,48 @@
+DEFINE_ACTION_FUNCTION ~RIGHTCLICK~ BEGIN
+
+COPY ~bg2improvedgui/panel_rightclick/files/ABILDESC.2DA~ ~override~
+COPY ~bg2improvedgui/panel_rightclick/files/ABILDESC.SPL~ ~override~
+
+INCLUDE ~bg2improvedgui/panel_rightclick/ability_desc.tph~
+INCLUDE ~bg2improvedgui/panel_rightclick/item_ability_desc.tph~
+INCLUDE ~bg2improvedgui/panel_rightclick/item_ability_fixes.tph~
+INCLUDE ~bg2improvedgui/panel_rightclick/add_spell_desc.tph~
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/panel_rightclick/files/TobEx_ini.txt"
+BUT_ONLY
+
+COPY_EXISTING ~guipr.chu~ ~override~
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 3) BEGIN    // spell info panel
+          PanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    READ_SHORT (%offPanels% + %PanelNum% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %PanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+
+        READ_SHORT  (%offControlThis% + 0x0)  ControlID
+        PATCH_IF (ControlID == 0xFFFF) BEGIN         // Label
+          WRITE_SHORT (%offControlThis% + 0x2) 4096  // buffer size, make it accessable
+        END
+    END
+BUT_ONLY
+
+END // FUNCTION

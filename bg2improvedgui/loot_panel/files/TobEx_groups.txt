@@ -1,0 +1,4 @@
+UI:Loot Panel=1
+UI:Loot Panel Item Grouping=1
+UI:Loot Panel Sorting Order=
+UI:Loot Panel Sorting Unidentified First=1

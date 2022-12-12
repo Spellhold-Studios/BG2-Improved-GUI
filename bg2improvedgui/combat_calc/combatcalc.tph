@@ -1,0 +1,32 @@
+DEFINE_ACTION_FUNCTION ~COMBATCALC~ INT_VAR option = 0 BEGIN
+
+ACTION_IF (~%LANGUAGE%~ STR_EQ ~russian_dos~ ) ||
+          (~%LANGUAGE%~ STR_EQ ~russian_1251~ ) BEGIN // russian only
+    STRING_SET 3805 @3805
+END    
+
+STRING_SET 9509 @9509
+STRING_SET 9510 @9510
+STRING_SET 9511 @9511
+STRING_SET 9512 @9512
+STRING_SET 9513 @9513
+STRING_SET 9514 @9514
+STRING_SET 9515 @9515
+STRING_SET 9516 @9516
+STRING_SET 9517 @9517
+STRING_SET 9518 @9518
+STRING_SET 9519 @9519
+STRING_SET 9520 @9520
+STRING_SET 9521 @9521
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/combat_calc/files/TobEx_ini_type.txt"
+BUT_ONLY
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/combat_calc/files/TobEx_ini_full.txt"
+    BUT_ONLY
+END
+
+END  //DEFINE_ACTION_FUNCTION

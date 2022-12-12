@@ -1,0 +1,702 @@
+// (c) Prozh (http://www.shsforums.net/user/38456-prozh)
+
+COPY ~bg2improvedgui/panel_rightclick/spl~ ~override~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11001)
+APPEND ~abildesc.2da~ 
+  ~amsoul01         %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11002)
+APPEND ~abildesc.2da~ 
+  ~amul01           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11003)
+APPEND ~abildesc.2da~ 
+  ~amul15           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11004)
+APPEND ~abildesc.2da~ 
+  ~amul17           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11005)
+APPEND ~abildesc.2da~ 
+  ~amul22           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11006)
+APPEND ~abildesc.2da~ 
+  ~amul26           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11008)
+APPEND ~abildesc.2da~ 
+  ~belt09           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11009)
+APPEND ~abildesc.2da~ 
+  ~boot11           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11010)
+APPEND ~abildesc.2da~ 
+  ~boot12           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11011)
+APPEND ~abildesc.2da~ 
+  ~bow10            %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11012)
+APPEND ~abildesc.2da~ 
+  ~bow20            %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11012)
+APPEND ~abildesc.2da~ 
+  ~bow21            %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11013)
+APPEND ~abildesc.2da~ 
+  ~brac16           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11014)
+APPEND ~abildesc.2da~ 
+  ~brac20           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11015)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11016)
+APPEND ~abildesc.2da~ 
+  ~brac23           %abil0%         %abil1%     -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11017)
+APPEND ~abildesc.2da~ 
+  ~chan20           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11018)
+APPEND ~abildesc.2da~ 
+  ~clck04           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11019)
+APPEND ~abildesc.2da~ 
+  ~clck07           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11021)
+APPEND ~abildesc.2da~ 
+  ~clck20           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11022)
+APPEND ~abildesc.2da~ 
+  ~clck25           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11023)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11024)
+OUTER_SET abil2 = RESOLVE_STR_REF(@11025)
+APPEND ~abildesc.2da~ 
+  ~clck27           %abil0%         %abil1%     %abil2%~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11006)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11026)
+APPEND ~abildesc.2da~ 
+  ~clck31           %abil0%         %abil1%     -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11027)
+APPEND ~abildesc.2da~ 
+  ~halb06           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11028)
+APPEND ~abildesc.2da~ 
+  ~halb10           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11028)
+APPEND ~abildesc.2da~ 
+  ~halb11           %abil0%         -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11029)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11030)
+APPEND ~abildesc.2da~ 
+  ~hamm11           %abil0%         %abil1%     -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11031)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11032)
+OUTER_SET abil2 = RESOLVE_STR_REF(@11033)
+APPEND ~abildesc.2da~ 
+  ~helm16           %abil0%       %abil1%       %abil2%~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11034)
+APPEND ~abildesc.2da~ 
+  ~helm17           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11035)
+APPEND ~abildesc.2da~ 
+  ~helm30           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11036)
+APPEND ~abildesc.2da~ 
+  ~helm32           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11037)
+APPEND ~abildesc.2da~ 
+  ~misc5t           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11038)
+APPEND ~abildesc.2da~ 
+  ~npmisc1          %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11039)
+APPEND ~abildesc.2da~ 
+  ~npshld           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11040)
+APPEND ~abildesc.2da~ 
+  ~regisamu         %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11041)
+APPEND ~abildesc.2da~ 
+  ~ring03           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11042)
+APPEND ~abildesc.2da~ 
+  ~ring05           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11043)
+APPEND ~abildesc.2da~ 
+  ~ring20           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11044)
+APPEND ~abildesc.2da~ 
+  ~ring26           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11045)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11046)
+OUTER_SET abil2 = RESOLVE_STR_REF(@11047)
+APPEND ~abildesc.2da~ 
+  ~ring27           %abil0%       %abil1%       %abil2%~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11048)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11049)
+APPEND ~abildesc.2da~ 
+  ~ring28           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11050)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11051)
+APPEND ~abildesc.2da~ 
+  ~ring29           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11052)
+APPEND ~abildesc.2da~ 
+  ~ring30           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11053)
+APPEND ~abildesc.2da~ 
+  ~ring33           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11054)
+APPEND ~abildesc.2da~ 
+  ~ring34           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11042)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11055)
+APPEND ~abildesc.2da~ 
+  ~ring39           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11056)
+APPEND ~abildesc.2da~ 
+  ~ring42           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11057)
+APPEND ~abildesc.2da~ 
+  ~rodmace          %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11058)
+APPEND ~abildesc.2da~ 
+  ~rodspear         %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11059)
+APPEND ~abildesc.2da~ 
+  ~rodsword         %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11060)
+APPEND ~abildesc.2da~ 
+  ~slng06           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11061)
+APPEND ~abildesc.2da~ 
+  ~slng08           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11061)
+APPEND ~abildesc.2da~ 
+  ~slng09           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11062)
+APPEND ~abildesc.2da~ 
+  ~staf09           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11063)
+APPEND ~abildesc.2da~ 
+  ~staf10           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11064)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11065)
+APPEND ~abildesc.2da~ 
+  ~staf11           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11066)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11067)
+APPEND ~abildesc.2da~ 
+  ~staf12           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11068)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11069)
+APPEND ~abildesc.2da~ 
+  ~staf13           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11070)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11071)
+APPEND ~abildesc.2da~ 
+  ~staf14           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11072)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11073)
+APPEND ~abildesc.2da~ 
+  ~staf15           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11074)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11075)
+APPEND ~abildesc.2da~ 
+  ~staf16           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11076)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11077)
+APPEND ~abildesc.2da~ 
+  ~staf17           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11078)
+APPEND ~abildesc.2da~ 
+  ~sw1h26           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11079)
+APPEND ~abildesc.2da~ 
+  ~sw1h27           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11033)
+APPEND ~abildesc.2da~ 
+  ~sw1h31           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11080)
+APPEND ~abildesc.2da~ 
+  ~sw1h32           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11081)
+APPEND ~abildesc.2da~ 
+  ~sw1h33           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11081)
+APPEND ~abildesc.2da~ 
+  ~sw1h33c          %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11082)
+APPEND ~abildesc.2da~ 
+  ~sw1h34           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11083)
+APPEND ~abildesc.2da~ 
+  ~sw1h36           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11084)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11085)
+APPEND ~abildesc.2da~ 
+  ~sw1h51           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11029)
+APPEND ~abildesc.2da~ 
+  ~sw1h60           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11030)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11086)
+APPEND ~abildesc.2da~ 
+  ~sw1h65           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11087)
+APPEND ~abildesc.2da~ 
+  ~sw1h68           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11087)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11088)
+APPEND ~abildesc.2da~ 
+  ~sw1h69           %abil0%       %abil1%       -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11089)
+APPEND ~abildesc.2da~ 
+  ~sw1h70           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11090)
+APPEND ~abildesc.2da~ 
+  ~sw1h71           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11091)
+APPEND ~abildesc.2da~ 
+  ~sw2h10           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11091)
+APPEND ~abildesc.2da~ 
+  ~sw2h19           %abil0%       -1            -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11092)
+APPEND ~abildesc.2da~ 
+  ~wa2helm          %abil0%       -1            -1~
+
+
+//////////////////////////////////
+// icon ability
+
+COPY_EXISTING ~amsoul01.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~sppr404b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~amul01.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi304b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~amul15.itm~ ~override~
+	          ~clck20.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi114b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~amul22.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "ail_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~SPPR404B~ #8 // was sppr212b
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~boot11.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi315b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~clck04.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~plywolf~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~clck07.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi104b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~helm30.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi609b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~helm32.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spcl908b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~ring03.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spcl641b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~ring05.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi206b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~ring20.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi217b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~ring42.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi405b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~rodmace.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~enchmacb~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~rodspear.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi417b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~rodsword.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~enchlswb~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~sw1h33.itm~  ~override~
+	          ~sw1h33c.itm~ ~override~
+	          ~sw1h68.itm~  ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi716b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~sw1h69.itm~ ~override~
+  WRITE_ASCII 0xae ~spwi716b~ #8
+  BUT_ONLY_IF_IT_CHANGES
+
+
+//////////////////////////////////
+// tooltip
+
+COPY_EXISTING ~tooltip.2da~  ~override~
+  REPLACE_TEXTUALLY CASE_INSENSITIVE ~STAF12    8121    23085   23791~ ~STAF12      8121    99999   23791~
+  REPLACE_TEXTUALLY CASE_INSENSITIVE ~STAF13    8132    23085   12124~ ~STAF13      8132    12988   12124~
+  REPLACE_TEXTUALLY CASE_INSENSITIVE ~MISC3A8   23085   4731    -1~    ~MISC3A8     12988   4731    -1~
+  REPLACE_TEXTUALLY ~3008~ ~18630~
+  REPLACE_TEXTUALLY ~9387~ ~23471~
+BUT_ONLY
+
+COPY_EXISTING ~tooltip.2da~ ~override~
+ REPLACE ~38872~ @11100
+ REPLACE ~13722~ @11101
+ REPLACE ~20678~ @11103
+ REPLACE ~12047~ @11115
+ REPLACE ~99999~ @11102
+BUT_ONLY
+
+COPY_EXISTING ~tooltip.2da~  ~override~
+  REPLACE_TEXTUALLY ~15211~ ~34551~
+  REPLACE_TEXTUALLY ~15180~ ~34574~
+  REPLACE_TEXTUALLY ~24839~ ~34573~
+BUT_ONLY
+
+APPEND ~tooltip.2da~
+  ~amul15            12053      -1          -1~
+APPEND ~tooltip.2da~
+  ~amul17            23748      -1          -1~
+APPEND ~tooltip.2da~
+  ~brac20            14178      -1          -1~
+APPEND ~tooltip.2da~
+  ~clck07            14033      -1          -1~
+APPEND ~tooltip.2da~
+  ~clck20            12053      -1          -1~
+APPEND ~tooltip.2da~
+  ~helm17            7917       -1          -1~
+APPEND ~tooltip.2da~
+  ~npmisc1           12042      -1          -1~
+APPEND ~tooltip.2da~
+  ~npshld            12028      -1          -1~
+APPEND ~tooltip.2da~
+  ~regisamu          12050      -1          -1~
+APPEND ~tooltip.2da~
+  ~ring03            20678      -1          -1~
+APPEND ~tooltip.2da~
+  ~ring05            12017      -1          -1~
+APPEND ~tooltip.2da~
+  ~ring26            34610      -1          -1~
+APPEND ~tooltip.2da~
+  ~ring30            14033      -1          -1~
+APPEND ~tooltip.2da~
+  ~ring34            10850      -1          -1~
+APPEND ~tooltip.2da~
+  ~sw1h60            64394      73979       -1~
+APPEND ~tooltip.2da~
+  ~sw2h19            64502      12026       -1~
+APPEND ~tooltip.2da~
+  ~wa2helm           26234      -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11104)
+APPEND ~tooltip.2da~ 
+  ~amul01           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11105)
+APPEND ~tooltip.2da~ 
+  ~amul22           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11106)
+APPEND ~tooltip.2da~ 
+  ~belt09           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11107)
+APPEND ~tooltip.2da~ 
+  ~boot11           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11108)
+APPEND ~tooltip.2da~ 
+  ~clck04           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11109)
+APPEND ~tooltip.2da~ 
+  ~clck25           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11110)
+APPEND ~tooltip.2da~ 
+  ~misc5t           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11111)
+APPEND ~tooltip.2da~ 
+  ~ring20           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11112)
+APPEND ~tooltip.2da~ 
+  ~ring33           %abil0%     -1          -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(#7819)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11113)
+APPEND ~tooltip.2da~ 
+  ~slng06           %abil0%     %abil1%     -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(#64942)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11114)
+APPEND ~tooltip.2da~ 
+  ~slng08           %abil0%     %abil1%     -1~
+
+OUTER_SET abil0 = RESOLVE_STR_REF(#64943)
+OUTER_SET abil1 = RESOLVE_STR_REF(@11114)
+APPEND ~tooltip.2da~ 
+  ~slng09           %abil0%     %abil1%     -1~
+
+
+/////////////////////////////////////////
+// if bg2fixpack installed
+ACTION_IF FILE_EXISTS_IN_GAME ~cddetevl.spl~ THEN BEGIN
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11007)
+APPEND ~abildesc.2da~ 
+  ~ax1h07           %abil0%     -1          -1~
+
+APPEND ~tooltip.2da~
+  ~ax1h07           21956       13051       -1~
+
+END // cddetevl.spl
+
+
+/////////////////////////////////////
+// if bgt installed
+ACTION_IF FILE_EXISTS_IN_GAME ~bgring08.itm~ THEN BEGIN
+
+OUTER_SET abil0 = RESOLVE_STR_REF(@11020)
+APPEND ~abildesc.2da~ 
+  ~clck08           %abil0%     -1      -1~
+
+APPEND ~tooltip.2da~
+  ~clck08           14033       -1      -1~
+
+COPY_EXISTING ~clck08.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  FOR (index = 0 ; index < abil_num ; index = index + 1) BEGIN
+    READ_BYTE ("%abil_off%" +        ("%index%" * 0x38)) "abiltype"
+    PATCH_IF ("%abiltype%" = 3) BEGIN // magical
+      WRITE_ASCII ("%abil_off%" + 0x04 + ("%index%" * 0x38)) ~spwi104b~ #8
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+END // bgring08.itm
+
+
+////////////////////////////////
+// format
+
+COPY_EXISTING ~ABILDESC.2DA~ ~override~
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
+COPY_EXISTING ~tooltip.2da~ ~override~
+  PRETTY_PRINT_2DA
+BUT_ONLY

@@ -1,0 +1,19 @@
+DEFINE_ACTION_FUNCTION ~MORECASTVOICE~ INT_VAR option = 0 BEGIN
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/bg1_sound/files/TobEx_ini_bg2clear.txt"
+    BUT_ONLY
+    
+    COPY ~bg2improvedgui/bg1_sound/files/BG2C~ ~override~
+END
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/bg1_sound/files/TobEx_ini_nwn.txt"
+    BUT_ONLY
+    
+    COPY ~bg2improvedgui/bg1_sound/files/NWN~ ~override~    
+END
+
+END

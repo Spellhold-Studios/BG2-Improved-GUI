@@ -1,0 +1,291 @@
+// (c) Prozh (http://www.shsforums.net/user/38456-prozh)
+
+//  sumdjinn.cre
+//  helm16.itm
+//  staf11.itm
+//  staf12.itm
+//  staf13.itm
+//  staf17.itm
+//  sw1h31.itm
+//  wa2helm.itm
+//  ring27.itm
+//  ring28.itm
+//  staf12.itm
+//  ring27.itm
+//  chan20.itm
+
+//
+COPY_EXISTING ~sumdjinn.cre~ ~override~
+  WRITE_BYTE 0x6e "2"
+  BUT_ONLY
+
+//
+COPY_EXISTING ~helm16.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "sppr707" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgpr707~ #8
+        END
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "spwi304" = 0) AND ("%type1%" = 148)) BEGIN
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgwi304~ #8
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~helm16.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE  ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    READ_ASCII ("%abil_off%" + 0x04 + ("%abil_num%" * 0x38)) "icon"
+    PATCH_IF (("%type%" = 3) AND ("%icon%" STRING_COMPARE_CASE "spwi714b" = 0)) BEGIN
+      WRITE_SHORT ("%abil_off%" + 0x0e + ("%abil_num%" * 0x38)) 15 // range
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~staf11.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE  ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    READ_ASCII ("%abil_off%" + 0x04 + ("%abil_num%" * 0x38)) "icon"
+    PATCH_IF (("%type%" = 3) AND ("%icon%" STRING_COMPARE_CASE "spwi308b" = 0)) BEGIN
+      WRITE_SHORT ("%abil_off%" + 0x0e + ("%abil_num%" * 0x38)) 30 // range
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~staf12.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE  ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    READ_ASCII ("%abil_off%" + 0x04 + ("%abil_num%" * 0x38)) "icon"
+    PATCH_IF (("%type%" = 3) AND ("%icon%" STRING_COMPARE_CASE "spwi308b" = 0)) BEGIN
+      WRITE_SHORT ("%abil_off%" + 0x0e + ("%abil_num%" * 0x38)) 30 // range
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~staf13.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE  ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    READ_ASCII ("%abil_off%" + 0x04 + ("%abil_num%" * 0x38)) "icon"
+    PATCH_IF (("%type%" = 3) AND ("%icon%" STRING_COMPARE_CASE "spwi308b" = 0)) BEGIN
+      WRITE_SHORT ("%abil_off%" + 0x0e + ("%abil_num%" * 0x38)) 30 // range
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~staf17.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "spwi418" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgwi418~ #8
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~sw1h31.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "sppr707" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_LONG ("%fx_off%" + 0x04 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) 0 // casting level
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgpr707~ #8
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES  
+
+//
+COPY_EXISTING ~wa2helm.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "spwi804" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_LONG ("%fx_off%" + 0x08 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) 0
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES  
+  
+
+//
+ACTION_IF NOT FILE_EXISTS_IN_GAME ~cddetevl.spl~ THEN BEGIN  // vanilla item, no bg2fixpack installed
+COPY_EXISTING ~ring27.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE  ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    READ_ASCII ("%abil_off%" + 0x04 + ("%abil_num%" * 0x38)) "icon"
+    PATCH_IF (("%type%" = 3) AND ("%icon%" STRING_COMPARE_CASE "spwi103b" = 0)) BEGIN
+      WRITE_BYTE ("%abil_off%" + 0x0c + ("%abil_num%" * 0x38)) 4 // target
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+END
+
+//
+COPY_EXISTING ~chan20.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE  ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    READ_ASCII ("%abil_off%" + 0x04 + ("%abil_num%" * 0x38)) "icon"
+    PATCH_IF (("%type%" = 3) AND ("%icon%" STRING_COMPARE_CASE "spwi503b" = 0)) BEGIN
+      WRITE_SHORT ("%abil_off%" + 0x0e + ("%abil_num%" * 0x38)) 12 // range
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+
+/////////////////////////////////////////
+// if bg2fixpack installed
+ACTION_IF FILE_EXISTS_IN_GAME ~cddetevl.spl~ THEN BEGIN  
+
+//
+COPY_EXISTING ~ring27.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "sppr503" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgpr503~ #8
+        END
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "spwi103" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgwi103~ #8
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~ring28.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "spwi405" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_LONG ("%fx_off%" + 0x08 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) 0
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+//
+COPY_EXISTING ~staf12.itm~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  READ_LONG   0x6a "fx_off"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    READ_BYTE   ("%abil_off%" +        ("%abil_num%" * 0x38)) "type"
+    PATCH_IF ("%type%" = 3) BEGIN
+      READ_SHORT  ("%abil_off%" + 0x1e + ("%abil_num%" * 0x38)) "abil_fx_num"
+      READ_SHORT  ("%abil_off%" + 0x20 + ("%abil_num%" * 0x38)) "abil_fx_idx"
+      WHILE ("%abil_fx_num%" > 0) BEGIN
+        SET "abil_fx_num" = ("%abil_fx_num%" - 1)
+        READ_SHORT ("%fx_off%" +        (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "type1"
+        READ_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) "spell"
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "cdstaf12" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_LONG ("%fx_off%" + 0x08 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) 0
+        END
+        PATCH_IF (("%spell%" STRING_COMPARE_CASE "spwi602" = 0) AND ("%type1%" = 146)) BEGIN
+          WRITE_ASCII ("%fx_off%" + 0x14 + (("%abil_fx_idx%" + "%abil_fx_num%") * 0x30)) ~xgwi602~ #8
+        END
+      END
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+  
+END // cddetevl.spl  

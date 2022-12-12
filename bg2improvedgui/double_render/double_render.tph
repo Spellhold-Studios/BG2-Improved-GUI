@@ -1,0 +1,13 @@
+DEFINE_ACTION_FUNCTION ~DOUBLERENDERRATE~ INT_VAR option = 0 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/double_render/files/TobEx_ini.txt"
+BUT_ONLY
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/double_render/files/TobEx_ini_lite.txt"
+    BUT_ONLY
+END
+
+END  //DEFINE_ACTION_FUNCTION

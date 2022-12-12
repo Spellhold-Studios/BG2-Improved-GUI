@@ -1,0 +1,129 @@
+DEFINE_ACTION_FUNCTION ~TOTALROLL~ BEGIN
+
+ACTION_IF (MOD_IS_INSTALLED ~Setup-TutuGUI.tp2~ 0) THEN BEGIN
+    OUTER_SET TutuGUI=1
+    COPY ~bg2improvedgui/total_roll/files/GUIABB.MOS~ ~override~
+END ELSE BEGIN
+    OUTER_SET TutuGUI=0
+END
+
+
+COPY_EXISTING   ~guicg.chu~ ~override~
+
+
+    // code based on TobEx0018.tpa (c)Ascension64
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET ContainerPanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+        PATCH_IF (PanelID = 4) BEGIN
+          AbilityPanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+
+    READ_SHORT (%offPanels% + %AbilityPanelNum% * 0x1c +  0xe) nContainerPanelControls
+    READ_SHORT (%offPanels% + %AbilityPanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nContainerPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+        READ_SHORT  (%offControlThis%       )  Control_ID
+	READ_SHORT  (%offControlThis% + 0x0C)  Control_Type
+
+	PATCH_IF (Control_ID = 0 AND Control_Type = 6) BEGIN	// ABILITIES Text Label
+	    WRITE_SHORT  (%offControlThis% + 0x8)  187  	// New width
+        END 
+
+    END
+
+    SET  StartButtonID       = 39
+
+    PATCH_IF (TutuGUI = 1) BEGIN
+        SET  StartX1         = 205    // TutuGUI
+        SET  StartY1         = 9
+        SET  ButtonWidth     = 45
+        SET  ButtonHeight    = 19
+    END ELSE BEGIN
+        SET  StartX1         = 218
+        SET  StartY1         = 8
+        SET  ButtonWidth     = 46
+        SET  ButtonHeight    = 23
+    END
+
+    SET  currPanelIdx        = AbilityPanelNum
+
+
+    // Total Roll Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID    //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX1
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY1
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "NORMAL" #8    //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0xFFFFFF       //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x45           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+
+
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/total_roll/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

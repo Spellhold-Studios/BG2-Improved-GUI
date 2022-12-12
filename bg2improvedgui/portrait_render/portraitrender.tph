@@ -1,0 +1,67 @@
+DEFINE_ACTION_FUNCTION ~PORTRAITRENDER~ INT_VAR option = 0 BEGIN
+
+COPY ~bg2improvedgui/portrait_render/files/DIGITFNT.bam~ ~override~
+
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp_always.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 3) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 4) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action_always.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 5) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 6) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp_always.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action_always.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 7) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp_always.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 8) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_hp.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action.txt"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_action_always.txt"
+    BUT_ONLY
+END
+
+INCLUDE ~bg2improvedgui/keyboard_shortcuts/keyboard_shortcuts.tph~
+LAUNCH_ACTION_FUNCTION  ~SHORTCUTS~ END
+
+END

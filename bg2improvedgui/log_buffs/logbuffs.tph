@@ -1,0 +1,26 @@
+DEFINE_ACTION_FUNCTION ~LOGBUFFS~ INT_VAR option = 0 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/log_buffs/files/TobEx_ini.txt"
+BUT_ONLY
+
+ACTION_IF ((%option% = 1) OR (%option% = 3) OR (%option% = 4) OR (%option% = 5)) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/log_buffs/files/TobEx_ini_time.txt"
+    BUT_ONLY
+END
+
+ACTION_IF ((%option% = 2) OR (%option% = 3) OR (%option% = 5)) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/log_buffs/files/TobEx_ini_items.txt"
+    BUT_ONLY
+END
+
+ACTION_IF ((%option% = 4) OR (%option% = 5)) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/log_buffs/files/TobEx_ini_time_partyonly.txt"
+    BUT_ONLY
+END
+
+
+END

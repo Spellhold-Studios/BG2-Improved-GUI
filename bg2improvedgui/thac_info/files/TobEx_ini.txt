@@ -1,0 +1,1 @@
+UI:THAC0 Info On Inventory Screen=1

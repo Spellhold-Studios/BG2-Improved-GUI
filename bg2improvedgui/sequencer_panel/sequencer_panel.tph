@@ -1,0 +1,253 @@
+DEFINE_ACTION_FUNCTION ~SPELLSEQUENCER~ INT_VAR option = 1 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/sequencer_panel/files/TobEx_ini.txt"
+BUT_ONLY
+
+COPY_EXISTING ~guimg.chu~   ~override~
+    // code based on TobEx0018.tpa (c)Ascension64
+    
+    SET ButtonX       = 107 + 148 + 2
+    SET ButtonY       = 449
+    SET ButtonID      = 67
+    SET ButtonWidth   = 148
+    SET ButtonHeight  = 28
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum  = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 2) BEGIN
+          PanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    // panel #2
+    SET currPanelIdx = PanelNum
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    SET ContingencyButtonID  = 55
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+
+        READ_SHORT  (%offControlThis% +  0x0) ControlID
+	PATCH_IF ControlID = ContingencyButtonID BEGIN
+	    WRITE_SHORT  (%offControlThis% + 0x8) ButtonWidth // change width of #55
+        END
+    END	
+
+    // add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+
+    INSERT_BYTES (%offControlThis%)        0x20
+    WRITE_SHORT  (%offControlThis%)        ButtonID     //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 0            //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) ButtonX      // X
+    WRITE_SHORT  (%offControlThis% +  0x6) ButtonY      // Y
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth  //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 0                    //type = BUTTON
+    WRITE_BYTE   (%offControlThis% +  0xd) 0                    //unknown
+    WRITE_ASCII  (%offControlThis% +  0xe) "GUIGENC6" #8
+    WRITE_BYTE   (%offControlThis% + 0x16) 0                    //anim cycle
+    WRITE_BYTE   (%offControlThis% + 0x17) 0                    //text flags
+    WRITE_SHORT  (%offControlThis% + 0x18) 0                    //frame unpressed
+    WRITE_SHORT  (%offControlThis% + 0x1a) 1                    //frame pressed
+    WRITE_SHORT  (%offControlThis% + 0x1c) 0                    //frame selected
+    WRITE_SHORT  (%offControlThis% + 0x1e) 2                    //frame disabled
+
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x20
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x20 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+    //////////////////////////////////////////////
+    // panel #7
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum  = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 7) BEGIN
+          PanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+
+    SET currPanelIdx = PanelNum
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+
+        READ_SHORT  (%offControlThis% +  0x0) ControlID
+        PATCH_IF (ControlID == 0xFFFF) BEGIN           // Title name
+            WRITE_SHORT (%offControlThis% + 0x0) 100   // new ControlID
+            WRITE_SHORT (%offControlThis% + 0x2) 4096  // buffer size, make control accessable
+        END
+
+    END	
+BUT_ONLY
+
+COPY_EXISTING ~guimg.chu~   ~override~
+    // code based on TobEx0018.tpa (c)Ascension64
+
+
+    //////////////////////////////////////////////
+    // panel #8
+  
+    SET ButtonX       = 107 + 148 + 2
+    SET ButtonY       = 449
+    SET ButtonID      = 67
+    SET ButtonWidth   = 148
+    SET ButtonHeight  = 28
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum = 0
+    SET bLastPanel = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 8) BEGIN
+          PanelNum = i
+
+          PATCH_IF (i = %nPanels% - 1) BEGIN
+              bLastPanel = 1
+          END 
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    SET currPanelIdx = PanelNum
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    SET ContingencyButtonID  = 55
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+
+        READ_SHORT  (%offControlThis% +  0x0) ControlID
+	PATCH_IF ControlID = ContingencyButtonID BEGIN
+	    WRITE_SHORT  (%offControlThis% + 0x8) ButtonWidth // change width of #55
+        END
+    END	
+
+    // add control
+    PATCH_IF (bLastPanel = 1) BEGIN
+        SET offControlThis = SOURCE_SIZE
+    END ELSE BEGIN 
+        READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    END 
+
+    INSERT_BYTES (%offControlThis%)        0x20
+    WRITE_SHORT  (%offControlThis%)        ButtonID     //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 0            //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) ButtonX      // X
+    WRITE_SHORT  (%offControlThis% +  0x6) ButtonY      // Y
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth  //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 0                    //type = BUTTON
+    WRITE_BYTE   (%offControlThis% +  0xd) 0                    //unknown
+    WRITE_ASCII  (%offControlThis% +  0xe) "GUIGENC6" #8
+    WRITE_BYTE   (%offControlThis% + 0x16) 0                    //anim cycle
+    WRITE_BYTE   (%offControlThis% + 0x17) 0                    //text flags
+    WRITE_SHORT  (%offControlThis% + 0x18) 0                    //frame unpressed
+    WRITE_SHORT  (%offControlThis% + 0x1a) 1                    //frame pressed
+    WRITE_SHORT  (%offControlThis% + 0x1c) 0                    //frame selected
+    WRITE_SHORT  (%offControlThis% + 0x1e) 2                    //frame disabled
+
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x20
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x20 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+BUT_ONLY
+
+END // FUNCTION

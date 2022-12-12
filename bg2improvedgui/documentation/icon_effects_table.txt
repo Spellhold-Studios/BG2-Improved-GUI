@@ -1,0 +1,180 @@
+-14	Create Weapon
+-13	Physical Mirror
+-12	Aid
+-11	Spell Shield
+-10	Immunity: Alteration
+-9	Immunity: Necromancy
+-8	Immunity: Evocation
+-7	Immunity: Illusion
+-6	Immunity: Enchantment
+-5	Immunity: Divination
+-4	Immunity: Conjuration
+-3	Immunity: Abjuration
+-2	Mirror Imaged
+-1	Blur
+0	Charm
+1	Dire Charm
+2	Rigid Thinking
+3	Confused
+4	Berserk
+5	Intoxicated
+6	Poisoned
+7	Diseased
+8	Blind
+9	Protection from Evil
+10	Protection from Petrification
+11	Protection from Missiles
+12	Magic Armor
+13	Held
+14	Sleep
+15	Shielded
+16	Protection from Fire
+17	Blessed
+18	Chant
+19	Free Action
+20	Barkskin
+21	Strength
+22	Heroism
+23	Invulnerable
+24	Protection from Acid
+25	Protection from Cold
+26	Resist Fire/Cold
+27	Protection from Electricity
+28	Protection from Magic
+29	Protection from Undead
+30	Protection from Poison
+;31	Non-detectable
+32	Good Luck
+33	Bad Luck
+34	Silenced
+35	Cursed
+36	Panic
+37	Resist Fear
+38	Haste
+;39	Fatigue
+;40	Bard Song
+41	Slow
+;42	Regenerate
+43	Domination
+44	Hopelessness
+45	Greater Malison
+46	Spirit Armor
+47	Chaos
+48	Feebleminded
+49	Defensive Harmony
+50	Champions Strength
+51	Dying
+52	Mind Shield
+53	Energy Drain
+;54	Polymorph Self
+55	Stun
+;56	Regeneration
+;57	Perception
+;58	Master Thievery
+59	Energy Drain
+60	Holy Power
+61	Cloak of Fear
+62	Iron Skins
+63	Magic Resistance
+64	Righteous Magic
+65	Spell Turning
+;66	Repulsing Undead
+67	Spell Deflection
+68	Fire Shield Red
+69	Fire Shield Blue
+70	Protection from Normal Weapon
+71	Protection from Magic Weapon
+72	Tensor's Transformation
+73	Protected from Magical Energy
+74	Mislead
+;75	Contingency Active
+76	Protected from the Elements
+;77	Projected Image
+78	Maze
+79	Imprisonment
+80	Stoneskin
+81	KAI
+82	Called Shot
+83	Spell Failure
+84	Offensive Spin
+85	Defensive Spin
+86	Intelligence drained by Mind Flayer
+;87	Regenerating
+;88	In Dialog
+;89	In Store
+90	Negative Plane Protection
+91	Ability Score Drained
+;92	Spell Sequencer Active
+93	Protected from Energy
+94	Magnetized
+95	Able to Poison Weapons
+;96	Setting Trap
+97	Glass Dust
+98	Blade Barrier
+99	Death Ward
+100	Doom
+101	Decaying
+102	Acid
+103	Vocalize
+104	Mantle
+105	Miscast Magic
+106	Magic Resistance Lowered
+107	Spell Immunity
+;108	True Seeing
+;109	Detecting Traps
+110	Improved Haste
+111	Spell Trigger
+112	Deaf
+113	Enfeebled
+;114	Infravision
+;115	Friends
+116	Shield of the Archons
+117	Spell Trap
+118	Absolute Immunity
+119	Improved Mantle
+;120	Farsight
+121	Globe of Invulnerability
+122	Minor Globe of Invulneribility
+123	Spell Shield
+124	Polymorphed
+125	Otiluke's Resilient Sphere
+126	Nauseated
+127	Ghost Armor
+128	Glitterdust
+129	Webbed
+130	Unconscious
+131	Mental Combat
+132	Physical Mirror
+;133	Repulse Undead
+134	Chaotic Commands
+135	Draw Upon Holy Might
+136	Strength of One
+137	Bleeding
+138	Barbarian Rage
+139	Boon of Lathander
+140	Storm Shield
+141	Enraged
+142	Stunning Blow
+143	Quivering Palm
+144	Entangled
+145	Grease
+146	Smite
+147	Hardiness
+148	Power Attack
+149	Whirlwind Attack
+150	Greater Whirlwind Attack
+;151	Magic Flute
+152	Critical Strike
+153	Greater Deathblow
+154	Deathblow
+;155	Avoid Death
+156	Assassination
+157	Evasion
+158	Greater Evasion
+159	Improved Alacrity
+160	Aura of Flaming Death
+161	Globe of Blades
+162	Improved Chaos Shield*
+163	Chaos Shield*
+164	Fire Elemental Transformation
+165	Earth Elemental Transformation

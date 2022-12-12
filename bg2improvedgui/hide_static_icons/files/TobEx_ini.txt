@@ -1,0 +1,1 @@
+UI:Hide Static Portrait Icons=1

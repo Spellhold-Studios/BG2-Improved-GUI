@@ -1,0 +1,743 @@
+BACKUP ~bg2improvedgui/backup~
+AUTHOR ~Insomniator (http://www.shsforums.net/topic/60986-bg2-improved-gui/)~
+
+VERSION ~5.5~
+
+LANGUAGE ~English~ ~english~
+         ~bg2improvedgui/tra/english/setup.tra~
+         ~bg2improvedgui/tra/english/strings.tra~
+         ~bg2improvedgui/tra/english/ability_desc.tra~
+         ~bg2improvedgui/tra/english/item_ability_desc.tra~
+         ~bg2improvedgui/tra/english/add_spell_desc.tra~
+LANGUAGE ~ê„··™®©~ ~russian_dos~
+         ~bg2improvedgui/tra/russian_dos/setup.tra~
+         ~bg2improvedgui/tra/russian_1251/strings.tra~
+         ~bg2improvedgui/tra/russian_1251/ability_desc.tra~
+         ~bg2improvedgui/tra/russian_1251/item_ability_desc.tra~
+         ~bg2improvedgui/tra/russian_1251/add_spell_desc.tra~
+LANGUAGE ~–ÛÒÒÍËÈ~ ~russian_1251~
+         ~bg2improvedgui/tra/russian_1251/setup.tra~
+         ~bg2improvedgui/tra/russian_1251/strings.tra~
+         ~bg2improvedgui/tra/russian_1251/ability_desc.tra~
+         ~bg2improvedgui/tra/russian_1251/item_ability_desc.tra~
+         ~bg2improvedgui/tra/russian_1251/add_spell_desc.tra~
+
+////////////////////////////////
+//  Loot panel
+BEGIN @110 DESIGNATED 110                         
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/loot_panel/lootpanel.tph~
+LAUNCH_ACTION_FUNCTION ~LOOTPANEL~ INT_VAR option = 0 END
+
+BEGIN @120 DESIGNATED 120      //  Loot panel Group Mode
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/loot_panel/lootpanel.tph~
+LAUNCH_ACTION_FUNCTION ~LOOTPANEL~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+//  Colorize learnable scrolls
+BEGIN @200 DESIGNATED 200                         
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/colorize_scrolls/colorizescrolls.tph~
+LAUNCH_ACTION_FUNCTION ~COLORIZE_SCROLLS~ END
+
+
+////////////////////////////////
+//  Write magic button
+BEGIN @300 DESIGNATED 300                         
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/write_button/writebutton.tph~
+LAUNCH_ACTION_FUNCTION ~WRITE_BUTTON~ END
+
+
+////////////////////////////////
+// Show HitPoints on NPC
+BEGIN @410 DESIGNATED 410
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 2 END //  enemy + ally/summon
+
+BEGIN @420 DESIGNATED 420
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 1 END //  enemy
+
+BEGIN @430 DESIGNATED 430
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 3 END //  enemy + ally/summon + party
+
+BEGIN @440 DESIGNATED 440
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 4 END //  enemy + neutral
+
+BEGIN @450 DESIGNATED 450
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 5 END //  enemy + neutral + ally/summon
+
+BEGIN @470 DESIGNATED 470
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 7 END //  ally/summon
+
+BEGIN @480 DESIGNATED 480
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 8 END //  ally/summon + party
+
+BEGIN @490 DESIGNATED 490
+SUBCOMPONENT @400
+INCLUDE ~bg2improvedgui/show_hp/showhp.tph~
+LAUNCH_ACTION_FUNCTION  ~patch~ INT_VAR option = 6 END //  all + party
+
+
+////////////////////////////////
+// THAC0 & Damage Info on Inventory Screen
+BEGIN @500 DESIGNATED 500
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @550
+REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~Setup-TutuGUI.tp2~ 0) @599
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/thac_info/thacinfo.tph~
+LAUNCH_ACTION_FUNCTION  ~THACINFO~ INT_VAR option = 0 END
+
+BEGIN @510 DESIGNATED 510
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @550
+REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~Setup-TutuGUI.tp2~ 0) @599
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/thac_info/thacinfo.tph~
+LAUNCH_ACTION_FUNCTION  ~THACINFO~ INT_VAR option = 1 END // 1pp's INVENTOR.MOS
+
+BEGIN @520 DESIGNATED 520
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @550
+REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~Setup-TutuGUI.tp2~ 0) @599
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/thac_info/thacinfo.tph~
+LAUNCH_ACTION_FUNCTION  ~THACINFO~ INT_VAR option = 2 END // Sir-Kill's INVENTOR.MOS
+
+BEGIN @530 DESIGNATED 530
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/thac_info/thacinfo.tph~
+LAUNCH_ACTION_FUNCTION  ~THACINFO~ INT_VAR option = 3 END // Skip Inventory screen
+
+
+////////////////////////////////
+// Dark Portaits If Item Not Allowed
+BEGIN @600 DESIGNATED 600
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/darkportraits.tph~
+LAUNCH_ACTION_FUNCTION  ~DARKPORTRAITS~ END
+
+
+////////////////////////////////
+// Show Total Roll
+BEGIN @700 DESIGNATED 700
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/total_roll/totalroll.tph~
+LAUNCH_ACTION_FUNCTION  ~TOTALROLL~ END
+
+
+////////////////////////////////
+// Fold journal
+BEGIN @810 DESIGNATED 810                               // large mos
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @800
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/journal/journal.tph~
+LAUNCH_ACTION_FUNCTION  ~JOURNAL~ INT_VAR option = 1 END
+
+BEGIN @820 DESIGNATED 820
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003       // orig mos
+SUBCOMPONENT @800
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/journal/journal.tph~
+LAUNCH_ACTION_FUNCTION  ~JOURNAL~ INT_VAR option = 0 END
+
+
+////////////////////////////////
+// Grey Background On Pause
+BEGIN @910 DESIGNATED 910
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @900
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/grey_background/greybackground.tph~
+LAUNCH_ACTION_FUNCTION  ~GREYBACKGROUND~ INT_VAR option = 0 END
+
+BEGIN @920 DESIGNATED 920
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @900
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/grey_background/greybackground.tph~
+LAUNCH_ACTION_FUNCTION  ~GREYBACKGROUND~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Unlimited Hand Off Slot
+BEGIN @1000 DESIGNATED 1000
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/handoff_slot/handoffslot.tph~
+LAUNCH_ACTION_FUNCTION  ~HANDOFFSLOT~ END
+
+// Disable Equipping Off Hand Weapon for BG1 part of BGT
+BEGIN @1010 DESIGNATED 1010
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/handoff_slot/disableweapon.tph~
+LAUNCH_ACTION_FUNCTION  ~DISABLEOFFWEAPON~ END
+
+
+////////////////////////////////
+// Log Active Buffs
+BEGIN @1110 DESIGNATED 1110
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/log_buffs/logbuffs.tph~
+LAUNCH_ACTION_FUNCTION  ~LOGBUFFS~ INT_VAR option = 0 END  // spells only, don't show time
+
+BEGIN @1120 DESIGNATED 1120
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/log_buffs/logbuffs.tph~
+LAUNCH_ACTION_FUNCTION  ~LOGBUFFS~ INT_VAR option = 1 END  // spells only, show remaining time
+
+BEGIN @1125 DESIGNATED 1125
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/log_buffs/logbuffs.tph~
+LAUNCH_ACTION_FUNCTION  ~LOGBUFFS~ INT_VAR option = 4 END  // spells only, show remaining time for party only
+
+BEGIN @1130 DESIGNATED 1130
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/log_buffs/logbuffs.tph~
+LAUNCH_ACTION_FUNCTION  ~LOGBUFFS~ INT_VAR option = 2 END  // items & spells, don't show time
+
+BEGIN @1140 DESIGNATED 1140
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/log_buffs/logbuffs.tph~
+LAUNCH_ACTION_FUNCTION  ~LOGBUFFS~ INT_VAR option = 3 END  // items & spells, show remaining time
+
+BEGIN @1150 DESIGNATED 1150
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/log_buffs/logbuffs.tph~
+LAUNCH_ACTION_FUNCTION  ~LOGBUFFS~ INT_VAR option = 5 END  // items & spells, show remaining time for party only
+
+
+////////////////////////////////
+// Extended Event Text
+BEGIN @1200 DESIGNATED 1200
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/event_text/eventtext.tph~
+LAUNCH_ACTION_FUNCTION  ~EVENTTEXT~ END
+
+
+////////////////////////////////
+// Combat Extended Text
+BEGIN @1310 DESIGNATED 1310
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/combat_calc/combatcalc.tph~
+LAUNCH_ACTION_FUNCTION  ~COMBATCALC~ INT_VAR option = 0 END
+
+BEGIN @1320 DESIGNATED 1320
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/combat_calc/combatcalc.tph~
+LAUNCH_ACTION_FUNCTION  ~COMBATCALC~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Keep Drained Spells
+BEGIN @1400 DESIGNATED 1400
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/drained_spells/drainedspells.tph~
+LAUNCH_ACTION_FUNCTION  ~DRAINEDSPELLS~ END
+
+
+////////////////////////////////
+// Show HP/Action on Portrait
+BEGIN @1510 DESIGNATED 1510
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 1 END
+
+BEGIN @1520 DESIGNATED 1520
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 2 END
+
+BEGIN @1530 DESIGNATED 1530
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 3 END
+
+BEGIN @1540 DESIGNATED 1540
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 4 END
+
+BEGIN @1550 DESIGNATED 1550
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 5 END
+
+BEGIN @1560 DESIGNATED 1560
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 6 END
+
+BEGIN @1570 DESIGNATED 1570
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 7 END
+
+BEGIN @1580 DESIGNATED 1580
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1500
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/portraitrender.tph~
+LAUNCH_ACTION_FUNCTION  ~PORTRAITRENDER~ INT_VAR option = 8 END
+
+
+////////////////////////////////
+// Legacy of Bhaal
+BEGIN @1610 DESIGNATED 1610
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+GROUP @1710
+SUBCOMPONENT @1600
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/nighmare_difficulty/nighmaredifficulty.tph~
+LAUNCH_ACTION_FUNCTION  ~NIGHTMARE~ INT_VAR option = 1 END
+
+BEGIN @1620 DESIGNATED 1620
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+GROUP @1710
+SUBCOMPONENT @1600
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/nighmare_difficulty/nighmaredifficulty.tph~
+LAUNCH_ACTION_FUNCTION  ~NIGHTMARE~ INT_VAR option = 2 END
+
+BEGIN @1630 DESIGNATED 1630
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+GROUP @1710
+SUBCOMPONENT @1600
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/nighmare_difficulty/nighmaredifficulty.tph~
+LAUNCH_ACTION_FUNCTION  ~NIGHTMARE~ INT_VAR option = 3 END
+
+BEGIN @1690 DESIGNATED 1690
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~1610~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~1620~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~1630~)) ~Skipped~
+GROUP @1710
+INCLUDE ~bg2improvedgui/nighmare_difficulty/nighmaredifficulty.tph~
+LAUNCH_ACTION_FUNCTION  ~NIGHTMARE_SUMMONS~ END
+
+BEGIN @1700 DESIGNATED 1700
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~1610~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~1620~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~1630~)) ~Skipped~
+GROUP @1710
+INCLUDE ~bg2improvedgui/nighmare_difficulty/nighmaredifficulty.tph~
+LAUNCH_ACTION_FUNCTION  ~NIGHTMARE_XPBONUS~ END
+
+
+////////////////////////////////
+// Block Door/Portals/Area Escape if enemy is in sight
+BEGIN @1720 DESIGNATED 1720
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+GROUP @1710
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/more_difficulty/blocktransition.tph~
+LAUNCH_ACTION_FUNCTION ~BLOCKTRANSITION~ END
+
+
+////////////////////////////////
+// Enemy can bump party, not pass Otiluke's Sphere and other Hold effects
+BEGIN @1740 DESIGNATED 1740
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+GROUP @1710
+SUBCOMPONENT @1730
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/more_difficulty/enemycanbump.tph~
+LAUNCH_ACTION_FUNCTION ~ENEMYCANBUMP~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Enemy can bump party, ignores Otiluke's Sphere and other Hold effects
+BEGIN @1750 DESIGNATED 1750
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+GROUP @1710
+SUBCOMPONENT @1730
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/more_difficulty/enemycanbump.tph~
+LAUNCH_ACTION_FUNCTION ~ENEMYCANBUMP~ INT_VAR option = 2 END
+
+
+////////////////////////////////
+// Shaman Kit and Spell Book
+//BEGIN @1800 DESIGNATED 1800
+//REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+//INCLUDE ~bg2improvedgui/tobex.tph~
+//INCLUDE ~bg2improvedgui/shaman_kit/shaman.tph~
+//LAUNCH_ACTION_FUNCTION  ~SHAMAN~ INT_VAR option = 0 END
+
+
+////////////////////////////////
+// BG1 Style Greeting
+BEGIN @1910 DESIGNATED 1910
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1900
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/bg1_greeting/bg1_greeting.tph~
+LAUNCH_ACTION_FUNCTION  ~BG1_GREETING~ INT_VAR option = 0 END
+
+BEGIN @1920 DESIGNATED 1920
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @1900
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/bg1_greeting/bg1_greeting.tph~
+LAUNCH_ACTION_FUNCTION  ~BG1_GREETING~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Highlight Active Zones
+BEGIN @2010 DESIGNATED 2010
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2000
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/active_zones/active_zones.tph~
+LAUNCH_ACTION_FUNCTION  ~ACTIVE_ZONES~ INT_VAR option = 0 END
+
+BEGIN @2020 DESIGNATED 2020
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2000
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/active_zones/active_zones.tph~
+LAUNCH_ACTION_FUNCTION  ~ACTIVE_ZONES~ INT_VAR option = 1 END
+
+BEGIN @2030 DESIGNATED 2030
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2000
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/active_zones/active_zones.tph~
+LAUNCH_ACTION_FUNCTION  ~ACTIVE_ZONES~ INT_VAR option = 2 END
+
+BEGIN @2040 DESIGNATED 2040
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2000
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/active_zones/active_zones.tph~
+LAUNCH_ACTION_FUNCTION  ~ACTIVE_ZONES~ INT_VAR option = 3 END
+
+
+////////////////////////////////
+// Double Mouse Render Rate
+BEGIN @2110 DESIGNATED 2110
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/double_render/double_render.tph~
+LAUNCH_ACTION_FUNCTION  ~DOUBLERENDERRATE~ INT_VAR option = 0 END
+
+BEGIN @2120 DESIGNATED 2120
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2100
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/double_render/double_render.tph~
+LAUNCH_ACTION_FUNCTION  ~DOUBLERENDERRATE~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Fast ProgressBar Screen
+BEGIN @2200 DESIGNATED 2200
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/fast_progressbar/fast_progressbar.tph~
+LAUNCH_ACTION_FUNCTION  ~FASTPROGRESSBAR~ END
+
+
+////////////////////////////////
+// Scaled Graphics
+BEGIN @2310 DESIGNATED 2310
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/stretch_gui/stretch_gui.tph~
+LAUNCH_ACTION_FUNCTION  ~STRETCHGUI~ INT_VAR option = 0 END
+
+BEGIN @2320 DESIGNATED 2320
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/stretch_gui/stretch_gui.tph~
+LAUNCH_ACTION_FUNCTION  ~STRETCHGUI~ INT_VAR option = 1 END
+
+BEGIN @2330 DESIGNATED 2330
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @2300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/stretch_gui/stretch_gui.tph~
+LAUNCH_ACTION_FUNCTION  ~STRETCHGUI~ INT_VAR option = 2 END
+
+// Scaled Graphics for WidescreeMod
+BEGIN @2400 DESIGNATED 2400
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~2310~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~2320~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~2330~)) ~Skipped~
+REQUIRE_PREDICATE (MOD_IS_INSTALLED ~widescreen.tp2~ 0) @2401
+INCLUDE ~bg2improvedgui/stretch_gui/stretch_gui.tph~
+LAUNCH_ACTION_FUNCTION  ~STRETCHGUIWIDESCREENMODE~ END
+
+
+////////////////////////////////
+// Shift subtitles
+BEGIN @2500 DESIGNATED 2500
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/stretch_gui/stretch_gui.tph~
+LAUNCH_ACTION_FUNCTION  ~SHIFTSUBTITLES~ END
+
+
+////////////////////////////////
+// Store interface
+BEGIN @2600 DESIGNATED 2600
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/store_interface/store_interface.tph~
+LAUNCH_ACTION_FUNCTION  ~STOREINTERFACE~ END
+
+
+////////////////////////////////
+// Exchange turn undead button
+BEGIN @2700 DESIGNATED 2700
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/turnundead_button/turnundead_button.tph~
+LAUNCH_ACTION_FUNCTION  ~PICKPOCKETBUTTON~ END
+
+
+////////////////////////////////
+// Auto disable innnate button
+BEGIN @2800 DESIGNATED 2800
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/innate_toolbar/innate_toolbar.tph~
+LAUNCH_ACTION_FUNCTION  ~DISABLEINNATETOOLBAR~ END
+
+
+////////////////////////////////
+// Spell Sequencer panel
+BEGIN @2900 DESIGNATED 2900
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/sequencer_panel/sequencer_panel.tph~
+LAUNCH_ACTION_FUNCTION  ~SPELLSEQUENCER~ END
+
+
+////////////////////////////////
+// Spell Icon Right Click
+BEGIN @3000 DESIGNATED 3000
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/panel_rightclick/panel_rightclick.tph~
+LAUNCH_ACTION_FUNCTION  ~RIGHTCLICK~ END
+
+
+////////////////////////////////
+// Hide static portrait icons
+BEGIN @3100 DESIGNATED 3100
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/hide_static_icons/hide_static_icons.tph~
+LAUNCH_ACTION_FUNCTION  ~HIDEICONS~ END
+
+
+////////////////////////////////
+// Keyboard shortcuts
+//BEGIN @3200 DESIGNATED 3200
+//REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+//INCLUDE ~bg2improvedgui/tobex.tph~
+//INCLUDE ~bg2improvedgui/keyboard_shortcuts/keyboard_shortcuts.tph~
+//LAUNCH_ACTION_FUNCTION  ~SHORTCUTS~ END
+
+
+////////////////////////////////
+// Color foot markers
+BEGIN @3310 DESIGNATED 3310
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @3300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/colorize_markers/colorize_markers.tph~
+LAUNCH_ACTION_FUNCTION  ~COLORMARKERS~ INT_VAR option = 0 END
+
+BEGIN @3320 DESIGNATED 3320
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @3300
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/colorize_markers/colorize_markers.tph~
+LAUNCH_ACTION_FUNCTION  ~COLORMARKERS~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Spell menu
+BEGIN @3400 DESIGNATED 3400
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/spell_menu/spell_menu.tph~
+LAUNCH_ACTION_FUNCTION  ~SPELLMENU~ END
+
+
+////////////////////////////////
+// Fullscreen world map
+BEGIN @3500 DESIGNATED 3500
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/world_map/world_map.tph~
+LAUNCH_ACTION_FUNCTION  ~WORLDMAP~ END
+
+
+////////////////////////////////
+// Show NPC Float Name
+BEGIN @3600 DESIGNATED 3600
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/show_name/show_name.tph~
+LAUNCH_ACTION_FUNCTION  ~SHOWNAME~ END
+
+
+////////////////////////////////
+// Auto Switch Book Screen
+BEGIN @3700 DESIGNATED 3700
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/autoswitch_book/autoswitch_book.tph~
+LAUNCH_ACTION_FUNCTION  ~SWITCHBOOK~ END
+
+
+////////////////////////////////
+// Additional Character Information on Record Screen
+BEGIN @3810 DESIGNATED 3810
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @3800
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/screen_record/right_panel.tph~
+LAUNCH_ACTION_FUNCTION  ~RIGHT_PANEL~ INT_VAR option = 0 END
+
+BEGIN @3820 DESIGNATED 3820
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @3800
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/screen_record/right_panel.tph~
+LAUNCH_ACTION_FUNCTION  ~RIGHT_PANEL~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// Normalize Volume
+BEGIN @3910 DESIGNATED 3910
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @3900
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/normalize/normalize.tph~
+LAUNCH_ACTION_FUNCTION  ~NORMALIZE~ INT_VAR option = 0 END
+
+BEGIN @3920 DESIGNATED 3920
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @3900
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/normalize/normalize.tph~
+LAUNCH_ACTION_FUNCTION  ~NORMALIZE~ INT_VAR option = 1 END
+
+BEGIN @3930 DESIGNATED 3930
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~3910~) OR (MOD_IS_INSTALLED ~bg2improvedgui\bg2improvedgui.tp2~ ~3920~)) ~Skipped~
+INCLUDE ~bg2improvedgui/normalize/normalize.tph~
+LAUNCH_ACTION_FUNCTION  ~NORMALIZE~ INT_VAR option = 2 END
+
+
+////////////////////////////////
+// Add Pause To Save Game
+BEGIN @4000 DESIGNATED 4000
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/savegame_pause/savegame_pause.tph~
+LAUNCH_ACTION_FUNCTION ~PAUSE~ END
+
+
+////////////////////////////////
+// Additional Icons on Portrait
+BEGIN @4100 DESIGNATED 4100
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/portrait_render/new_icons.tph~
+LAUNCH_ACTION_FUNCTION ~NEWICONS~ END
+
+
+////////////////////////////////
+// BG1 Casting Voice
+BEGIN @4210 DESIGNATED 4210
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @4200
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/bg1_sound/bg1_cast_voice.tph~
+LAUNCH_ACTION_FUNCTION ~BG1CASTVOICE~ INT_VAR option = 1 END
+
+BEGIN @4220 DESIGNATED 4220
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+SUBCOMPONENT @4200
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/bg1_sound/bg1_cast_voice.tph~
+LAUNCH_ACTION_FUNCTION ~BG1CASTVOICE~ INT_VAR option = 2 END
+
+
+////////////////////////////////
+// BG2 clear voice Casting Sounds for HLA casting
+BEGIN @4280 DESIGNATED 4280
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/bg1_sound/more_cast_voice.tph~
+LAUNCH_ACTION_FUNCTION ~MORECASTVOICE~ INT_VAR option = 1 END
+
+
+////////////////////////////////
+// NWN Casting Sounds for Innate casting
+BEGIN @4290 DESIGNATED 4290
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/bg1_sound/more_cast_voice.tph~
+LAUNCH_ACTION_FUNCTION ~MORECASTVOICE~ INT_VAR option = 2 END
+

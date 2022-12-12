@@ -1,0 +1,1 @@
+UI:Fold Journal=1

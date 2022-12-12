@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~DRAINEDSPELLS~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/drained_spells/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

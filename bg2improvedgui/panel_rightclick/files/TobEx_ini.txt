@@ -1,0 +1,1 @@
+UI:Spell Icon Right Click=1

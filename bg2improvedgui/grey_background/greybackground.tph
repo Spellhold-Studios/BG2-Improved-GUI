@@ -1,0 +1,133 @@
+DEFINE_ACTION_FUNCTION ~GREYBACKGROUND~ INT_VAR option = 0 BEGIN
+
+ACTION_IF (MOD_IS_INSTALLED ~Setup-TutuGUI.tp2~ 0) THEN BEGIN
+    OUTER_SET TutuGUI=1
+END ELSE BEGIN
+    OUTER_SET TutuGUI=0
+END
+
+ACTION_IF (%option% = 1) BEGIN
+ COPY_EXISTING ~guiw.chu~   ~override~
+              ~guiw08.chu~ ~override~
+              ~guiw10.chu~ ~override~ 
+
+    // code based on TobEx0018.tpa (c)Ascension64
+    
+    SET X             = 46
+    SET ButtonID      = 9
+    SET ButtonWidth   = 18
+    SET ButtonHeight  = 36
+
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET RightPanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+        PATCH_IF (PanelID = 1) BEGIN
+          RightPanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    SET  currPanelIdx        = RightPanelNum
+
+    READ_SHORT (%offPanels% + %RightPanelNum% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %RightPanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG   (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+        READ_SHORT  (%offControlThis%       )  Control_ID
+	READ_SHORT  (%offControlThis% + 0x0C)  Control_Type
+
+        PATCH_IF (Control_ID = 6 AND Control_Type = 0) BEGIN	// AI Button
+	    WRITE_SHORT  (%offControlThis% + 0x4)   0  	        // New X
+	    WRITE_SHORT  (%offControlThis% + 0x8)  25     	// New Width
+            READ_SHORT   (%offControlThis% + 0x6)   Y     	// Y for new Button
+        END 
+
+	PATCH_IF (Control_ID = 7 AND Control_Type = 0) BEGIN	// SelectAll Button
+	    WRITE_SHORT  (%offControlThis% + 0x4)  24           // New X
+	    WRITE_SHORT  (%offControlThis% + 0x8)  22   	// New Width
+        END 
+    END
+
+
+
+   //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x20
+    WRITE_SHORT  (%offControlThis%)        ButtonID         //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 0               //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) %X%
+
+    PATCH_IF (TutuGUI = 1) BEGIN
+       WRITE_SHORT  (%offControlThis% +  0x6) (%Y% + 1)    // TutuGUI
+    END ELSE BEGIN
+       WRITE_SHORT  (%offControlThis% +  0x6) %Y%
+    END
+ 
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 0              //type = Button
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_ASCII  (%offControlThis% +  0xe) "GREYBUTT" #8  //bam
+    WRITE_BYTE   (%offControlThis% + 0x16) 0              //anim cycle
+    WRITE_BYTE   (%offControlThis% + 0x17) 0              //text flags
+    WRITE_SHORT  (%offControlThis% + 0x18) 0              //frame unpressed
+    WRITE_SHORT  (%offControlThis% + 0x1a) 1              //frame pressed
+    WRITE_SHORT  (%offControlThis% + 0x1c) 0              //frame selected
+    WRITE_SHORT  (%offControlThis% + 0x1e) 0              //frame disabled
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x20
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x20 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+ BUT_ONLY
+END
+
+
+COPY ~bg2improvedgui/grey_background/files/GREYBUTT.BAM~   ~override~
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+ APPEND_FILE "bg2improvedgui/grey_background/files/TobEx_ini.txt"
+
+INCLUDE ~bg2improvedgui/keyboard_shortcuts/keyboard_shortcuts.tph~
+LAUNCH_ACTION_FUNCTION  ~SHORTCUTS~ END
+
+END

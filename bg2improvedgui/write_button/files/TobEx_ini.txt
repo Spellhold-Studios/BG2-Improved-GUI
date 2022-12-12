@@ -1,0 +1,1 @@
+UI:Hide Write Magic Button=1

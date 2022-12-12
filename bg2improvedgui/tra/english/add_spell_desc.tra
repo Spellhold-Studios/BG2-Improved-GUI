@@ -1,0 +1,133 @@
+
+@12001 = ~Immunity: Abjuration
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Abjuration school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12002 = ~Immunity: Conjuration
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Conjuration school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12003 = ~Immunity: Divination
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Divination school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12004 = ~Immunity: Enchantment
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Enchantment school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12005 = ~Immunity: Illusion
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Illusion school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12006 = ~Immunity: Evocation
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Evocation school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12007 = ~Immunity: Necromancy
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Necromancy school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12008 = ~Immunity: Alteration
+School: (Abjuration)
+
+Level: 5
+Range: 0
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+Saving Throw: None
+
+Casting this spell grants the caster protection from any spells of the Alteration school. All spells of this school will not be able to harm or aid the caster for the duration of this spell. This includes all spells from this school, including any priest spells that might benefit the caster.~
+@12009 = ~Enchanted Weapon: Long Sword
+School: (Enchantment/Charm)
+
+Level: 4
+Range: 0
+Duration: 1 day
+Casting Time: 4
+Area of Effect: The caster
+Saving Throw: None
+
+This spell conjures forth a +3 enchanted long sword that may be used by anyone. The sword stays in existence for 1 day.~
+@12010 = ~Enchanted Weapon: Short Sword
+School: (Enchantment/Charm)
+
+Level: 4
+Range: 0
+Duration: 1 day
+Casting Time: 4
+Area of Effect: The caster
+Saving Throw: None
+
+This spell conjures forth a +3 enchanted short sword that may be used by anyone. The sword stays in existence for 1 day.~
+@12011 = ~Enchanted Weapon: Battle Axe
+School: (Enchantment/Charm)
+
+Level: 4
+Range: 0
+Duration: 1 day
+Casting Time: 4
+Area of Effect: The caster
+Saving Throw: None
+
+This spell conjures forth a +3 enchanted battle axe that may be used by anyone. The axe stays in existence for 1 day.~
+@12012 = ~Enchanted Weapon: Mace
+School: (Enchantment/Charm)
+
+Level: 4
+Range: 0
+Duration: 1 day
+Casting Time: 4
+Area of Effect: The caster
+Saving Throw: None
+
+This spell conjures forth a +3 enchanted mace that may be used by anyone. The mace stays in existence for 1 day.~

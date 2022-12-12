@@ -1,0 +1,78 @@
+ 0    Miscellaneous
+ 1    Amulets and necklaces
+ 2    Armor
+ 3    Belts and girdles
+ 4    Boots
+ 5    Arrows
+ 6    Bracers and gauntlets
+ 7    Headgear
+ 8    Keys
+ 9    Potions
+10    Rings
+11    Scrolls
+12    Shields
+13    Food
+14    Bullets
+15    Bows
+16    Daggers
+17    Maces
+18    Slings
+19    Small swords
+20    Large swords
+21    Hammers
+22    Morning stars
+23    Flails
+24    Darts
+25    Axes
+26    Quarterstaves
+27    Crossbows
+28    Hand-to-hand weapons
+29    Spears
+30    Halberds
+31    Bolts
+32    Cloaks and robes
+33    Gold pieces
+34    Gems
+35    Wands
+36    Containers
+37    Books
+38    Familiars
+39    Tattoos
+40    Lenses
+41    Bucklers
+42    Candles
+43    Child bodies
+44    Clubs
+45    Female bodies
+46    Keys (old)
+47    Large shields
+48    Male bodies
+49    Medium shields
+50    Notes
+51    Rods
+52    Skulls
+53    Small shields
+54    Spider bodies
+55    Telescopes
+56    Bottles
+57    Greatswords
+58    Bags
+59    Furs and pelts
+60    Leather armor
+61    Studded leather
+62    Chain mail
+63    Splint mail
+64    Plate mail
+65    Full plate
+66    Hide armor
+67    Robes
+68    Scale mail
+69    Bastard swords
+70    Scarves
+71    Rations
+72    Hats
+73    Gloves
+74    Eyeballs
+75    Earrings
+76    Teeth
+77    Bracelets

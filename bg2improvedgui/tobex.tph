@@ -1,0 +1,2 @@
+COPY ~bg2improvedgui/files/TobEx.dll~           ~TobEx.dll~
+COPY ~bg2improvedgui/files/XCrashReport.exe~    ~XCrashReport.exe~

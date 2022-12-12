@@ -1,0 +1,8 @@
+DEFINE_ACTION_FUNCTION ~PAUSE~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/savegame_pause/files/TobEx_ini.txt"
+BUT_ONLY
+
+
+END // FUNCTION

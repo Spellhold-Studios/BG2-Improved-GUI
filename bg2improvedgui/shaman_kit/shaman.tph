@@ -1,0 +1,551 @@
+DEFINE_ACTION_FUNCTION ~SHAMAN~ INT_VAR option = 1 BEGIN
+
+STRING_SET 6569 @6569
+STRING_SET 6570 @6570
+STRING_SET 6571 @6571
+STRING_SET 6573 @6573
+STRING_SET 6577 @6577
+STRING_SET 6578 @6578
+STRING_SET 6579 @6579
+STRING_SET 6580 @6580
+STRING_SET 6581 @6581
+STRING_SET 9522 @9522
+STRING_SET 9523 @9523
+STRING_SET 9524 @9524
+STRING_SET 9525 @9525
+STRING_SET 9526 @9526
+STRING_SET 9527 @9527
+STRING_SET 9528 @9528
+STRING_SET 9529 @9529
+STRING_SET 9530 @9530
+STRING_SET 9531 @9531
+STRING_SET 9532 @9532
+STRING_SET 9533 @9533
+STRING_SET 9534 @9534
+STRING_SET 9535 @9535
+STRING_SET 9536 @9536
+STRING_SET 9537 @9537
+STRING_SET 9538 @9538
+STRING_SET 9539 @9539
+STRING_SET 9540 @9540
+STRING_SET 9541 @9541
+STRING_SET 9542 @9542
+STRING_SET 9543 @9543
+STRING_SET 9544 @9544
+STRING_SET 9545 @9545
+STRING_SET 9546 @9546
+
+
+COPY_EXISTING ~guicg.chu~   ~override~
+
+    // code based on TobEx0018.tpa (c)Ascension64
+    
+    SET ButtonX       = 18
+    SET ButtonY       = 248
+    SET ButtonID      = 18
+    SET ButtonWidth   = 271
+    SET ButtonHeight  = 18
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 2) BEGIN
+          PanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    // Shift class button's height to -2 and recalc Y
+    READ_SHORT (%offPanels% + %PanelNum% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %PanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+
+        READ_SHORT  (%offControlThis% + 0x0)  ControlID
+        PATCH_IF ((ControlID >= 2) AND (ControlID <= 9)) BEGIN
+          READ_SHORT  (%offControlThis% + 0x6)  Y
+          Diff_Y = (ControlID - 2) * 2
+          WRITE_SHORT (%offControlThis% + 0x6) (Y - Diff_Y) // Y 
+
+          WRITE_SHORT (%offControlThis% + 0xa) 18           // height
+        END
+
+        PATCH_IF ((ControlID >= 15) AND (ControlID <= 17)) BEGIN
+          READ_SHORT  (%offControlThis% + 0x6)  Y
+          Diff_Y = (ControlID - 15 + 8) * 2
+          WRITE_SHORT (%offControlThis% + 0x6) (Y - Diff_Y) // Y 
+
+          WRITE_SHORT (%offControlThis% + 0xa) 18           // height
+        END
+    END
+
+
+    SET currPanelIdx = PanelNum
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x20
+    WRITE_SHORT  (%offControlThis%)        ButtonID     //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 0            //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) ButtonX      // X
+    WRITE_SHORT  (%offControlThis% +  0x6) ButtonY      // Y
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth  //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 0                    //type = BUTTON
+    WRITE_BYTE   (%offControlThis% +  0xd) 0                    //unknown
+    WRITE_ASCII  (%offControlThis% +  0xe) "GUICGBC" #8
+    WRITE_BYTE   (%offControlThis% + 0x16) 8                    //anim cycle
+    WRITE_BYTE   (%offControlThis% + 0x17) 0                    //text flags
+    WRITE_SHORT  (%offControlThis% + 0x18) 0                    //frame unpressed
+    WRITE_SHORT  (%offControlThis% + 0x1a) 1                    //frame pressed
+    WRITE_SHORT  (%offControlThis% + 0x1c) 1                    //frame selected
+    WRITE_SHORT  (%offControlThis% + 0x1e) 3                    //frame disabled
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x20
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x20 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+BUT_ONLY
+
+
+COPY_EXISTING ~guimg.chu~   ~override~
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 8) BEGIN
+          PanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    READ_SHORT (%offPanels% + %PanelNum% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %PanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+
+        READ_SHORT  (%offControlThis% + 0x0)  ControlID
+        PATCH_IF (ControlID == 0xFFFF) BEGIN         // Book name
+          WRITE_SHORT (%offControlThis% + 0x0) 100   // new ControlID
+          WRITE_SHORT (%offControlThis% + 0x2) 4096  // buffer size
+        END
+    END
+BUT_ONLY
+
+
+////////////////
+// TobEx external Class restriction clsrcreq.2da
+ACTION_IF FILE_EXISTS_IN_GAME ~clsrcreq.2da~ THEN BEGIN
+ APPEND ~clsrcreq.2da~
+  ~SHAMAN 1 0 1 0 0 0 1~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~clsrcreq.2da~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+END
+////////////////
+
+
+////////////////
+// TobEx external Cat Grace' dexterity mod clssplab.2da
+ACTION_IF FILE_EXISTS_IN_GAME ~clssplab.2da~ THEN BEGIN
+ APPEND ~clssplab.2da~
+  ~SHAMAN 4 6 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~clssplab.2da~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+END
+////////////////
+
+////////////////
+// Aligment restriction ALIGNMNT.2DA
+ APPEND ~ALIGNMNT.2DA~
+  ~SHAMAN 0 0 0 1 1 1 0 0 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~ALIGNMNT.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+// Class Stats restriction ABCLASRQ.2DA
+ APPEND ~ABCLASRQ.2DA~
+  ~SHAMAN 0 0 12 0 12 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~ABCLASRQ.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+// Class Stats modificator ABCLSMOD.2DA
+ APPEND ~ABCLSMOD.2DA~
+  ~SHAMAN 0 0 0 0 0 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~ABCLSMOD.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  ABDCDSRQ.2DA
+ APPEND ~ABDCDSRQ.2DA~
+  ~SHAMAN 0 0 0 0 0 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~ABDCDSRQ.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  ABDCSCRQ.2DA
+ APPEND ~ABDCSCRQ.2DA~
+  ~SHAMAN 0 0 0 0 0 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~ABDCSCRQ.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  CLASS.IDS
+ APPEND ~CLASS.IDS~
+  ~21 SHAMAN~
+ UNLESS ~21 SHAMAN~
+////////////////
+
+
+////////////////
+//  ACTION.IDS
+ APPEND ~ACTION.IDS~
+  ~182 MakeUnselectable(I:Time*,I:Mode*)~
+ UNLESS ~182 MakeUnselectable(I:Time*,I:Mode*)~
+////////////////
+
+
+////////////////
+//  STATS.IDS
+ APPEND ~STATS.IDS~
+  ~1000 SHAMANDANCE~
+ UNLESS ~1000 SHAMANDANCE~
+////////////////
+
+
+////////////////
+//  CLASWEAP.2DA
+ APPEND ~CLASWEAP.2DA~
+  ~SHAMAN 1 0 1 1 0 0 0 1~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~CLASWEAP.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  DUALCLAS.2DA
+ APPEND ~DUALCLAS.2DA~
+  ~SHAMAN 0 0 0 0 0 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~DUALCLAS.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  HPCLASS.2DA
+ APPEND ~HPCLASS.2DA~
+  ~SHAMAN HPPRS~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~HPCLASS.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  KITTABLE.2DA
+ APPEND ~KITTABLE.2DA~
+  ~SHAMAN K_SH_H   K_SH_D  K_SH_G  K_SH_E  K_SH_HE  K_SH_HL  K_SH_HO~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~KITTABLE.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  LORE.2DA
+ APPEND ~LORE.2DA~
+  ~SHAMAN 1~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~LORE.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  LUABBR.2DA
+ APPEND ~LUABBR.2DA~
+  ~SHAMAN Sh0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~LUABBR.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  LUNUMAB.2DA
+ APPEND ~LUNUMAB.2DA~
+  ~SHAMAN 18 1 99 1~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~LUNUMAB.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  MODAL.IDS
+// APPEND ~MODAL.IDS~
+//  ~5 SHAMANDANCE~
+// UNLESS ~5 SHAMANDANCE~
+////////////////
+
+
+////////////////
+//  PROFS.2DA
+ APPEND ~PROFS.2DA~
+  ~SHAMAN 2 4~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~PROFS.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  PROFSMAX.2DA
+ APPEND ~PROFSMAX.2DA~
+  ~SHAMAN 1 1~        //bg2ee: SHAMAN 2 5 3 4 5
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~PROFSMAX.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  STRTGOLD.2DA
+ APPEND ~STRTGOLD.2DA~
+  ~SHAMAN 6 3 0 10~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~STRTGOLD.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  THAC0.2DA
+ APPEND ~THAC0.2DA~
+  ~SHAMAN 20 20 20 18 18 18 16 16 16 14 14 14 12 12 12 10 10 10 8 8 8 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6 6~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~THAC0.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  WEAPPROF.2DA
+ APPEND_COL "WEAPPROF.2DA"
+  ~$ $ SHAMAN 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 0 0 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~WEAPPROF.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  25STWEAP.2DA
+ APPEND_COL "25STWEAP.2DA"
+  ~$ $ SHAMAN LEAT20 * HELM19 BAG27A RING06 RING31 CLCK02 BOOT01 AMUL19 BRAC14 BELT06 AROW11,40 BULL03,40 BOLT06,40 POTN52,5 POTN04,2 POTN14,5 HAMM07 SW1H27 STAF08~
+ UNLESS ~SHAMAN~
+ 
+ COPY_EXISTING ~25STWEAP.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  XPCAP.2DA
+ APPEND ~XPCAP.2DA~
+  ~SHAMAN 8000000~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~XPCAP.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+////////////////
+//  XPLEVEL.2DA
+ APPEND ~XPLEVEL.2DA~
+  ~SHAMAN 0 2500 5000 10000 20000 40000 60000 90000 135000 250000 375000 750000 1125000 1500000 1875000 2250000 2625000 3000000 3375000 3750000 4125000 4500000 4875000 5250000 5625000 6000000 6375000 6750000 7125000 7500000 7875000 8250000 8625000 9000000 9375000 9750000 10125000 10500000 10875000 11250000 13000000~
+ UNLESS ~SHAMAN~
+
+ COPY_EXISTING ~XPLEVEL.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  StatDesc.2DA
+ APPEND ~StatDesc.2DA~
+  ~191     6579~
+ UNLESS ~191     6579~
+
+ COPY_EXISTING ~StatDesc.2DA~ ~override~
+   PRETTY_PRINT_2DA
+ BUT_ONLY
+////////////////
+
+
+////////////////
+//  PROJECTL.IDS
+ADD_PROJECTILE ~bg2improvedgui/shaman_kit/WRITHING.PRO~
+////////////////
+
+
+
+
+ACTION_IF !FILE_EXISTS_IN_GAME ~bag27a.itm~ THEN BEGIN
+ COPY_EXISTING ~bag27.itm~ ~override/bag27a.itm~
+ IF_EXISTS
+
+ COPY ~bg2improvedgui/shaman_kit/files/BAG27A.STO~   ~override~
+ BUT_ONLY
+END
+
+
+////////////////
+// add shaman items
+
+COPY_EXISTING ~ELETRO02.CRE~ ~override/ELETRO02.CRE~ // Troll Shaman
+    WRITE_LONG 0x08 38730                            // Troll Shaman name
+    WRITE_LONG 0x0C 38730                            // Troll Shaman tooltip
+
+    WRITE_ASCII 0x248 ~TROSHA02~ #8                  // new transform script
+BUT_ONLY
+
+
+COPY_EXISTING ~TROLL02.CRE~ ~override/TROSHA02.CRE~  // new 1HP troll
+    WRITE_LONG 0x08 38730                            // Troll Shaman name
+    WRITE_LONG 0x0C 38730                            // Troll Shaman tooltip
+
+    ADD_CRE_ITEM ~BDAMUL26~ #0 #0 #0 ~none~ ~inv1 inv2 inv3 inv4 inv5 inv6 inv7 inv8 inv9 inv10 inv11 inv12 inv13 inv14 inv15 inv16~
+BUT_ONLY
+
+
+
+COPY_EXISTING ~SWSHAMAN.CRE~ ~override/SWSHAMAN.CRE~
+    ADD_CRE_ITEM ~BDHELM16~ #0 #0 #0 ~none~ ~inv1 inv2 inv3 inv4 inv5 inv6 inv7 inv8 inv9 inv10 inv11 inv12 inv13 inv14 inv15 inv16~
+BUT_ONLY
+
+
+
+// adding item to Troll Mound in the Druid Grove
+// Improved Shamanic Dance, (c) Argent77
+COPY_EXISTING ~AR1904.ARE~ ~override~
+  LPF ADD_AREA_ITEM
+  INT_VAR
+    container_to_add_to = 2
+  STR_VAR
+    item_to_add = ~BDSTAF02~
+  END
+BUT_ONLY
+
+////////////////
+
+
+COPY ~bg2improvedgui/shaman_kit/files~   ~override~
+
+
+ACTION_IF !FILE_CONTAINS "TobEx_ini/TobExCore.ini" "Shaman Class" BEGIN
+ COPY "TobEx_ini/TobExCore.ini" "TobEx_ini/TobExCore.ini"
+      REPLACE_TEXTUALLY EXACT_MATCH ~[Engine]~ ~[Engine]%WNL%Shaman Class=1~
+ BUT_ONLY
+END
+
+
+END

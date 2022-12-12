@@ -1,0 +1,21 @@
+DEFINE_ACTION_FUNCTION ~SPELLMENU~ BEGIN
+
+COPY ~bg2improvedgui/spell_menu/files/SPLBUT44.BAM~ ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM1.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM2.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM3.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM4.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM5.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM6.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM7.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM8.BAM~   ~override~
+COPY ~bg2improvedgui/spell_menu/files/B3NUM9.BAM~   ~override~
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/spell_menu/files/TobEx_ini.txt"
+BUT_ONLY
+
+INCLUDE ~bg2improvedgui/keyboard_shortcuts/keyboard_shortcuts.tph~
+LAUNCH_ACTION_FUNCTION  ~SHORTCUTS~ END
+
+END

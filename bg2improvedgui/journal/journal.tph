@@ -1,0 +1,72 @@
+DEFINE_ACTION_FUNCTION ~JOURNAL~ INT_VAR option = 0 BEGIN
+
+ACTION_IF (%option% = 1) BEGIN
+ COPY ~bg2improvedgui/journal/files/GUIJRNL.MOS~ ~override~
+
+ COPY_EXISTING ~GUIJRNL.CHU~   ~override~
+
+    // code based on TobEx0018.tpa (c)Ascension64
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET ContainerPanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+        PATCH_IF (PanelID = 2) BEGIN
+          JournalPanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+
+    READ_SHORT (%offPanels% + %JournalPanelNum% * 0x1c +  0xe) nContainerPanelControls
+    READ_SHORT (%offPanels% + %JournalPanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nContainerPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+        READ_SHORT  (%offControlThis%       )  Control_ID
+	READ_SHORT  (%offControlThis% + 0x0C)  Control_Type
+
+        PATCH_IF (Control_ID = 1 AND Control_Type = 5) BEGIN	// Text Area
+	    WRITE_SHORT  (%offControlThis% + 0x4)   30 	        // X
+	    WRITE_SHORT  (%offControlThis% + 0x8)  435  	// Width
+            WRITE_SHORT  (%offControlThis% + 0xA)  184 	        // Height
+        END 
+
+        PATCH_IF (Control_ID = 5 AND Control_Type = 5) BEGIN	// Chapter Text Area
+	    WRITE_SHORT  (%offControlThis% + 0x4)   60 	        // X
+        END 
+
+        PATCH_IF (Control_ID = 2 AND Control_Type = 7) BEGIN	// Scroll Bar
+	    WRITE_SHORT  (%offControlThis% + 0x4)  480 	        // X
+	    WRITE_SHORT  (%offControlThis% + 0x6)  183 	        // Y
+        END 
+
+        PATCH_IF (Control_ID = 3 AND Control_Type = 0) BEGIN	// Chapter Button L
+	    WRITE_SHORT  (%offControlThis% + 0x4)   32 	        // X
+	    WRITE_SHORT  (%offControlThis% + 0x6)    7 	        // Y
+        END 
+
+        PATCH_IF (Control_ID = 4 AND Control_Type = 0) BEGIN	// Chapter Button R
+	    WRITE_SHORT  (%offControlThis% + 0x4)  441 	        // X
+	    WRITE_SHORT  (%offControlThis% + 0x6)    7 	        // Y
+        END 
+	
+    END
+
+
+END
+
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/journal/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

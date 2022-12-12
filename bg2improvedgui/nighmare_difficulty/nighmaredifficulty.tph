@@ -1,0 +1,213 @@
+DEFINE_ACTION_FUNCTION ~NIGHTMARE~ INT_VAR option = 1 BEGIN
+
+STRING_SET 6568 @6568
+
+COPY ~bg2improvedgui/nighmare_difficulty/files/GUICGB.MOS~ ~override~
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/nighmare_difficulty/files/TobEx_ini.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/nighmare_difficulty/files/TobEx_ini_FoB.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 3) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/nighmare_difficulty/files/TobEx_ini_HoF.txt"
+    BUT_ONLY
+END
+
+
+// hack for BGT's A6GenSpl.dlg to 100% learn spell with any difficulty levels
+ACTION_FOR_EACH file IN
+  ~a6spw201.spl~
+  ~a6spw202.spl~
+  ~a6spw203.spl~
+  ~a6spw205.spl~
+  ~a6spw206.spl~
+  ~a6spw207.spl~
+  ~a6spw208.spl~
+  ~a6spw209.spl~
+  ~a6spw210.spl~
+  ~a6spw211.spl~
+  ~a6spw212.spl~
+  ~a6spw213.spl~
+  ~a6spw214.spl~
+  ~a6spw215.spl~
+  ~a6spw217.spl~
+  ~a6spw218.spl~
+  ~a6spw219.spl~
+  ~a6spw220.spl~
+  ~a6spw221.spl~
+  ~a6spw222.spl~
+  ~a6spw223.spl~
+  ~a6spw224.spl~
+  ~a6spw301.spl~
+  ~a6spw302.spl~
+  ~a6spw303.spl~
+  ~a6spw304.spl~
+  ~a6spw305.spl~
+  ~a6spw306.spl~
+  ~a6spw307.spl~
+  ~a6spw308.spl~
+  ~a6spw309.spl~
+  ~a6spw310.spl~
+  ~a6spw311.spl~
+  ~a6spw312.spl~
+  ~a6spw313.spl~
+  ~a6spw314.spl~
+  ~a6spw316.spl~
+  ~a6spw317.spl~
+  ~a6spw318.spl~
+  ~a6spw319.spl~
+  ~a6spw320.spl~
+  ~a6spw321.spl~
+  ~a6spw322.spl~
+  ~a6spw324.spl~
+  ~a6spw325.spl~
+  ~a6spw326.spl~
+  ~a6spw401.spl~
+  ~a6spw403.spl~
+  ~a6spw404.spl~
+  ~a6spw405.spl~
+  ~a6spw406.spl~
+  ~a6spw407.spl~
+  ~a6spw408.spl~
+  ~a6spw409.spl~
+  ~a6spw410.spl~
+  ~a6spw411.spl~
+  ~a6spw412.spl~
+  ~a6spw413.spl~
+  ~a6spw414.spl~
+  ~a6spw415.spl~
+  ~a6spw416.spl~
+  ~a6spw417.spl~
+  ~a6spw418.spl~
+  ~a6spw419.spl~
+  ~a6spw420.spl~
+  ~a6spw421.spl~
+  ~a6spw423.spl~
+  ~a6spw424.spl~
+  ~a6spw425.spl~
+
+BEGIN
+   COPY_EXISTING ~%file%~ ~override~
+   LPF ALTER_EFFECT INT_VAR silent = 1 check_globals = 0 match_opcode = 147 parameter1  = 0x40000 END // 147 = learn spell, 4 = SUCCESS_ALWAYS
+   BUT_ONLY IF_EXISTS
+END
+
+
+// hack for BGT's A6GenSpl.dlg to skip difficulty level checks
+COPY_EXISTING ~A6GENSPL.dlg~  ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~DifficultyGT(EASY)~ ~False()~
+    REPLACE_TEXTUALLY ~DifficultyLT(NORMAL)~ ~True()~
+  END
+BUT_ONLY IF_EXISTS
+
+
+COPY_EXISTING ~guicg.chu~   ~override~
+    // code based on TobEx0018.tpa (c)Ascension64
+    
+    SET ButtonX       = 266
+    SET ButtonY       = 438 - 36 - 1
+    SET ButtonID      = 50
+    SET ButtonWidth   = 168
+    SET ButtonHeight  = 36
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET PanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+
+        PATCH_IF (PanelID = 0) BEGIN
+          PanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    SET currPanelIdx = PanelNum
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x20
+    WRITE_SHORT  (%offControlThis%)        ButtonID     //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 0            //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) ButtonX      // X
+    WRITE_SHORT  (%offControlThis% +  0x6) ButtonY      // Y
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth  //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 0                    //type = BUTTON
+    WRITE_BYTE   (%offControlThis% +  0xd) 0                    //unknown
+    WRITE_ASCII  (%offControlThis% +  0xe) "GUBOTC" #8
+    WRITE_BYTE   (%offControlThis% + 0x16) 1                    //anim cycle
+    WRITE_BYTE   (%offControlThis% + 0x17) 0                    //text flags
+    WRITE_SHORT  (%offControlThis% + 0x18) 0                    //frame unpressed
+    WRITE_SHORT  (%offControlThis% + 0x1a) 1                    //frame pressed
+    WRITE_SHORT  (%offControlThis% + 0x1c) 0                    //frame selected
+    WRITE_SHORT  (%offControlThis% + 0x1e) 2                    //frame disabled
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x20
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x20 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+BUT_ONLY
+
+END // FUNCTION ~NIGHTMARE~
+
+
+DEFINE_ACTION_FUNCTION ~NIGHTMARE_SUMMONS~ BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/nighmare_difficulty/files/TobEx_ini_Summon.txt"
+    BUT_ONLY
+END
+
+
+DEFINE_ACTION_FUNCTION ~NIGHTMARE_XPBONUS~ BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/nighmare_difficulty/files/TobEx_ini_XP.txt"
+    BUT_ONLY
+END

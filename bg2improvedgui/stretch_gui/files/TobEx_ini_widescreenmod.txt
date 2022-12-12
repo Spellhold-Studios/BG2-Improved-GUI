@@ -1,0 +1,1 @@
+UI:Stretch GUI WidescreenMode=1

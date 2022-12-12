@@ -1,0 +1,146 @@
+@3713 = ~Images/Blur~
+@3720 = ~Spell Failed: Action Change~
+@3725 = ~Casting speed~
+
+@6551 = ~Specialization THAC0~
+@6552 = ~Off hand Spec. THAC0~
+
+@6559 = ~You can't leave or change area in combat~
+
+@6560 = ~Main hand damage~
+@6561 = ~Off hand damage~
+@6562 = ~Main hand estimated damage~
+@6563 = ~Off hand estimated damage~
+
+@6564 = ~Quest has been completed ~ [TADA]
+@6565 = ~Quest journal has been updated ~ [FOLSTART]
+@6566 = ~Story journal has been updated ~ [FOLSTART]
+@6567 = ~New quest has been added to journal ~ [FOLSTART]
+
+@17576 = ~The Party Has Gained An Item ~
+@17577 = ~The Party Has Lost An Item ~
+@10959 = ~Inventory Full: Item Dropped on Ground ~
+@11360 = ~Your world map has been updated ~
+
+@6568 = ~LEGACY OF BHAAL~
+
+@9509 = ~fire~
+@9510 = ~piercing~
+@9511 = ~slashing~
+@9512 = ~crushing~
+@9513 = ~missile~
+@9514 = ~electricity~
+@9515 = ~cold~
+@9516 = ~magic~
+@9517 = ~acid~
+@9518 = ~poison~
+@9519 = ~magical fire~
+@9520 = ~magical cold~
+@9521 = ~nonlethal~
+
+@6569 = ~shaman~
+@6571 = ~Shaman~
+@6573 = ~SHAMAN BOOK~
+@6577 = ~Detecting Illusions~
+@6578 = ~Stopped Detecting Illusions~
+@6579 = ~Shamanic Dance~
+@6580 = ~Dancing Shamanic Dance~
+@6581 = ~Stopped Dancing Shamanic Dance~
+
+@6570 = ~SHAMAN: Shamans forge a divine connection with the natural world, similar to the way Druids commune with nature, but Shamans are more spiritual than primal. They directly tap into the energies that flow through the earth and air, through plants and animals, and even through the dead, and shape these energies to obey their will. Nowhere is this more evident than in their ability to summon powerful spirits as guardians and defenders. A being of two worlds, Shamans value balance over dominance.
+
+CLASS FEATURES:
+
+– May only wear leather, studded leather, and hide armor.
+– May not equip shields larger than bucklers.
+– May only use the following weapons: dagger, club, spear, axe, quarterstaff, dart, sling, and shortbow.
+– May only become Proficient (one slot) in any weapon class.
+– May only become Proficient (one slot) in any fighting style.
+– May cast druidic spells.
+– Does not automatically learn all spells of a given level as Druids do. Instead, Shamans select new spells to learn at each level, which they can cast daily without memorization.
+– Gains immediate access to a number of Shaman-specific spells, which can be cast like any other: Spirit Ward, Writhing Fog, Spiritual Clarity, Spirit Fire, Recall Spirit, Spiritual Lock, and Ether Gate.
+– Gains use of the Detect Illusion skill with 20% points as a base and an 4 points per level, up to a maximum of 100% at level 20.
+– May use Shamanic Dance at will.
+
+SHAMANIC DANCE: Shamans can summon spirit allies by performing a ritualistic dance. While dancing, the Shaman takes a -4 penalty to Armor Class and cannot move, attack, cast spells, use items and special abilities, or perform any other activity. Each round while the Shaman dances, there is a 35% base chance plus 2% for each level of the Shaman that a spirit will answer the call, up to a maximum of 75% at level 20. Any summoned spirits will disappear if the Shaman moves, stops dancing, or if the spirits leave visual range. The spirits grow in power as the Shaman gains additional levels:
+  Level 1: Minor animal spirits (snake, fox, hound), up to 2 spirits at the same time.
+  Level 6: Major animal spirits (bear, panther, boar), up to 3 spirits at the same time.
+  Level 12: Minor nature spirits (lesser air spirit, lesser earth spirit, lesser fire spirit), up to 4 spirits at the same time.
+  Level 18: Major nature spirits (air spirit, earth spirit, fire spirit), up to 5 spirits at the same time.
+The type of the summoned spirit is randomly determined from all the spirits available at the Shaman's level. For example, a level 12 Shaman will summon either a minor nature spirit, a major animal spirit, or a minor animal spirit, but cannot choose which one appears. Spirits will do their best to protect the Shaman but are not controlled directly.
+
+– Does not gain bonus spells per day from high Wisdom.
+– Alignment restricted to neutral good, true neutral, and neutral evil.
+– Ineligible for any stronghold.
+– Hit Die: d8~
+
+@9522 = ~No spirits answer your call~
+@9523 = ~A minor animal spirit answers your call~
+@9524 = ~A major animal spirit answers your call~
+@9525 = ~A minor nature spirit answers your call~
+@9526 = ~A major nature spirit answers your call~
+@9527 = ~Fox Spirit~
+@9528 = ~Snake Spirit~
+@9529 = ~Hound Spirit~
+@9530 = ~Bear Spirit~
+@9531 = ~Panther Spirit~
+@9532 = ~Boar Spirit~
+@9533 = ~Lesser Fire Spirit~
+@9534 = ~Lesser Air Spirit~
+@9535 = ~Lesser Earth Spirit~
+@9536 = ~Fire Spirit~
+@9537 = ~Air Spirit~
+@9538 = ~Earth Spirit~
+
+// bdhelm16.ITM
+@9539 = ~Circlet~
+@9540 = ~Circlet of Lost Souls~
+@9541 = ~A circlet is a circular band, typically made of precious metal, worn on the head as an ornament or symbol of status. Circlets carrying low-level enchantments are commonly worn by mages across Faerun.
+
+Weight: 1~
+@9542 = ~Adventurers delving in a tomb centuries ago were set upon by ghosts and spectres when they entered the central crypt. The adventurers fought bravely but, one by one, they fell to the ghosts' attacks. Years later, the daughter of one of the adventurers hired a team to delve into the tomb and recover the bodies. The daughter told her group not to disturb anything but the dead adventurers they had come to collect, and the spirits of the tomb let them be. The woman kept her dead father's circlet as a memento of his bravery.
+
+STATISTICS:
+
+Equipped abilities:
+– THAC0: +2
+– Caster Level: +1
+– Summoned spirits are constantly under the effects of the Bless spell
+
+Weight: 1~
+
+// bdamul26.ITM
+@9543 = ~Heart of the Mountain~
+@9544 = ~During a skirmish between a powerful water elemental and a powerful earth elemental, a tiny fragment of the latter broke off. An orc fleeing the site of the battle snatched the fragment up as she ran. This she gave to her tribe's shaman, who immediately recognized its power and fashioned it into an amulet. 
+
+The Heart of the Mountain is of particular use to those who do the Ghost Dance. Such folk dwell at least partly in the realm of the spirits; the amulet forges a stronger connection 'twixt them and the earth, lending its wearer strength in the face of physical adversity.
+
+STATISTICS:
+
+Equipped abilities: 
+– Armor Class: +2
+– Summoned spirits gain +10 Hit Points
+
+Weight: 0~
+
+@9545 = ~The Soulherder's Staff +2~
+@9546 = ~A gnarled wooden staff cut from the dak'Dekanter goblin tribe's sacred tree, this item was a symbol of spiritual power for centuries. It disappeared during a hard-fought battle between the dak'Dekanters and a dwarven clan whose name is lost to history, and those few who remembered it once existed thought it lost forever. It was found discarded in the lost dwarven town of Kanaglym, among other treasures the dwarves stole from their goblin enemies over the years.
+
+STATISTICS:
+
+Equipped abilities:
+– Magic Resistance: +15%
+– Summoned spirits gain a +1 to Strength
+
+THAC0: +2
+Damage: 1d6, +2 (magic)
+Damage Type: Crushing
+Speed Factor: 2
+Proficiency Type: Quarterstaff
+Type: Two-handed
+Requires:
+ 5 Strength
+
+Weight: 3~
+
+// @9549 - last unused

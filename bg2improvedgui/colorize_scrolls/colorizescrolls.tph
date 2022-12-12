@@ -1,0 +1,9 @@
+DEFINE_ACTION_FUNCTION ~COLORIZE_SCROLLS~ BEGIN
+
+COPY ~bg2improvedgui/colorize_scrolls/files/STORTIN3.BAM~ ~override~
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/colorize_scrolls/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

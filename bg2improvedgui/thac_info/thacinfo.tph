@@ -1,0 +1,464 @@
+DEFINE_ACTION_FUNCTION ~THACINFO~ INT_VAR option = 0 BEGIN
+
+STRING_SET 6560 @6560
+STRING_SET 6561 @6561
+STRING_SET 6562 @6562
+STRING_SET 6563 @6563
+
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY ~bg2improvedgui/thac_info/files/1PP/INVENTOR.MOS~      ~override~ END
+ACTION_IF (%option% = 2) BEGIN
+    COPY ~bg2improvedgui/thac_info/files/Sir-Kill/INVENTOR.MOS~ ~override~ END
+ACTION_IF (%option% = 0) BEGIN
+    COPY ~bg2improvedgui/thac_info/files/INVENTOR.MOS~          ~override~ END
+
+
+ACTION_IF (%option% = 3) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/thac_info/files/TobEx_ini_record.txt"
+    BUT_ONLY
+END
+ELSE BEGIN
+
+COPY_EXISTING   ~guiinv.chu~ ~override~
+
+    // code based on TobEx0018.tpa (c)Ascension64
+
+    READ_LONG 0x8 nPanels
+    READ_LONG 0xc offControlTbl
+    READ_LONG 0x10 offPanels
+  
+    SET i = 0
+    SET nControls = 0
+    SET ContainerPanelNum = 0
+    FOR (i = 0; i < nPanels; i+= 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0xe) nPanelControls
+
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x0) PanelID
+        PATCH_IF (PanelID = 2) BEGIN
+          InvPanelNum = i
+        END 
+
+        SET nControls += nPanelControls
+    END
+
+    PATCH_IF (%option% = 0) BEGIN
+        Color2Button_X= 190
+    END ELSE BEGIN
+        Color2Button_X= 188           // 1pp gui has less space to fit second button
+    END
+
+    READ_SHORT (%offPanels% + %InvPanelNum% * 0x1c +  0xe) nContainerPanelControls
+    READ_SHORT (%offPanels% + %InvPanelNum% * 0x1c + 0x18) idxPanelControl
+
+    FOR (i = 0; i < nContainerPanelControls; i+= 1) BEGIN
+        READ_LONG  (%offControlTbl% + (%idxPanelControl% + %i%) * 0x8) offControlThis
+        READ_SHORT  (%offControlThis%       )  Control_ID
+	READ_SHORT  (%offControlThis% + 0x0C)  Control_Type
+
+        PATCH_IF (Control_ID = 62 AND Control_Type = 0) BEGIN	// Change Color1 Button
+	    WRITE_SHORT  (%offControlThis% + 0x4)  148  	// New X
+	    WRITE_SHORT  (%offControlThis% + 0x6)  286  	// New Y
+        END 
+
+	PATCH_IF (Control_ID = 63 AND Control_Type = 0) BEGIN	  // Change Color2 Button
+	    WRITE_SHORT  (%offControlThis% + 0x4)  Color2Button_X // New X
+	    WRITE_SHORT  (%offControlThis% + 0x6)  286  	  // New Y
+        END 
+
+	PATCH_IF (Control_ID = 56 AND Control_Type = 6) BEGIN	// Armor Label
+	    WRITE_SHORT  (%offControlThis% + 0x4)  418  	// New X
+	    WRITE_SHORT  (%offControlThis% + 0x6)  202  	// New Y
+        END 
+
+	PATCH_IF (Control_ID = 57 AND Control_Type = 6) BEGIN	// HP Label
+	    WRITE_SHORT  (%offControlThis% + 0x4)  454  	// New X
+	    WRITE_SHORT  (%offControlThis% + 0x6)  201  	// New Y
+        END 
+
+	PATCH_IF (Control_ID = 58 AND Control_Type = 6) BEGIN	// HP Label
+	    WRITE_SHORT  (%offControlThis% + 0x4)  454  	// New X
+	    WRITE_SHORT  (%offControlThis% + 0x6)  219  	// New Y
+        END 
+
+        PATCH_IF (Control_ID = 22 AND Control_Type = 0) BEGIN	// Left Ring Button
+	    WRITE_SHORT  (%offControlThis% + 0x6)  241  	// New Y
+        END 
+
+    END
+
+
+    SET  StartButtonID       = 73
+    SET  LastButtonID        = 78
+
+    SET  StartX1              = 376
+    SET  StartY1              = 105
+
+    SET  StartX2              = 438
+    SET  StartY2              = 105
+
+    SET  StartX3              = 374
+    SET  StartY3              = 132
+
+    SET  StartX4              = 438
+    SET  StartY4              = 132
+
+    SET  StartX5              = 374
+    SET  StartY5              = 162
+
+    SET  StartX6              = 438
+    SET  StartY6              = 162
+
+    SET  ButtonWidth         = 58
+    SET  ButtonHeight        = 22
+    SET  currPanelIdx        = InvPanelNum
+
+
+
+    // Thac Left Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID    //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX1
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY1
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "STONESML" #8  //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0              //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x46           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+    // Thac Right Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID+1  //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX2
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY2
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "STONESML" #8  //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0              //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x46           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+    // Damage Left Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID+2  //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX3
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY3
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "STONESML" #8  //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0              //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x46           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+    // Damage Right Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID+3  //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX4
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY4
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "STONESML" #8  //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0              //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x46           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+   // Aprox Damage Left Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID+4  //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX5
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY5
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "STONESML" #8  //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0              //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x46           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+    // Aprox Damage Right Label
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c +  0xe) nPanelControls
+    READ_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0x18) idxPanelControl
+
+    //add control
+    READ_LONG    (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) offControlThis
+    INSERT_BYTES (%offControlThis%)        0x24
+    WRITE_SHORT  (%offControlThis%)        StartButtonID+5  //controlIdx
+    WRITE_SHORT  (%offControlThis% +  0x2) 4096             //bufferSize
+    
+    WRITE_SHORT  (%offControlThis% +  0x4) StartX6
+    WRITE_SHORT  (%offControlThis% +  0x6) StartY6
+    
+    WRITE_SHORT  (%offControlThis% +  0x8) ButtonWidth    //width
+    WRITE_SHORT  (%offControlThis% +  0xa) ButtonHeight   //height
+    WRITE_BYTE   (%offControlThis% +  0xc) 6              //type = LABEL
+    WRITE_BYTE   (%offControlThis% +  0xd) 0              //unknown
+    WRITE_LONG   (%offControlThis% +  0xe) 0		  //textref
+    WRITE_ASCII  (%offControlThis% + 0x12) "STONESML" #8  //font
+    WRITE_LONG   (%offControlThis% + 0x1a) 0              //color1
+    WRITE_LONG   (%offControlThis% + 0x1e) 0              //color2
+    WRITE_SHORT  (%offControlThis% + 0x22) 0x46           //text flags
+
+    //updating all existing control table offsets
+    FOR (i = %idxPanelControl% + %nPanelControls%; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x24
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //add control table entry
+    INSERT_BYTES (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) 0x8
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8) %offControlThis% //offset
+    WRITE_LONG (%offControlTbl% + (%idxPanelControl% + %nPanelControls%) * 0x8 + 0x4) 0x24 //length
+
+    SET nControls += 1
+
+    //update all control table offsets
+    FOR (i = 0; i < nControls; i += 1) BEGIN
+        READ_SHORT (%offControlTbl% + %i% * 0x8) offControl
+        SET offControl += 0x8
+        WRITE_SHORT (%offControlTbl% + %i% * 0x8) %offControl%
+    END
+
+    //update control numbers
+    SET nPanelControls += 1
+    WRITE_SHORT (%offPanels% + %currPanelIdx% * 0x1c + 0xe) %nPanelControls%
+
+    //update panel control indices
+    FOR (i = %currPanelIdx% + 1; i < nPanels; i += 1) BEGIN
+        READ_SHORT (%offPanels% + %i% * 0x1c + 0x18) idxPanelControl
+        SET idxPanelControl += 1
+        WRITE_SHORT (%offPanels% + %i% * 0x1c + 0x18) %idxPanelControl%
+    END
+
+
+BUT_ONLY
+
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/thac_info/files/TobEx_ini.txt"
+        APPEND_FILE "bg2improvedgui/thac_info/files/TobEx_ini_record.txt"
+BUT_ONLY
+
+END  // option =3
+END  // DEFINE_ACTION_FUNCTION

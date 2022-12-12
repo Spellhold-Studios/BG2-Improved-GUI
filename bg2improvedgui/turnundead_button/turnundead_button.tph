@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~PICKPOCKETBUTTON~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/turnundead_button/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

@@ -1,0 +1,11 @@
+DEFINE_ACTION_FUNCTION ~BLOCKTRANSITION~ BEGIN
+
+STRING_SET 6559 @6559   // ~You can't leave or change area in combat~
+
+COPY ~bg2improvedgui/more_difficulty/files/UNBLAREA.2DA~ ~override~
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/more_difficulty/files/TobEx_ini_blocktransition.txt"
+BUT_ONLY
+
+END

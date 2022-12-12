@@ -1,0 +1,1 @@
+Engine:Enemy Can Bump Party=1

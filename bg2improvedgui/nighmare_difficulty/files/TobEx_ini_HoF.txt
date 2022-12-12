@@ -1,0 +1,16 @@
+UI:Legacy of Bhaal Difficulty=1
+UI:Legacy of Bhaal Difficulty Bonus.Gold=75
+UI:Legacy of Bhaal Difficulty Bonus.XP Multiplier=2
+UI:Legacy of Bhaal Difficulty Bonus.XP Addon=1000
+UI:Legacy of Bhaal Difficulty Bonus.THAC0=5
+UI:Legacy of Bhaal Difficulty Bonus.Armor Class=0
+UI:Legacy of Bhaal Difficulty Bonus.APR=1
+UI:Legacy of Bhaal Difficulty Bonus.Saving Throws=1
+UI:Legacy of Bhaal Difficulty Bonus.LevelsUp=12
+UI:Legacy of Bhaal Difficulty Bonus.HP Multiplier=3
+UI:Legacy of Bhaal Difficulty Bonus.HP Addon=80
+UI:Legacy of Bhaal Difficulty Bonus.HP Party Summons Multiplier=2
+UI:Legacy of Bhaal Difficulty Bonus.HP Party Summons Addon=20
+UI:Legacy of Bhaal Difficulty Bonus.Rest Encounter Spawn Addon=0
+UI:Legacy of Bhaal Difficulty Bonus.No Morale Break=1
+UI:Legacy of Bhaal Difficulty Bonus.Movement Rate=1

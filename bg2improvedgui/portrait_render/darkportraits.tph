@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~DARKPORTRAITS~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_darkportraits.txt"
+BUT_ONLY
+
+END

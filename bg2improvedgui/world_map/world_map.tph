@@ -1,0 +1,25 @@
+DEFINE_ACTION_FUNCTION ~WORLDMAP~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/world_map/files/TobEx_ini.txt"
+BUT_ONLY
+
+COPY ~bg2improvedgui/world_map/files/GUIMAP08.MOS~ ~override~
+COPY ~bg2improvedgui/world_map/files/GUIMAP10.MOS~ ~override~
+
+
+COPY_EXISTING ~bgmain.exe~ ~bgmain.exe~
+    READ_BYTE   0x32790 widescreen_marker
+    READ_SHORT  0x32791 WIDTH
+    READ_SHORT  0x32B65 HEIGH
+BUT_ONLY
+
+ACTION_IF (widescreen_marker = 0xB8) BEGIN
+    PRINT ~Installing %WIDTH%x%HEIGH% GUIMAPWX.MOS for Widescreen Mod~
+    COPY_EXISTING ~GUIMAPWB.MOS~ ~override/GUIMAPWX.MOS~
+        EXTEND_MOS "HCENT" WIDTH
+        EXTEND_MOS "BOTTOM" HEIGH
+    BUT_ONLY
+END
+
+END

@@ -1,0 +1,1 @@
+UI:Party Color Circles Exclude NPC Colors=1

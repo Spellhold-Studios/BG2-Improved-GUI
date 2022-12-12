@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~DISABLEINNATETOOLBAR~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/innate_toolbar/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

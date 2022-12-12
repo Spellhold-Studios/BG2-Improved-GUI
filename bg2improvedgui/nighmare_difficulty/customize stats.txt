@@ -1,0 +1,41 @@
+UI:Legacy of Bhaal Difficulty Bonus.Gold=75
+ - Additional gold value for killing every Mob
+
+UI:Legacy of Bhaal Difficulty Bonus XP=1
+ - Enable new XP formula for killing Mob
+
+UI:Legacy of Bhaal Difficulty Bonus.XP Multiplier=2
+UI:Legacy of Bhaal Difficulty Bonus.XP Addon=1000
+ - New_XP = (Orig_XP * XP_Multiplier) + XP_Addon
+
+UI:Legacy of Bhaal Difficulty Bonus.THAC0=5
+ - Lower THAC0 for specified value
+
+UI:Legacy of Bhaal Difficulty Bonus.Armor Class=11
+ - Lower Armor Class for specified value
+
+UI:Legacy of Bhaal Difficulty Bonus.APR=1
+ - Increase Attacks Per Round for specified value
+
+UI:Legacy of Bhaal Difficulty Bonus.Saving Throws=5
+ - Lower All Saving Throws (Death/Wands/Polymorph/Breath/Spell) for specified value
+
+UI:Legacy of Bhaal Difficulty Bonus.LevelsUp=12
+ - Add specified count of levels to all available classes,
+ - for example Mage-Thief Lev1/Lev1 turns to Mage-Thief Lev13/Lev13
+
+UI:Legacy of Bhaal Difficulty Bonus.HP Multiplier=3
+UI:Legacy of Bhaal Difficulty Bonus.HP Addon=80
+UI:Legacy of Bhaal Difficulty Bonus.HP Party Summons Multiplier=2
+UI:Legacy of Bhaal Difficulty Bonus.HP Party Summons Addon=20
+ - Increase HitPoints, New_HP = (Orig_HP * HP_Multiplier) + HP_Addon
+
+UI:Legacy of Bhaal Difficulty Bonus.Rest Encounter Spawn Addon=2
+ - Increase count of Rest Encounter Mobs for specified value
+
+UI:Legacy of Bhaal Difficulty Bonus.No Morale Break=1
+ - Disable Morale Break after high damage
+
+UI:Legacy of Bhaal Difficulty Bonus.Movement Rate=1
+ - Increase Movement Rate by hardcoded formula:
+ - NewMovementRate = (DefaultMovementRate*1.3)+1

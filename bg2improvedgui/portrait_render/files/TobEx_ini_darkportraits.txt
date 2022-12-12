@@ -1,0 +1,2 @@
+UI:Dark Portraits If Item Not Allowed=1
+UI:Yellow Border On Portrait If Too Far=1

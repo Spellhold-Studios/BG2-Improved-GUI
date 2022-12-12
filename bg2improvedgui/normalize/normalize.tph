@@ -1,0 +1,23 @@
+DEFINE_ACTION_FUNCTION ~NORMALIZE~ INT_VAR option = 0 BEGIN
+
+COPY ~bg2improvedgui/normalize/files/EXCLNORM.2DA~ ~override~
+
+ACTION_IF ((%option% = 0) OR (%option% = 1)) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/normalize/files/TobEx_ini.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/normalize/files/TobEx_ini_CreOnly.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/normalize/files/TobEx_ini_Print.txt"
+    BUT_ONLY
+END
+
+END

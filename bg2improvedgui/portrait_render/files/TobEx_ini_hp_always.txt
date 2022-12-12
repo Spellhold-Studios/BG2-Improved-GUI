@@ -1,0 +1,1 @@
+UI:Show Hit-Points On Portrait Always=1

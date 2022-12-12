@@ -1,0 +1,14 @@
+DEFINE_ACTION_FUNCTION ~ENEMYCANBUMP~ INT_VAR option = 1 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/more_difficulty/files/TobEx_ini_enemycanbump.txt"
+BUT_ONLY
+
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/more_difficulty/files/TobEx_ini_enemycanbumpunmoveable.txt"
+    BUT_ONLY
+END
+
+END

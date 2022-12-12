@@ -1,0 +1,467 @@
+ OUTER_PATCH_SAVE orig1 ~~ BEGIN
+    INSERT_BYTES 0x00 0x14          // #00957C30
+
+    WRITE_LONG   0x00 0x51884D8B
+    WRITE_LONG   0x04 0xE8844D8B
+    WRITE_LONG   0x08 0xFFD3C4D0
+    WRITE_LONG   0x0C 0x83D0BF0F
+    WRITE_LONG   0x10 0x0674FFFA
+ END
+
+ OUTER_PATCH_SAVE orig2 ~~ BEGIN
+    INSERT_BYTES 0x00 0xAC          // #00A575A4
+
+    WRITE_LONG   0x00 0x51EC8B55
+    WRITE_LONG   0x04 0xF18B5653
+    WRITE_LONG   0x08 0x8BFF3357
+    WRITE_LONG   0x0C 0x00009886
+    WRITE_LONG   0x10 0x0FC73B00
+    WRITE_LONG   0x14 0x00008D84
+    WRITE_LONG   0x18 0x4c1d8b00
+    WRITE_LONG   0x1C 0x5000AA53
+    WRITE_LONG   0x20 0xB70FD3FF
+    WRITE_LONG   0x24 0x75FF0248
+    WRITE_LONG   0x28 0x51C80308
+    WRITE_LONG   0x2C 0x52D415FF
+    WRITE_LONG   0x30 0xC08500AA
+    WRITE_LONG   0x34 0x458D7075
+    WRITE_LONG   0x38 0xFF5057FC
+    WRITE_LONG   0x3C 0xD9E80875
+    WRITE_LONG   0x40 0x85FFFF57
+    WRITE_LONG   0x44 0x8B5F74C0
+    WRITE_LONG   0x48 0x00009486
+    WRITE_LONG   0x4C 0x74C73B00
+    WRITE_LONG   0x50 0x17E85006
+    WRITE_LONG   0x54 0x5700002E
+    WRITE_LONG   0x58 0x75FF5757
+    WRITE_LONG   0x5C 0xFC75FF08
+    WRITE_LONG   0x60 0x57B0E857
+    WRITE_LONG   0x64 0x6A50FFFF
+    WRITE_LONG   0x68 0x5015FF42
+    WRITE_LONG   0x6C 0x5000AA53
+    WRITE_LONG   0x70 0x00948689
+    WRITE_LONG   0x74 0xD3FF0000
+    WRITE_LONG   0x78 0x5057026A
+    WRITE_LONG   0x7C 0xFF0875FF
+    WRITE_LONG   0x80 0xE857FC75
+    WRITE_LONG   0x84 0xFFFF578E
+    WRITE_LONG   0x88 0x7401F883
+    WRITE_LONG   0x8C 0x94B6FF11
+    WRITE_LONG   0x90 0xE8000000
+    WRITE_LONG   0x94 0x00002DD6
+    WRITE_LONG   0x98 0x0094BE89
+    WRITE_LONG   0x9C 0x75FF0000
+    WRITE_LONG   0xA0 0x576AE8FC
+    WRITE_LONG   0xA4 0x5E5FFFFF
+    WRITE_LONG   0xA8 0x04C2C95B
+ END
+
+ OUTER_PATCH_SAVE orig_party1 ~~ BEGIN
+    INSERT_BYTES 0x00 0x5           // #007CBF86
+
+    WRITE_LONG   0x00 0xEED254E8    // call PartyHPDisplay()
+    WRITE_BYTE   0x04 0xFF
+ END
+
+ OUTER_PATCH_SAVE orig_party2 ~~ BEGIN
+    INSERT_BYTES 0x00 0x5           // #007CC72B
+
+    WRITE_LONG   0x00 0xEECAAFE8    // call PartyHPDisplay()
+    WRITE_BYTE   0x04 0xFF
+ END
+
+////////////////////////////////////////////////////////////
+
+ OUTER_PATCH_SAVE part1 ~~ BEGIN
+    INSERT_BYTES 0x00 0x14          // #00957C30
+
+    WRITE_BYTE   0x00 0x51          // push    ecx
+    WRITE_SHORT  0x01 0xC189        // mov     ecx, eax
+    WRITE_LONG   0x03 0xD3C4D4E8    // call    GetCharacterPortraitNum(long) ; return FFFF=NPC / 000x=PartyChar
+    WRITE_BYTE   0x07 0xFF
+    WRITE_SHORT  0x08 0xFF3C        // cmp     al, FF
+    WRITE_SHORT  0x0A 0x0E75        // jnz     Exit          ; skip for party chars (changeable)
+    WRITE_LONG   0x0C 0x0FF966E8    // call    IsCharShowable
+    WRITE_BYTE   0x10 0x00  
+    WRITE_SHORT  0x11 0x0773        // jc      Exit
+    WRITE_BYTE   0x13 0x90          // nop
+ END
+
+ OUTER_PATCH_SAVE part2 ~~ BEGIN
+    INSERT_BYTES 0x00 0x5E          // #00A575A4
+
+    WRITE_SHORT  0x00 0x04C2        // ret 4
+    WRITE_BYTE   0x02 0x00      
+
+    // IsCharShowable() #00A575A7 :
+    WRITE_LONG   0x03 0xFF54958B    // mov  edx, [ebp-AC]           ; *CreatureObject
+    WRITE_SHORT  0x07 0xFFFF
+    WRITE_LONG   0x09 0x6412BA80    // cmp  byte ptr [edx+6412h], 0 ; 1 = currentState, 0 - prevState
+    WRITE_SHORT  0x0D 0x0000
+    WRITE_BYTE   0x0F 0x00
+    WRITE_SHORT  0x10 0x0D74        // jz   Prev
+    WRITE_LONG   0x12 0x0B0AC281    // add  edx, 0B0Ah      ; offset to currentState
+    WRITE_SHORT  0x16 0x0000
+    WRITE_SHORT  0x18 0x0BEB        // jmp  W2              ; jump over relocable bytes
+
+    // FF 15 ** ** ** **            ; relocable bytes
+
+    // Prev:
+    WRITE_LONG   0x1F 0x13C2C281    // add  edx, 13C2h      ; offset to prevState
+    WRITE_SHORT  0x23 0x0000
+    // W2:      
+    WRITE_SHORT  0x25 0x28EB        // jmp  Checks
+    WRITE_BYTE   0x27 0x90
+    WRITE_BYTE   0x28 0x90
+    WRITE_BYTE   0x29 0x90
+
+    // isTABPressed:
+    WRITE_SHORT  0x2A 0x096A        // push    09                       ; 09 = TAB key
+    WRITE_LONG   0x2C 0x567415FF    // call    GetAsyncKeyState(long)
+    WRITE_SHORT  0x30 0x00AA
+    WRITE_SHORT  0x32 0xC085        // test    eax,eax
+    WRITE_SHORT  0x34 0x1574        // jz      NoPressed
+    WRITE_LONG   0x36 0x010845C7    // mov     dword ptr [ebp+08], 1    ; force_showhp = 1
+    WRITE_LONG   0x3A 0xC7000000    // 
+    WRITE_LONG   0x3E 0x00020C45    // mov     dword ptr [ebp+0C], 2    ; durationNew = 2
+    WRITE_LONG   0x42 0x45C70000    // 
+    WRITE_LONG   0x46 0x00000210    // mov     dword ptr [ebp+10], 2    ; durationExisting = 2
+    WRITE_BYTE   0x4A 0x00
+
+    // NoPressed:
+    WRITE_BYTE   0x4B 0xF9          // stc
+    WRITE_BYTE   0x4C 0xC3          // ret
+
+    // Skip_Show:
+    WRITE_BYTE   0x4D 0xF8          // clc
+    WRITE_BYTE   0x4E 0xC3          // ret
+
+    // Checks:
+    WRITE_LONG   0x4F 0xFF548D8B    // mov     ecx, [ebp-0ACh]          ; *CreatureObject
+    WRITE_SHORT  0x53 0xFFFF
+    WRITE_LONG   0x55 0x00347983    // cmp     dword ptr [ecx+34h], 0   ; inSight ?
+    WRITE_SHORT  0x59 0xF274        // jz      Skip_Show
+    WRITE_SHORT  0x5B 0x418A        // mov     al, [ecx+20h]            ; al = allegiance
+    WRITE_BYTE   0x5D 0x20
+
+    // CheckAllegiance:
+ END
+
+ OUTER_PATCH_SAVE part3 ~~ BEGIN
+    INSERT_BYTES 0x00 0x13          // #00A5763B
+
+    // isInvisible:                                                     ; STATE.IDS:
+    WRITE_LONG   0x00 0x001002F7    // test    dword ptr [edx], 10h     ; INVISIBLE
+    WRITE_SHORT  0x04 0x0000
+    WRITE_SHORT  0x06 0xAE75        // jnz     Skip_Show
+    WRITE_BYTE   0x08 0x90
+
+    // isDead:
+    WRITE_LONG   0x09 0x0FC002F7    // test    dword ptr [edx], FC0h    ; *DEAD*
+    WRITE_SHORT  0x0D 0x0000
+    WRITE_SHORT  0x0F 0xA575        // jnz     Skip_Show
+    WRITE_SHORT  0x11 0x80EB        // jmp     IsTabPressed
+ END
+
+ //OUTER_PATCH_SAVE all ~~ BEGIN
+ //   INSERT_BYTES 0x00 0x02        // #00A57602
+ //
+ //END
+
+ OUTER_PATCH_SAVE enemy ~~ BEGIN
+    INSERT_BYTES 0x00 0x39          // #00A57602
+
+    // CheckAllegiance:                             ; EA.IDS :
+    WRITE_SHORT 0x00 0xFF3C     // cmp     al, FF   ; 255=ENEMY
+    WRITE_SHORT 0x02 0x3574     // jz      isInvisible
+    WRITE_SHORT 0x04 0x1C3C     // cmp     al, 1C   ;  28=GOODBUTRED
+    WRITE_SHORT 0x06 0x3174     // jz      isInvisible
+    WRITE_SHORT 0x08 0xC83C     // cmp     al, C8   ; 200=EVILCUTOFF
+    WRITE_SHORT 0x0A 0x05EB     // jmp     W4       ; jump over relocable bytes
+    // FF 15 ** ** ** **
+    // W4:
+    WRITE_SHORT 0x11 0x2674     // jz      isInvisible
+    WRITE_SHORT 0x13 0x023C     // cmp     al, 02   ;   2=PARTY (party disabled in other place)
+    WRITE_SHORT 0x15 0x2B74     // jz      isDead
+
+    WRITE_SHORT 0x17 0x023C     // cmp     al, 02   ; repeat to keep same template 
+    WRITE_SHORT 0x19 0x2774     // jz      isDead
+    WRITE_SHORT 0x1B 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x1D 0x2374     // jz      isDead
+    WRITE_SHORT 0x1F 0x023C     // cmp     al, 02    
+    WRITE_SHORT 0x21 0x1F74     // jz      isDead
+    WRITE_SHORT 0x23 0x023C     // cmp     al, 02    
+    WRITE_SHORT 0x25 0x1B74     // jz      isDead
+    WRITE_SHORT 0x27 0x023C     // cmp     al, 02    
+    WRITE_SHORT 0x29 0x1774     // jz      isDead
+    WRITE_SHORT 0x2B 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x2D 0x1374     // jz      isDead
+    WRITE_SHORT 0x2F 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x31 0x0F74     // jz      isDead
+    WRITE_SHORT 0x33 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x35 0x0B74     // jz      isDead
+    WRITE_SHORT 0x37 0xB6EB     // jmp     Skip_Show
+ END
+
+ OUTER_PATCH_SAVE enemy_ally ~~ BEGIN
+    INSERT_BYTES 0x00 0x39      // #00A57602
+
+    // CheckAllegiance:                             ; EA.IDS :
+    WRITE_SHORT 0x00 0xFF3C     // cmp     al, FF   ; 255=ENEMY
+    WRITE_SHORT 0x02 0x3574     // jz      isInvisible
+    WRITE_SHORT 0x04 0x1C3C     // cmp     al, 1C   ;  28=GOODBUTRED
+    WRITE_SHORT 0x06 0x3174     // jz      isInvisible
+    WRITE_SHORT 0x08 0xC83C     // cmp     al, C8   ; 200=EVILCUTOFF
+    WRITE_SHORT 0x0A 0x05EB     // jmp     W4
+    // FF 15 ** ** ** **
+    // W4:
+    WRITE_SHORT 0x11 0x2674     // jz      isInvisible
+    WRITE_SHORT 0x13 0x023C     // cmp     al, 02   ;   2=PARTY
+    WRITE_SHORT 0x15 0x2B74     // jz      isDead
+    WRITE_SHORT 0x17 0x023C     // cmp     al, 02   ;   dummy
+    WRITE_SHORT 0x19 0x2774     // jz      isDead
+
+    // workaround for stratagems's "detect cloud" invisible helper creatures with actual allegiance=ALLY(*.eff change it from NEUTRAL)
+    // best way is check for active effect "Disable Animation=271", but due limited space for injected code
+    // we only check for magicstring "dw#cldki" in CRE's scriptname
+    WRITE_SHORT 0x1B 0x498B     // mov     ecx, [ecx+1Ñh]   ; ecx = scriptname 
+    WRITE_BYTE  0x1D 0x1C       // 
+    WRITE_SHORT 0x1E 0xC985     // test    ecx,ecx
+    WRITE_SHORT 0x20 0x1174     // jz      Skip_dw#cloud.cre
+    WRITE_LONG  0x22 0x77643981 // cmp     dword ptr [ecx],   'c#wd'
+    WRITE_SHORT 0x26 0x6323
+    WRITE_SHORT 0x28 0x0975     // jnz     Skip_dw#cloud.cre
+    WRITE_LONG  0x2A 0x6C047981 // cmp     dword ptr [ecx+4], 'ikdl'
+    WRITE_SHORT 0x2E 0x6B64
+    WRITE_BYTE  0x30 0x69
+    WRITE_SHORT 0x31 0xBC74     // jz      Skip_Show
+
+    // Skip_dw#cloud.cre:
+    WRITE_SHORT 0x33 0x083C     // cmp     al, 08   ; 0<x<8 =ALLY/FAMILIAR/CONTROLLED/CHARMED
+    WRITE_SHORT 0x35 0x0B72     // jc      isDead
+    WRITE_SHORT 0x37 0xB6EB     // jmp     Skip_Show
+ END    
+ 
+OUTER_PATCH_SAVE neutral ~~ BEGIN
+    INSERT_BYTES 0x00 0x39      // #00A57602
+
+    // CheckAllegiance:                             ; EA.IDS :
+    WRITE_SHORT 0x00 0xFF3C     // cmp     al, FF   ; 255=ENEMY
+    WRITE_SHORT 0x02 0x3574     // jz      isInvisible
+    WRITE_SHORT 0x04 0x1C3C     // cmp     al, 1C   ;  28=GOODBUTRED
+    WRITE_SHORT 0x06 0x3174     // jz      isInvisible
+    WRITE_SHORT 0x08 0xC83C     // cmp     al, C8   ; 200=EVILCUTOFF
+    WRITE_SHORT 0x0A 0x05EB     // jmp     W4
+    // FF 15 ** ** ** **
+    // W4:
+    WRITE_SHORT 0x11 0x2674     // jz      isInvisible
+    WRITE_SHORT 0x13 0x023C     // cmp     al, 02   ;   2=PARTY
+    WRITE_SHORT 0x15 0x2B74     // jz      isDead
+    WRITE_SHORT 0x17 0xC93C     // cmp     al, C9   ; 201=EVILBUTGREEN
+    WRITE_SHORT 0x19 0x1E74     // jz      isInvisible
+    WRITE_SHORT 0x1B 0xCA3C     // cmp     al, CA   ; 202=EVILBUTBLUE
+    WRITE_SHORT 0x1D 0x1A74     // jz      isInvisible
+    WRITE_SHORT 0x1F 0x1D3C     // cmp     al, 1D   ;  29=GOODBUTBLUE
+    WRITE_SHORT 0x21 0x1674     // jz      isInvisible
+    WRITE_SHORT 0x23 0x1E3C     // cmp     al, 1E   ;  30=GOODCUTOFF     
+    WRITE_SHORT 0x25 0x1274     // jz      isInvisible
+    WRITE_SHORT 0x27 0x803C     // cmp     al, 80   ; 128=NEUTRAL
+    WRITE_SHORT 0x29 0x0E74     // jz      isInvisible
+    WRITE_SHORT 0x2B 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x2D 0x1374     // jz      isDead
+    WRITE_SHORT 0x2F 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x31 0x0F74     // jz      isDead
+    WRITE_SHORT 0x33 0x023C     // cmp     al, 02   
+    WRITE_SHORT 0x35 0x0B74     // jz      isDead
+    WRITE_SHORT 0x37 0xB6EB     // jmp     Skip_Show
+ END
+
+OUTER_PATCH_SAVE neutral_ally ~~ BEGIN
+    INSERT_BYTES 0x00 0x39      // #00A57602
+
+    // CheckAllegiance:                             ; EA.IDS :
+    WRITE_SHORT 0x00 0xFF3C     // cmp     al, FF   ; 255=ENEMY
+    WRITE_SHORT 0x02 0x3574     // jz      isInvisible
+    WRITE_SHORT 0x04 0x1C3C     // cmp     al, 1C   ;  28=GOODBUTRED
+    WRITE_SHORT 0x06 0x3174     // jz      isInvisible
+    WRITE_SHORT 0x08 0xC83C     // cmp     al, C8   ; 200=EVILCUTOFF
+    WRITE_SHORT 0x0A 0x05EB     // jmp     W4
+    // FF 15 ** ** ** **
+    // W4:
+    WRITE_SHORT 0x11 0x2674     // jz      isInvisible
+    WRITE_SHORT 0x13 0x023C     // cmp     al, 02   ;   2=PARTY
+    WRITE_SHORT 0x15 0x2B74     // jz      isDead
+    WRITE_SHORT 0x17 0xC93C     // cmp     al, C9   ; 201=EVILBUTGREEN
+    WRITE_SHORT 0x19 0x1E74     // jz      isInvisible
+    WRITE_SHORT 0x1B 0xCA3C     // cmp     al, CA   ; 202=EVILBUTBLUE
+    WRITE_SHORT 0x1D 0x1A74     // jz      isInvisible
+    WRITE_SHORT 0x1F 0x1D3C     // cmp     al, 1D   ;  29=GOODBUTBLUE
+    WRITE_SHORT 0x21 0x1674     // jz      isInvisible
+    WRITE_SHORT 0x23 0x1E3C     // cmp     al, 1E   ;  30=GOODCUTOFF     
+    WRITE_SHORT 0x25 0x1274     // jz      isInvisible
+    WRITE_SHORT 0x27 0x803C     // cmp     al, 80   ; 128=NEUTRAL
+    WRITE_SHORT 0x29 0x0E74     // jz      isInvisible
+    
+    // no workaround for stratagems's "detect cloud", no enough space, sorry
+    WRITE_SHORT 0x2B 0x083C     // cmp     al, 08   ; 0<x<8 =ALLY/FAMILIAR/CONTROLLED/CHARMED
+    WRITE_SHORT 0x2D 0x1372     // jc      isDead
+    WRITE_SHORT 0x2F 0x023C     // cmp     al, 02
+    WRITE_SHORT 0x31 0x0F74     // jz      isDead
+    WRITE_SHORT 0x33 0x023C     // cmp     al, 02
+    WRITE_SHORT 0x35 0x0B74     // jz      isDead
+    WRITE_SHORT 0x37 0xB6EB     // jmp     Skip_Show
+ END
+
+ OUTER_PATCH_SAVE ally ~~ BEGIN
+    INSERT_BYTES 0x00 0x39      // #00A57602
+
+    // CheckAllegiance:                             ; EA.IDS :
+    WRITE_SHORT 0x00 0x9090     // 
+    WRITE_SHORT 0x02 0x9090     // 
+    WRITE_SHORT 0x04 0x9090     //
+    WRITE_SHORT 0x06 0x9090     //
+    WRITE_SHORT 0x08 0x9090     //
+    WRITE_SHORT 0x0A 0x05EB     // jmp     W4
+    // FF 15 ** ** ** **
+    // W4:
+    WRITE_SHORT 0x11 0x9090     // 
+    WRITE_SHORT 0x13 0x023C     // cmp     al, 02   ;   2=PARTY
+    WRITE_SHORT 0x15 0x2B74     // jz      isDead
+    WRITE_SHORT 0x17 0x023C     // cmp     al, 02   ;   dummy
+    WRITE_SHORT 0x19 0x2774     // jz      isDead
+
+    WRITE_SHORT 0x1B 0x498B     // mov     ecx, [ecx+1Ñh]   ; ecx = scriptname 
+    WRITE_BYTE  0x1D 0x1C       // 
+    WRITE_SHORT 0x1E 0xC985     // test    ecx,ecx
+    WRITE_SHORT 0x20 0x1174     // jz      Skip_dw#cloud.cre
+    WRITE_LONG  0x22 0x77643981 // cmp     dword ptr [ecx],   'c#wd'
+    WRITE_SHORT 0x26 0x6323
+    WRITE_SHORT 0x28 0x0975     // jnz     Skip_dw#cloud.cre
+    WRITE_LONG  0x2A 0x6C047981 // cmp     dword ptr [ecx+4], 'ikdl'
+    WRITE_SHORT 0x2E 0x6B64
+    WRITE_BYTE  0x30 0x69
+    WRITE_SHORT 0x31 0xBC74     // jz      Skip_Show
+
+    // Skip_dw#cloud.cre:
+    WRITE_SHORT 0x33 0x083C     // cmp     al, 08   ; 0<x<8 =ALLY/FAMILIAR/CONTROLLED/CHARMED
+    WRITE_SHORT 0x35 0x0B72     // jc      isDead
+    WRITE_SHORT 0x37 0xB6EB     // jmp     Skip_Show
+ END    
+
+
+ OUTER_PATCH_SAVE noparty ~~ BEGIN
+    INSERT_BYTES 0x00 0x5
+
+    WRITE_LONG   0x00 0x90909090    // call PartyHPDisplay() => nops
+    WRITE_BYTE   0x04 0x90
+ END
+
+ OUTER_PATCH_SAVE party ~~ BEGIN
+    INSERT_BYTES 0x00 0x2           // #00957C3A
+
+    WRITE_SHORT  0x00 0x9090        //  jnz  #957C4A => nops
+ END
+
+
+ DEFINE_ACTION_FUNCTION ~patch~ INT_VAR option = 0 BEGIN
+
+  COPY bgmain.exe bgmain.exe
+    READ_ASCII 0x00557C30 target_bytes_1 ELSE 0 (0x14)
+    READ_ASCII 0x006575A4 target_bytes_2 ELSE 0 (0xAC)
+    READ_ASCII 0x003CBF86 target_bytes_3 ELSE 0 (0x05)
+    READ_ASCII 0x003CC72B target_bytes_4 ELSE 0 (0x05)
+
+    SET valid=0
+    PATCH_IF (~%target_bytes_1%~ STRING_EQUAL ~%orig1%~)
+         AND (~%target_bytes_2%~ STRING_EQUAL ~%orig2%~)
+         AND (~%target_bytes_3%~ STRING_EQUAL ~%orig_party1%~)
+         AND (~%target_bytes_4%~ STRING_EQUAL ~%orig_party2%~)
+    BEGIN SET valid=1 END
+    ELSE
+      PATCH_IF (~%target_bytes_2%~ STRING_EQUAL ~%part2%~)
+       BEGIN
+        PATCH_PRINT @-10001
+       END
+      ELSE
+       INNER_ACTION BEGIN FAIL @-10002 END
+
+    PATCH_IF (%valid%=1) AND (%option%=1)  // enemy
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%enemy%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x003CBF86 ~%noparty%~
+      WRITE_ASCIIE 0x003CC72B ~%noparty%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=2) // enemy + ally
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%enemy_ally%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x003CBF86 ~%noparty%~
+      WRITE_ASCIIE 0x003CC72B ~%noparty%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=3) // enemy + ally + party 
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%enemy_ally%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x00557C3A ~%party%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=4) // enemy + neutral
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%neutral%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x003CBF86 ~%noparty%~
+      WRITE_ASCIIE 0x003CC72B ~%noparty%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=5) // enemy + neutral + ally
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%neutral_ally%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x003CBF86 ~%noparty%~
+      WRITE_ASCIIE 0x003CC72B ~%noparty%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=6) // all
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%neutral_ally%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x00557C3A ~%party%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=7) // ally
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%ally%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x003CBF86 ~%noparty%~
+      WRITE_ASCIIE 0x003CC72B ~%noparty%~
+     END
+
+    PATCH_IF (%valid%=1) AND (%option%=8) // ally + party
+     BEGIN
+      WRITE_ASCIIE 0x00557C30 ~%part1%~
+      WRITE_ASCIIE 0x006575A4 ~%part2%~
+      WRITE_ASCIIE 0x00657602 ~%ally%~
+      WRITE_ASCIIE 0x0065763B ~%part3%~
+      WRITE_ASCIIE 0x00557C3A ~%party%~
+     END
+
+
+  BUT_ONLY
+ END // FUNC ~patch~

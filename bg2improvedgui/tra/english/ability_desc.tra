@@ -1,0 +1,1223 @@
+// (c) Prozh (http://www.shsforums.net/user/38456-prozh)
+
+@10001 = ~Enrage
+
+Duration: Special
+Area of Effect: The caster
+
+The character becomes enraged for 1 turn. While enraged, the character gains a +2 bonus to attack and damage rolls as well as to Armor Class, and becomes immune to charm, confusion, fear, feeblemind, hold, imprisonment, level drain, maze, stun, and sleep. The character also gains 15 temporary Hit Points which are taken away at the end of the berserk spree, possibly killing the character. Multiple usages of this ability are not cumulative. After the effects end, the character becomes winded, suffering a -2 penalty to Armor Class, to-hit rolls, and damage rolls.~
+@10002 = ~Kai
+
+Duration: 10 seconds
+Area of Effect: The caster
+
+All successful attacks within the next 10 seconds deal maximum damage.~
+@10003 = ~Barbarian Rage
+
+Duration: 5 rounds
+Area of Effect: The caster
+
+The enraged status lasts for 5 rounds and provides a +4 bonus to Strength and Constitution, a -2 penalty to Armor Class and a +2 bonus to Saving Throws vs. spell, as well as immunity to all charm, hold, fear, maze, stun, sleep, confusion, and level drain spells. Multiple usages of this ability are not cumulative.~
+@10004 = ~Lay On Hands
+
+Range: Touch
+Duration: Permanent
+Casting Time: 1
+Area of Effect: 1 creature
+
+The character channels positive energy to heal the touched creature of 2 Hit Points per level of the caster.~
+@10005 = ~Detect Evil
+
+Range: 0
+Duration: Instant
+Casting Time: 1
+Area of Effect: 60-ft. radius
+Saving Throw: None
+
+This ability discovers emanations of evil from any creature. Any evil creature within the range of the ability will glow red briefly.~
+@10006 = ~Protection From Evil
+
+Range: Touch
+Duration: 1 turn
+Casting Time: 1
+Area of Effect: 1 creature
+
+When this ability is cast, it creates a magical barrier around the recipient at a distance of one foot. The barrier moves with the recipient and has two major effects: First, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll. Second, summoned demons cannot target the protected creature.~
+@10007 = ~Remove Fear
+
+Range: Visual range of the caster
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: 30-ft. radius
+
+The character instills courage in the ability's recipients, raising their morale to its highest. The recipients' morale will gradually reset to normal as the duration runs out. If the recipients are affected by magical fear, this is negated.~
+@10008 = ~Dispel Magic
+
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 1
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+This ability removes magical effects upon anyone within the area and acts at twice the character level. This includes effects given from spells, potions and certain magical items such as wands.~
+@10009 = ~True Sight
+
+Range: 0
+Duration: 1 turn
+Casting Time: 1
+Area of Effect: 235-ft. radius
+Saving Throw: None
+
+Instantly and once each round for 1 turn after this ability is cast, all hostile Illusion/Phantasm spells in a 235-ft. radius around the caster will be dispelled. The target's Magic Resistance, if any, does not affect this.~
+@10010 = ~Charm Animal
+
+Range: Touch
+Duration: 2 turns
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single animal it is cast upon. The animal is allowed a save vs. spell to negate the effect. If the ability's recipient fails its Saving Throw, it regards the caster as a trusted friend and ally to be heeded and protected. The caster may give it orders, and the charmed animal will carry them out as quickly as possible. If the caster harms, or attempts to harm, the charmed animal by some overt action, or if a Dispel Magic spell is cast upon the charmed animal, the ability is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+@10011 = ~Called Shot
+
+Duration: 10 seconds
+Area of Effect: The caster
+
+All successful ranged attacks within the next 10 seconds have the following cumulative effects besides normal damage, according to the level of the caster:
+  4th Level: -1 penalty to target's THAC0
+  8th Level: -1 penalty to target's Saving Throws vs. spell
+  12th Level: -1 penalty to target's Strength score
+  16th Level: +2 bonus to damage roll~
+@10012 = ~Find Familiar
+
+Range: 20 yards
+Duration: Special
+Casting Time: 1
+Area of Effect: Special
+
+This ability enables the caster to attempt to summon a familiar to act as his aide and companion. Familiars are typically small creatures. A creature acting as a familiar can benefit a caster, conveying its sensory powers to its master, conversing with him, and serving as a guard/scout/spy as well. A caster can have only one familiar at a time, and he has no control over what sort of creature answers the summoning, if any come at all. The creature is always more intelligent than others of its type (typically by 2 or 3 Intelligence points), and its bond with the caster confers upon it an exceptionally long life. The caster has an empathic link with the familiar and can issue it mental commands. The caster receives half the familiar's total Hit Points (rounded down) as bonus Hit Points. However, the caster must take care to treat his familiar well, for if the familiar should die, the caster loses the bonus Hit Points and the familiar's Hit Points again as damage. Also when a familiar dies, the caster loses 1 point of Constitution PERMANENTLY.
+
+Here is a list of the familiars that the protagonist receives according to alignment:
+
+LAWFUL GOOD, NEUTRAL GOOD: Pseudo Dragon
+ - Hit Points: 24
+ - Armor Class: -2
+ - 50% resistance to magic
+ - Regenerates 1 Hit Point per round
+ - Can cast Blur once per day
+ - Immune to level drain, sleep, and petrification
+ - Combat: 2 attacks per round at 17 THAC0 for 1d3 piercing damage, hit target must save vs. death at -1 or be rendered unconscious for 2 turns
+
+CHAOTIC GOOD: Fairy Dragon
+ - Hit Points: 24
+ - Armor Class: 4
+ - 32% resistance to magic
+ - Can cast Mirror Image and Minor Mass Invisibility once per day
+ - Immune to level drain, sleep, and petrification
+ - Combat: 2 attacks per round at 17 THAC0 for 1d2 slashing damage~
+@10013 = ~Set Snare
+
+Range: 1 yard
+Duration: Permanent until triggered
+Area of Effect: 1 creature within a 35-ft. radius
+Saving Throw: Special
+
+Set a trap in the chosen location when no hostile creatures are in sight. Traps grow more powerful with the character's level and can only be triggered by enemies.
+  1st level: Deals 2d8 +5 missile damage.
+  11th level: Deals 2d8 +5 missile damage and additionally deals 2d6 poison damage per round for the next 3 rounds.
+  16th level: Deals 3d8 +5 missile damage and 4d8 +2 fire damage.
+  21st level: Deals 3d8 +5 missile damage and 20 poison damage with no save; slays target if a save vs. death with a +4 bonus is failed.~
+@10014 = ~Poison Weapon
+
+Duration: 5 rounds
+Area of Effect: The caster
+
+Each successful hit within the next round will inject poison into the target, dealing an extra 2 points of damage per second with no Saving Throw (for a total of 12 points of damage). Moreover, if the target fails a Saving Throw vs. poison, he will suffer 1 additional point of damage per second for 4 rounds. Multiple usages of this ability are not cumulative.~
+@10015 = ~Set Special Snare
+
+Range: Visual range of the caster
+Duration: Permanent until triggered
+Area of Effect: 1 creature within a 35-ft. radius
+Saving Throw: Special
+
+Set a trap in the chosen location when no hostile creatures are in sight. Traps grow more powerful with the character's level and can only be triggered by enemies.
+  1st level: Deals 3d8 +5 missile damage and slows target for 5 rounds if a save vs. spell with a -4 penalty is failed
+  11th level: Deals 4d8 +5 missile damage and holds target for 5 rounds if a save vs. spell with a -1 penalty is failed
+  16th level: Erects an Otiluke's Resilient Sphere around the target for 7 rounds if a save vs. spell is failed
+  21st level: Mazes the target~
+@10016 = ~Storm Shield
+
+Duration: 1 round/level
+Casting Time: 3
+Area of Effect: The caster
+
+This ability lasts 1 round per level of the caster. It protects the caster completely from lightning, fire, cold, and normal missiles.~
+@10017 = ~Lightning Bolt
+
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 3
+Area of Effect: Path of bolt
+Saving Throw: 1/2
+
+Upon casting this ability, the caster releases a powerful stroke of electrical energy that inflicts 1d6 points of damage per level of the caster (maximum damage of 10d6) to each creature within its area of effect. A successful Saving Throw vs. spell reduces this damage to half. If the lightning bolt intersects with a wall, it will bounce until it reaches its full length.~
+@10018 = ~Seeking Sword
+
+Duration: 1 round/level
+Casting Time: 5
+Area of Effect: The caster
+
+This ability creates a sword in the character's hand that cannot be dropped or unequipped. The sword is enchanted as a +4 weapon and provides a +4 THAC0 bonus, but no damage bonus. It deals 2d4 damage to any target it hits. The weapon sets the character's number of attacks per round to 3 and lasts for 1 round per level. While it is equipped, the wielder cannot cast further spells.~
+@10019 = ~Boon of Lathander
+
+Duration: 1 round/level
+Casting Time: 3
+Area of Effect: The caster
+
+This ability lasts 1 round per level of the caster. It gives the caster a +1 bonus to attack and damage rolls, a +1 bonus to all Saving Throws, and 1 extra attack per round. It also protects the caster from level drain.~
+@10020 = ~Hold Undead
+
+Range: Visual range of the caster
+Duration: 2 rounds/level
+Casting Time: 3
+Area of Effect: Special
+Saving Throw: Negates effect
+
+This ability holds 1d4 undead creatures rigidly immobile and in place. The effect is centered on the victim selected by the caster. Any enemies within 7.5 ft. of the target are also affected. Those who succeed on their Saving Throws are totally unaffected by the ability. Held creatures cannot move or speak, but they remain aware of events around them and can use abilities not requiring motion or speech. Being held does not prevent the worsening of the subject's condition due to wounds.~
+@10021 = ~Offensive Spin
+
+Duration: 4 rounds
+Area of Effect: The caster
+
+During the next 4 rounds, the character's movement rate doubles and the character gains a +2 bonus to hit and damage rolls as well as an extra attack per round. All attacks deal maximum damage for the duration. Offensive Spin may not be used in conjunction with the Haste or Improved Haste spells. It does not stack with Defensive Spin. Multiple usages of this ability are not cumulative.~
+@10022 = ~Defensive Spin
+
+Duration: 4 rounds
+Area of Effect: The caster
+
+During the next 4 rounds, the character is rooted to the spot and gains a +1 bonus to Armor Class per level, up to a maximum of +10. It does not stack with Offensive Spin. Multiple usages of this ability are not cumulative.~
+@10023 = ~Shapeshift: Brown Bear
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a brown bear. Characteristics of a brown bear shape:
+ - Strength: 18/00
+ - Dexterity: 12
+ - Constitution: 18
+ - Base Armor Class: 6
+ - Number of Attacks: 3
+ - Attack Damage: 1d6 (piercing); strikes as an enchanted weapon +2~
+@10024 = ~Shapeshift: Wolf
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a wolf. Characteristics of a wolf shape:
+ - Strength: 18
+ - Dexterity: 17
+ - Constitution: 17
+ - Base Armor Class: 6
+ - 100% resistance to cold
+ - 50% resistance to electricity
+ - Number of Attacks: 2
+ - Attack Damage: 1d8 (piercing); strikes as an enchanted weapon +1~
+@10025 = ~Shapeshift: Black Bear
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a black bear. Characteristics of a black bear shape:
+ - Strength: 18/00
+ - Dexterity: 12
+ - Constitution: 18
+ - Base Armor Class: 7
+ - Number of Attacks: 3
+ - Attack Damage: 1d4 (piercing); strikes as an enchanted weapon +1~
+@10026 = ~Summon Spirit Animal
+
+Range: Visual range of the caster
+Duration: 6 turns
+Casting Time: 1
+Area of Effect: Special
+
+The Totemic Druid summons a special spirit animal (spirit bear, spirit wolf, spirit lion, or spirit snake) to aid for 6 turns. Characteristics of a spirits:
+
+Spirit Wolf
+ - Hit Points: 56
+ - Armor Class: -4
+ - 100% resistance to cold
+ - 100% resistance to electricity
+ - Immune to non-magical weapons
+ - Immune to charm, confusion, fear, hold, level drain, morale failure, paralysis, petrification, poison, slay, sleep, and stun
+ - Combat: 3 attacks per round at 9 THAC0 for 1d4 +1 piercing damage; each hit target must save vs. spell at +2 or lose 1 level; strikes as an enchanted weapon +3
+
+Spirit Bear
+ - Hit Points: 96
+ - Armor Class: 2
+ - 100% resistance to cold
+ - 100% resistance to electricity
+ - Immune to non-magical weapons
+ - Immune to charm, confusion, fear, hold, level drain, morale failure, paralysis, petrification, poison, slay, sleep, and stun
+ - Combat: 3 attacks per round at 8 THAC0 for 1d10 +4 slashing damage; hit target must save vs. death at +3 or run away in fear for 5 rounds; strikes as an enchanted weapon +3
+
+Spirit Lion
+ - Hit Points: 72
+ - Armor Class: -3
+ - 100% resistance to cold
+ - 100% resistance to electricity
+ - Immune to non-magical weapons
+ - Immune to charm, confusion, fear, hold, level drain, morale failure, paralysis, petrification, poison, slay, sleep, and stun
+ - Combat: 3 attacks per round at 5 THAC0 for 1d8 +9 piercing damage; strikes as an enchanted weapon +3
+
+Spirit Snake
+ - Hit Points: 45
+ - Armor Class: -5
+ - 100% resistance to cold
+ - 100% resistance to electricity
+ - Immune to non-magical weapons
+ - Immune to charm, confusion, fear, hold, level drain, morale failure, paralysis, petrification, poison, slay, sleep, and stun
+ - Combat: 2 attacks per round at 8 THAC0 for 1d10 +2 piercing damage; hit target suffers 2 poison damage per second for 6 seconds (save vs. death for none); strikes as an enchanted weapon +3~
+@10027 = ~Shapeshift: Werewolf
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a werewolf. Characteristics of a werewolf shape:
+ - Strength: 19
+ - Dexterity: 16
+ - Constitution: 15
+ - Base Armor Class: 1
+ - 20% resistance to magic
+ - Number of Attacks: 2
+ - Attack Damage: 1d6 (piercing); strikes as an enchanted weapon +2~
+@10028 = ~Shapeshift: Greater Werewolf
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a greater werewolf. Characteristics of a greater werewolf shape:
+ - Strength: 21
+ - Dexterity: 20
+ - Constitution: 25
+ - Base Armor Class: -6
+ - 40% resistance to magic
+ - 50% resistance to acid, cold, fire, and electricity
+ - Number of Attacks: 3
+ - Attack Damage: 1d6 (piercing); strikes as an enchanted weapon +2~
+@10029 = ~Shapeshift: Natural Form
+
+Duration: Permanent
+Area of Effect: The caster
+
+This ability causes the character to return to his natural shape and ends the polymorph effect.~
+@10030 = ~Shapeshift: Sword Spider
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a sword spider. Characteristics of a sword spider shape:
+ - Strength: 16
+ - Dexterity: 16
+ - Constitution: 9
+ - Base Armor Class: 3
+ - Armor Class: +4 bonus
+ - Armor Class Modifier: +4 bonus vs. missile attacks
+ - Number of Attacks: 4
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d4 (piercing); hit target suffers 1 poison damage every 2 seconds for 6 rounds; strikes as an enchanted weapon +1~
+@10031 = ~Shapeshift: Baby Wyvern
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a baby wyvern. Characteristics of a baby wyvern shape:
+ - Strength: 16
+ - Dexterity: 17
+ - Constitution: 16
+ - Base Armor Class: 3
+ - Armor Class Modifier: +2 bonus vs. missile attacks
+ - Number of Attacks: 2
+ - Attack Damage: 1d8 (piercing); hit target suffers 1 poison damage per second for 1 round (save vs. death for none); strikes as an enchanted weapon +1~
+@10032 = ~Shapeshift: Fire Salamander
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a fire salamander. Characteristics of a fire salamander shape:
+ - Strength: 18/75
+ - Dexterity: 19
+ - Constitution: 15
+ - Base Armor Class: 2
+ - 50% resistance to fire
+ - Number of Attacks: 1
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d8 (piercing); strikes as an enchanted weapon +3~
+@10033 = ~Breathe Fireball
+
+Range: 15 yards
+Duration: Instant
+Area of Effect: 1 creature
+Saving Throw: None
+
+This ability launches a flaming projectile at a single target, dealing 2d6 fire damage on a successful ranged attack.~
+@10034 = ~Stunning Blow
+
+Duration: 9 seconds
+Area of Effect: The caster
+
+All successful attacks within the next round force the victim to save vs. spell or be stunned for 9 seconds. This special ability automatically modifies normal attacks; no targeting needs to be done.~
+@10035 = ~Lay On Hands
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+The character channels positive energy to heal himself of 2 Hit Points per level.~
+@10036 = ~Quivering Palm
+
+Duration: 5 seconds
+Area of Effect: The caster
+
+The next successful attack forces the opponent to save vs. spell or die. This special ability automatically modifies normal attacks; no targeting needs to be done.~
+@10037 = ~Set Spike Trap
+
+Range: 1 yard
+Duration: Permanent until triggered
+Area of Effect: 1 creature within a 30-ft. radius
+Saving Throw: None
+
+This ability allows the rogue to set a powerful spring-loaded spike trap that does 20d6 magical damage to the unsuspecting creature that sets it off.~
+@10038 = ~Set Exploding Trap
+
+Range: 1 yard
+Duration: Permanent until triggered
+Area of Effect: 40-ft. radius
+Saving Throw: Special
+
+This ability allows the rogue to set a powerful trap that unleashes a fireball which causes 10d6 fire damage (save vs. spell for half damage) and will knock its victims off their feet.~
+@10039 = ~Set Time Trap
+
+Range: 1 yard
+Duration: Permanent until triggered
+Area of Effect: Special
+Saving Throw: None
+
+This ability allows the rogue to set a magical trap that casts a weaker version of the high-level Time Stop spell. For 10 seconds, the flow of time slows for all but the rogue. Often, a rogue will use this trap to get behind an opponent for a free attack.~
+@10040 = ~Evasion
+
+Duration: 3 rounds
+Area of Effect: The caster
+
+A rogue's natural sense of preservation becomes heightened with the use of the Evasion ability. Evasion gives a bonus of 4 to Armor Class and 2 to all Saving Throws. The effect lasts for 3 rounds. Multiple usages of this ability are not cumulative.~
+@10041 = ~Greater Evasion
+
+Duration: 5 rounds
+Area of Effect: The caster
+
+A more powerful version of Evasion, this ability improves Armor Class by 6 and Saving Throws by 3. In addition, Greater Evasion allows the rogue to move so quickly that his movement rate is increased by 2 and normal missiles have no chance of striking him. Greater Evasion lasts for 5 rounds. Multiple usages of this ability are not cumulative.
+
+Requires: Evasion~
+@10042 = ~Avoid Death
+
+Duration: 5 rounds
+Area of Effect: The caster
+
+With extraordinary effort, a high-level rogue can avoid almost certain death. The effect lasts for 5 rounds, and during this time, the rogue's save vs. death receives a bonus of 5, Hit Points are increased by 20, and the rogue becomes immune to death magic. Multiple usages of this ability are not cumulative.~
+@10043 = ~Alchemy
+
+Duration: Permanent
+Area of Effect: The caster
+
+With cleverness innate to the class, an experienced rogue has seen enough potions in his or her adventuring career to simulate the creation of one. With the Alchemy skill, the rogue can create one of eight types of potions once per day. The potions a rogue can create are randomly chosen from the following list:
+1) Potion of Master Thievery
+2) Potion of Perception
+3) Potion of Extra Healing
+4) Potion of Superior Healing
+5) Potion of Regeneration
+6) Antidote
+7) Oil of Speed
+8) Rogue's Potion of Frost Giant Strength~
+@10044 = ~~
+@10045 = ~Scribe Scrolls
+
+Duration: Permanent
+Area of Effect: The caster
+
+This ability allows a rogue to create low- and mid-level spell scrolls. The scrolls that the rogue can create are randomly chosen from the following list:
+1) Magic Missile
+2) Haste
+3) Fireball
+4) Dispel Magic
+5) Dire Charm
+6) Invisibility
+7) Cone of Cold
+8) Monster Summoning II
+9) Monster Summoning III
+
+Requires: Use Any Item~
+@10046 = ~Magic Flute
+
+Duration: 24 hours
+Area of Effect: The caster
+
+This ability creates a magic flute made of pure magical energy. The spell-like abilities on the Flute are used in the same way that a wand's powers are used. The Flute lasts for 1 day. When played, the flute can be used to cast the following spells:
+1) Resist Fear - 1 charge
+2) Globe of Invulnerability - 1 charge
+3) Delayed Blast Fireball - 3 charges~
+@10047 = ~Assassination
+
+Duration: 1 round
+Area of Effect: The caster
+
+Using every clever trick an experienced Thief has learned in countless battles, this ability allows every strike in the next round to act as a backstab, using the Thief's existing backstab modifier to determine damage.~
+@10048 = ~Whirlwind Attack
+
+Duration: 1 round
+Area of Effect: The caster
+
+This ability allows the warrior to unleash a flurry of super-fast blows. The ability sets one's number of attacks per round to 10, but one's THAC0 and damage suffer a 4 point penalty. The Whirlwind Attack lasts for one round.~
+@10049 = ~Greater Whirlwind Attack
+
+Duration: 1 round
+Area of Effect: The caster
+
+A more powerful version of the Whirlwind Attack, Greater Whirlwind gives the warrior the same bonuses without penalties. Their number of attacks per round are set to 10 for one round.
+
+Requires: Whirlwind Attack~
+@10050 = ~Deathblow
+
+Duration: 2 rounds
+Area of Effect: The caster
+
+The Deathblow ability allows the warrior to blow through the defenses of any lesser creature. For the next 2 rounds, any creature of 10th level or lower is instantly killed when struck by the warrior.~
+@10051 = ~Greater Deathblow
+
+Duration: 2 rounds
+Area of Effect: The caster
+
+Like Deathblow, this ability allows the warrior to vanquish lesser foes with a single blow.  For the next 2 rounds, any creature of 12th level or lower is instantly killed when struck by the warrior.
+
+Requires: Deathblow~
+@10052 = ~Resist Magic
+
+Duration: 4 rounds
+Area of Effect: The caster
+
+This ability allows the warrior to temporarily tap a great inner strength and fight off the effects of malevolent magic. For 4 rounds, the warrior's Magic Resistance is set to 50%. This is not cumulative with other forms of Magic Resistance, so if the warrior already has 50% Magic Resistance or greater, the ability is useless.~
+@10053 = ~Critical Strike
+
+Duration: 1 round
+Area of Effect: The caster
+
+A high-level warrior's intimate knowledge of vital spots on opponents allows him to, once per day, concentrate all of the attacks in one round to strike a vital area every time. With this ability, every attack roll made in the next round is a natural 20, a critical hit.
+
+Requires: Power Attack~
+@10054 = ~Power Attack
+
+Duration: 2 rounds
+Area of Effect: The caster
+
+A Power Attack allows the warrior to strike blows so forceful that they stun an opponent for 2 rounds if the opponent fails a Save vs. death at a -4 penalty. The ability lasts for 2 rounds.~
+@10055 = ~Hardiness
+
+Duration: 1 round/2 levels
+Area of Effect: The caster
+
+Calling upon hidden reserves of strength during times of danger, a warrior can use the Hardiness ability to gain +40% resistance to all forms of physical damage. The ability lasts for 1 round for every 2 levels of the warrior. Multiple usages of this ability are not cumulative.~
+@10056 = ~War Cry
+
+Range: 0
+Duration: 1 turn
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+With a War Cry, the warrior emits a powerful and frightening yell that will panic all opponents in a 30-ft. radius if they don't make their save vs. spell.~
+@10057 = ~Smite
+
+Duration: 2 rounds
+Area of Effect: The caster
+
+With the Smite ability, the warrior gains the ability to strike a mighty blow, knocking an opponent back for a considerable distance and stunning the opponent for 1 round. All attacks made in the first round are critical hits. The ability lasts for 2 rounds. Large creatures such as a dragons or giants will not be knocked back or stunned.
+
+Requires: Critical Strike~
+@10058 = ~Tracking
+
+Range: 0
+Duration: Instant
+Area of Effect: Within the current location
+Saving Throw: None
+
+With an intimate knowledge of his surroundings and the creatures that live within them, a ranger can use the Tracking ability to give himself a general idea of what creatures are in an area and which direction they are. Red arrows at the edge of the screen will point in the general direction of the creatures in the area.~
+@10059 = ~Summon Deva
+
+Range: Visual range of the caster
+Duration: 4 rounds +1 round/level
+Casting Time: 5
+Area of Effect: Special
+
+This ability opens a celestial gate and calls forth an angelic deva to fight at the caster's side until the ability expires or the deva's earthly avatar is slain.
+
+Characteristics of a deva:
+ - Hit Points: 110
+ - Armor Class: -11
+ - 70% resistance to magic
+ - 100% resistance to cold, fire, and electricity
+ - 10% resistance to crushing, slashing, piercing, and missile damage
+ - Immune to backstab
+ - Immune to non-magical weapons and enchanted weapons +1
+ - Immune to charm, confusion, feeblemind, level drain, petrification, poison, and slay
+ - Regenerates 2 Hit Points per round
+ - Can cast Chaos, Cure Critical Wounds, Cure Disease, Dispel Magic, Globe of Blades, Neutralize Poison, Remove Curse, and Remove Fear
+ - Combat: 2 attack per round at -3 THAC0 for 3d6 +14 crushing damage; Dispel Magic on target each hit; undead take an extra 1d6 +2 crushing damage and must save vs. death at -4 or be utterly destroyed; strikes as an enchanted weapon +3~
+@10060 = ~Berserk
+
+Duration: 2 turns
+Area of Effect: The caster
+
+The character goes berserk 2 turns. He gains a +2 bonus to Strength and Dexterity, and becomes immune to charm, confusion, fear, feeblemind, hold, imprisonment, level drain, maze, stun, and sleep; he also gains 15 temporary Hit Points. When the state ends, the character will take 15 points of piercing damage.~
+@10061 = ~Invoke Courage
+
+Duration: 5 turns
+Casting Time: 2
+Area of Effect: The caster
+
+When Mazzy uses this ability, she becomes immune to fear and gains a +1 bonus to THAC0 as well as to all Saving Throws. The effect lasts for 5 turns.~
+@10062 = ~Lay On Hands
+
+Duration: Permanent
+Casting Time: 1
+Area of Effect: The caster
+
+Mazzy channels positive energy to heal herself for 2 Hit Points per level.~
+@10063 = ~Haste
+
+Duration: 3 rounds +1 round/level
+Casting Time: 3
+Area of Effect: The caster
+
+When circumstances demand it, Mazzy can move at incredible speeds for brief periods of time. Using this ability, she resembles nothing so much as a body imbued with a wizard's Haste spell; she can run twice her normal distance in the same amount of time, receives an additional attack in each round of combat, and gains a -2 initiative bonus. Such a pace cannot be maintained indefinitely, however. The effect only lasts for 3 rounds +1 round per level before she slows again to her standard speed.~
+@10064 = ~Strength
+
+Duration: Special
+Casting Time: 2
+Area of Effect: The caster
+
+When necessary, Mazzy can draw upon a great well of strength for brief periods of time. Using this ability sets her Strength to 18/50 for 3 turns. Upon reaching level 7, the Strength sets to 18/75 for 3 turns. Upon reaching level 13, the Strength increase is to 18/00, and she receives an additional +4 THAC0 bonus to all attacks for 39 rounds. Such might cannot be sustained indefinitely, alas. When the ability ends, the power coursing through her body ebbs, and Mazzy's Strength returns to normal levels.~
+@10065 = ~Create Bruiser Mates
+
+Duration: Permanent
+Casting Time: 9
+Area of Effect: The caster
+
+This ability crafts five of Jan's patented Flasher Master Bruiser Mates, adding them to the character's inventory. Handle with care!~
+@10066 = ~Cure Light Wounds
+
+Range: Touch
+Duration: Permanent
+Casting Time: 1
+Area of Effect: 1 creature
+
+By casting this ability and laying his hand upon a creature, the caster causes 8 points of wound or other injury damage to the creature's body to be healed. This healing cannot affect creatures without corporeal bodies, nor can it cure wounds of creatures not living or of extraplanar origin. Curing is permanent only insofar as the creature does not sustain further damage; caused wounds will heal, or can be cured, just as any normal injury.~
+@10067 = ~Slow Poison
+
+Range: Touch
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+
+When this ability is placed upon a poisoned individual, it greatly slows the effects of venom, actually neutralizing all but the most deadly poisons.~
+@10068 = ~Draw Upon Holy Might
+
+Duration: 1 turn
+Casting Time: 10
+Area of Effect: The caster
+
+The caster calls upon his god to grant him power for a short period. When he does this, his Strength, Constitution, and Dexterity are all raised by 1 point for every 3 levels of the caster. A 3rd-level caster would have his abilities raised by 1, while a 12th-level caster would have his abilities raised by 4.~
+@10069 = ~Larloch's Minor Drain
+
+Range: Visual range of the caster
+Duration: Special
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+With this ability, the caster drains the life force from a target and adds it to his own. The target creature suffers 4 damage, while the caster gains 4 Hit Points. If the caster goes over his maximum Hit Point total with this ability, he loses any extra Hit Points after 1 turn.~
+@10070 = ~Horror
+
+Range: Visual range of the caster
+Duration: 3 rounds
+Casting Time: 1
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+All enemies within the area of effect when this ability is cast must save vs. spell or flee in terror. Certain creatures are immune to the effects of fear, including all undead.~
+@10071 = ~Vampiric Touch
+
+Range: Touch
+Duration: Instant
+Casting Time: 3
+Area of Effect: 1 creature
+Saving Throw: None
+
+When this ability is cast, the target loses 1d6 Hit Points for every 2 caster levels, to a maximum drain of 6d6 for a 12th-level caster. These Hit Points are added to the caster's current Hit Points, with any Hit Points over the caster's normal maximum treated as temporary additional Hit Points. The temporary Hit Points last for 5 turns.
+Note: This ability may not be cast multiple times to radically increase the caster's maximum Hit Points.~
+@10072 = ~Slayer Change
+
+Duration: Special
+Area of Effect: The caster
+
+When you use this ability, you take on the form of the brutal essence of Bhaal: a violent, powerful creature made of teeth and claws. Characteristics of a Slayer shape:
+ - Strength: 25
+ - Dexterity: 25
+ - Constitution: 18
+ - Base THAC0: 0
+ - Hit Points: 100
+ - Base Armor Class: -4
+ - 40% resistance to magic
+ - Saving Throws: set to 2
+ - Immunity to fear and morale failure: Permanent until death
+ - Immunity to charm, confusion, imprisonment, level drain, sleep, stun, and spell Fingers of Death
+ - Invulnerability to non-magical hurled and launched missiles
+ - Number of Attacks: 4
+ - Attack Damage: 1d8 (crushing), +2 cold damage; strikes as an enchanted weapon +5~
+@10073 = ~End Slayer Change
+
+Duration: Permanent
+Area of Effect: The caster
+
+This ability causes the character to return to his natural shape and ends the polymorph effect.~
+@10074 = ~Pocket Plane
+
+Range: 0
+Duration: Instant
+Casting Time: 1
+Area of Effect: All party members
+
+This ability returns <CHARNAME>'s entire party to the pocket plane.~
+@10075 = ~Shapechange: Mind Flayer
+
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a mind flayer. Characteristics of a mind flayer shape:
+ - Strength: 10
+ - Dexterity: 10
+ - Constitution: 9
+ - Base Armor Class: 5
+ - Number of Attacks: 4
+ - May use Psionic Blast ability (victim must save vs. spell or be stunned for 1 turn)
+ - Attack Damage: 1d2 (crushing); target loses 5 points of Intelligence per hit for 5 rounds; strikes as an enchanted weapon +2~
+@10076 = ~Psionic Blast
+
+Range: 20 yards
+Duration: 1 turn
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+A mind flayer's preferred method of attack is the psionic blast, a blast of mental energy that will stun an opponent for 1 turn unless a save vs. spell is made.~
+@10077 = ~Shapechange: Iron Golem
+
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into an iron golem. Characteristics of an iron golem shape:
+ - Strength: 24
+ - Dexterity: 9
+ - Constitution: 9
+ - Base Armor Class: 3
+ - 100% resistance to magic
+ - 125% resistance to fire
+ - 100% resistance to acid, cold, and electricity
+ - 20% resistance to crushing, piercing, slashing, and missile damage
+ - Immune to backstab
+ - Number of Attacks: 1
+ - Attack Damage: 4d10 (crushing); strikes as an enchanted weapon +4~
+@10078 = ~Shapechange: Giant Troll
+
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a giant troll. Characteristics of a giant troll shape:
+ - Strength: 18
+ - Dexterity: 20
+ - Constitution: 9
+ - Base Armor Class: 4
+ - Regenerates 1 Hit Point per second
+ - Double movement rate
+ - Immune to hold, paralysis, sleep, and stun
+ - Number of Attacks: 3
+ - Attack Damage: 2d6 (piercing); strikes as an enchanted weapon +2~
+@10079 = ~Shapechange: Greater Wolfwere
+
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a greater wolfwere. Characteristics of a greater wolfwere shape:
+ - Strength: 19
+ - Dexterity: 19
+ - Constitution: 16
+ - Base Armor Class: 2
+ - Regenerates 8 Hit Points per second
+ - 50% resistance to acid, fire, cold, and electricity
+ - Immune to non-magical weapons and enchanted weapons +1
+ - Number of Attacks: 3
+ - Attack Damage: 1d12 (slashing); strikes as an enchanted weapon +1~
+@10080 = ~Shapechange: Fire Elemental
+
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a fire elemental. Characteristics of a fire elemental shape:
+ - Strength: 9
+ - Dexterity: 9
+ - Constitution: 9
+ - Base Armor Class: 2
+ - 100% resistance to fire
+ - Immune to all weapons of +2 or lower enchantment
+ - Number of Attacks: 1
+ - Attack Damage: 3d8 (crushing), +1d6 fire damage; strikes as an enchanted weapon +4~
+@10081 = ~Shapechange: Earth Elemental
+
+Duration: 5 turns
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into an earth elemental. Characteristics of an earth elemental shape:
+ - Strength: 19
+ - Dexterity: 9
+ - Constitution: 9
+ - Base Armor Class: 2
+ - Immune to all weapons of +2 or lower enchantment
+ - Number of Attacks: 1
+ - Attack Damage: 4d8 (crushing); strikes as an enchanted weapon +4~
+@10082 = ~Shapeshift: Flind
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a flind. Characteristics of a flind shape:
+ - Strength: 17
+ - Dexterity: 17
+ - Constitution: 12
+ - Base Armor Class: 5
+ - Number of Attacks: 2
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d10 +1 (piercing), +1 fire damage; strikes as an enchanted weapon +3~
+@10083 = ~Shapeshift: Ogre
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into an ogre. Characteristics of an ogre shape:
+ - Strength: 18/00
+ - Dexterity: 9
+ - Constitution: 18
+ - Base Armor Class: 5
+ - Number of Attacks: 1
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 4d6 (crushing); strikes as an enchanted weapon +1~
+@10084 = ~Shapeshift: Sword Spider
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a sword spider. Characteristics of a sword spider shape:
+ - Strength: 16
+ - Dexterity: 16
+ - Constitution: 9
+ - Base Armor Class: 3
+ - Armor Class: +4 bonus
+ - Armor Class Modifier: +4 bonus vs. missile attacks
+ - Immune to paralysis and web
+ - Number of Attacks: 4
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d4 (piercing); hit target suffers 1 poison damage every 2 seconds for 6 rounds; strikes as an enchanted weapon +1~
+@10085 = ~Shapeshift: Mustard Jelly
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a mustard jelly. Characteristics of a mustard jelly shape:
+ - Strength: 14
+ - Dexterity: 9
+ - Constitution: 9
+ - Base Armor Class: 4
+ - Armor Class: +4 bonus
+ - 100% resistance to magic
+ - 50% resistance to cold
+ - 100% resistance to electricity
+ - 100% resistance to piercing damage
+ - 85% resistance to missile damage
+ - 60% resistance to crushing damage
+ - 30% resistance to slashing damage
+ - Number of Attacks: 1
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d6 (crushing); target must save vs. polymorph or be slowed for 20 seconds; strikes as an enchanted weapon +3~
+@10086 = ~Shapeshift: Brown Bear
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a brown bear. Characteristics of a brown bear shape:
+ - Strength: 18/00
+ - Dexterity: 12
+ - Constitution: 18
+ - Base Armor Class: 6
+ - Number of Attacks: 3
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d6 (piercing); strikes as an enchanted weapon +1~
+@10087 = ~Shapeshift: Black Bear
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a black bear. Characteristics of a black bear shape:
+ - Strength: 18/00
+ - Dexterity: 12
+ - Constitution: 18
+ - Base Armor Class: 7
+ - Number of Attacks: 3
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d6 (piercing); strikes as an enchanted weapon +1~
+@10088 = ~Shapeshift: Wolf
+
+Duration: 1 turn +3 rounds/level
+Casting Time: 1
+Area of Effect: The caster
+
+The caster can change into a wolf. Characteristics of a wolf shape:
+ - Strength: 15
+ - Dexterity: 18
+ - Constitution: 13
+ - Base Armor Class: 6
+ - 100% resistance to cold
+ - 50% resistance to electricity
+ - Number of Attacks: 3
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d8 (piercing); strikes as an enchanted weapon +1~
+@10089 = ~Dispel Magic
+
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 4
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+This ability removes magical effects upon anyone within the area. This includes effects given from spells, potions and certain magical items such as wands.~
+@10090 = ~Spiritual Hammer
+
+Duration: 2 hours
+Casting Time: 1
+Area of Effect: The caster
+
+By calling upon his deity, the caster of a Spiritual Hammer spell brings into existence a magical hammer, which he can use for the duration of the ability. It strikes as a magical weapon with a bonus of +1 and deals 1d4 +2 crushing damage.~
+@10091 = ~Summon Dread Wolf
+
+Range: Visual range of the caster
+Duration: 2 hours
+Casting Time: 5
+Area of Effect: Special
+
+Faldorn's connection to nature manifests in an ability to call upon a powerful dread wolf. The wolf will follow Faldorn's commands until slain or after 2 hours. Characteristics of a dread wolf:
+ - Hit Points: 33
+ - Armor Class: 6
+ - 100% resistance to cold
+ - 50% resistance to electricity
+ - Immune to hold, level drain, poison, panic, sleep, paralysis, confusion, stun, charm, and petrification
+ - Combat: 1 attack per round at 15 THAC0 for 1d10 piercing damage~
+@10092 = ~Summon Ghast
+
+Range: Visual range of the caster
+Duration: 2 hours
+Casting Time: 5
+Area of Effect: Special
+
+No one knows just how Tiax managed to learn this particular bit of necromancy, perhaps because it seems an odd question to ask while being mauled by one of his creations. The ability summons a feral ghast, which remains for 2 hours to serve Tiax's bidding before returning to dust. Characteristics of a ghast:
+ - Hit Points: 29
+ - Armor Class: 4
+ - Immune to hold, level drain, poison, panic, sleep, paralysis, confusion, stun, charm, and petrification
+ - Combat: 3 attacks per round at 13 THAC0 for 1d8 +2 piercing damage; hit target must save vs. death or be paralyzed for 7 rounds; also hit target must save vs. breath or be diseased for 33 rounds (receives a -2 penalty to THAC0); strikes as an enchanted weapon +1~
+@10093 = ~Create Poisoned Arrows
+
+Duration: Permanent
+Area of Effect: The caster
+
+Eldoth learned how to use poison at a young age and can create enough venom for about five arrows per day.~
+@10094 = ~Invisibility
+
+Range: Touch
+Duration: Special
+Casting Time: 2
+Area of Effect: 1 creature
+
+This ability causes the creature touched to vanish from sight and be undetectable by normal vision or even infravision. Of course, the invisible creature is not magically silenced, and certain other conditions can render the creature detectable. Even allies cannot see the invisible creature or its gear, unless these allies can normally see invisible things or employ magic to do so. Items dropped or put down by the invisible creature become visible; items picked up disappear if tucked into the clothing or pouches worn by the creature. The ability remains in effect until it is magically broken or dispelled, until the caster or recipient cancels it, until the recipient attacks any creature, until the caster's location is given away by manipulating objects or initiating dialog, or until 10 turns have passed. Thus the invisible being can move, open doors, talk if spoken to first, climb stairs, or drop items while remaining invisible. However, if the invisible being picks up objects, initiates dialog or attacks, the invisibility is broken, although the invisibility enables a surprise attack.~
+@10095 = ~Protection From Evil
+
+Range: Touch
+Duration: 1 turn
+Casting Time: 4
+Area of Effect: 1 creature
+
+When this ability is cast, it creates a magical barrier around the recipient at a distance of one foot. The barrier moves with the recipient and has three major effects: first, all attacks made by evil or evilly enchanted creatures against the protected creature receive a penalty of -2 to each attack roll; second, any Saving Throws caused by such attacks are made by the protected creature with a +2 bonus; and third, the protected creature is immune to the effects of charm spells.~
+@10096 = ~Charm Person
+
+Range: Touch
+Duration: 100 seconds
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single person it is cast upon. The term person includes any bipedal human, demihuman, or humanoid of man-size or smaller, such as brownies, dryads, dwarves, elves, gnolls, gnomes, goblins, half-elves, halflings, half-orcs, hobgoblins, humans, kobolds, lizard men, nixies, orcs, pixies, sprites, troglodytes, and others. Thus, a 10th-level Fighter could be charmed, but an ogre could not. The person is allowed a Saving Throw vs. spell to negate the effect. If the ability's recipient fails his Saving Throw (with a +2 modifier), he regards the caster as a trusted friend and ally to be heeded and protected. The caster may give him orders, and the charmed individual will carry them out as quickly as possible. If the caster harms, or attempts to harm, the charmed person by some overt action, or if a Dispel Magic spell is cast upon the charmed person, the Charm ability is broken. If two or more Charms simultaneously affect a creature, the most recent Charm takes precedence. Note that the subject has full memory of the events that took place while he was charmed. Also note that you cannot have a charmed creature leave the area where he is charmed.~
+@10097 = ~Mist Ball
+
+Range: Visual range of the caster
+Duration: Special
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: Special
+
+This ability launches a ball of stinging mist to cloud the target's vision. The target suffers 1d4 +1 points of magical damage unless it makes a save vs. breath. In addition, the target is blinded for 10 seconds (no save).~
+@10098 = ~Whirlwind
+
+Range: Visual range of the caster
+Duration: Special
+Casting Time: 1
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+This ability causes 1d8 +12 crushing damage and will knock victims off their feet.~
+@10099 = ~Water Jet
+
+Range: 15 yards
+Duration: Special
+Casting Time: 1
+Area of Effect: 90-degree arc
+Saving Throw: Special
+
+This ability launches a glob of scalding steam at a single target, dealing 1d3 fire damage. The target must also make a Saving Throw vs. breath weapon or be stunned for 1 round.~
+@10100 = ~Boiling Rain Storm
+
+Range: 20 yards
+Duration: Special
+Casting Time: 1
+Area of Effect: 30-ft. radius
+Saving Throw: Special
+
+This ability calls down a rain of noxious, boiling water. Enemies in the area take 2d6 poison damage and must save vs. breath or be stunned for 1 round.~
+@10101 = ~Salt Crystals
+
+Range: 15 yards
+Duration: Special
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: Special
+
+This ability launches a projectile made up of sharp salt crystals that shatter on impact, dealing 1d4 crushing damage and stunning the target unless it makes a Saving Throw vs. breath weapon.~
+@10102 = ~Flame Fan
+
+Range: 4 yards
+Duration: 1 round
+Casting Time: 1
+Area of Effect: Special
+Saving Throw: None
+
+This ability burns the target, dealing 4 points of fire damage. The flame jet strikes a second time halfway through its duration, and the caster may move while the ability is in effect. There is no Saving Throw against this ability.~
+@10103 = ~Flame Jet
+
+Range: 15 yards
+Duration: 1 round
+Casting Time: 1
+Area of Effect: Special
+Saving Throw: 1/2
+
+This ability burns the target for 1d4 +1 fire damage, plus an additional 1d4 fire damage if the target fails a Saving Throw vs. breath weapon. The flame jet strikes a second time halfway through its duration, and the caster may move while the ability is in effect.~
+@10104 = ~Magma Ball
+
+Range: 15 yards
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+This ability launches a ball of molten lava to burn the target, dealing 1d6 fire damage.~
+@10105 = ~Stone Spit
+
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+This ability launches a rock the size of a sling bullet, dealing 1d6 crushing damage to the target on impact.~
+@10106 = ~Glass Dust
+
+Range: 15 yards
+Duration: 5 rounds
+Casting Time: 1
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+This ability sprays a collection of shattered glass, forcing the target to make a Saving Throw vs. breath weapon or suffer a -4 penalty to Armor Class and a -2 penalty to THAC0 as the glass shards bury themselves into his flesh.~
+@10107 = ~Earthquake
+
+Range: Visual range of the caster
+Duration: 3 tremors
+Casting Time: 1
+Area of Effect: 30-ft. radius
+Saving Throw: Special
+
+When this ability is cast, a local tremor of fairly high strength rips the ground. The shock is over in several rounds. The earthquake affects all creatures in its area of effect. There are 3 tremors that are caused by the earthquake:
+
+ 1st: All creatures affected take 6d6 points of crushing damage and fall to the ground for 2 rounds. A successful Saving Throw vs. spell with a -6 penalty halves the damage and negates the fall.
+ 2nd: All creatures affected take 3d6 points of crushing damage. A successful Saving Throw vs. spell with a -2 penalty halves the damage.
+ 3rd: All creatures affected take 2d6 points of crushing damage. A successful Saving Throw vs. spell halves the damage.
+
+Only enemies are affected by this ability. Finally, earth elementals dislike mere mortals toying with the land and there is a small chance that casting this ability will cause an earth elemental to appear and attack the party.~
+@10108 = ~Flame Strike
+
+Range: Visual range of the caster
+Duration: Instant
+Area of Effect: 1 creature
+Saving Throw: 1/2
+
+When the caster calls down a Flame Strike ability, a vertical column of fire roars downward in the exact location called for by the caster. The target must roll a Saving Throw vs. spell. Failure means the creature sustains 20d8 points of fire damage; otherwise, the damage is halved.~
+@10109 = ~Lightning Bolt
+
+Range: Visual range of the caster
+Duration: Instant
+Casting Time: 1
+Area of Effect: Path of bolt
+Saving Throw: None
+
+Upon casting this ability, the caster releases a stroke of electrical energy that inflicts 1d4 points of damage.~
+@10110 = ~Ice Shard
+
+Range: 15 yards
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: 1/2
+
+This ability launches a frozen projectile, dealing 1d3 cold damage, plus an additional 1d3 cold damage if the target fails a Saving Throw vs. breath weapon.~
+@10111 = ~Mimic Acid
+
+Range: 5 yards
+Duration: Instant
+Casting Time: 10
+Area of Effect: 1 creature
+Saving Throw: None
+
+This ability launches a glob of deadly acid at the target, dealing 3d12 acid damage on impact. There is no Saving Throw against this ability.~
+@10112 = ~Mimic Glue
+
+Range: 8 yards
+Duration: 5 rounds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability launches a mess of sticky ooze, paralyzing the target for 5 rounds unless the target makes a Saving Throw vs. breath weapon.~
+@10113 = ~Confusion
+
+Range: Visual range of the caster
+Duration: 1 round/level
+Casting Time: 7
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+This ability causes confusion in one or more enemy creatures within the area, creating indecision and the inability to take effective action. All enemy creatures within the area of effect are allowed Saving Throws vs. spell with a -2 penalty. Those successfully saving are unaffected by the ability. Those who fail their Saving Throws will go berserk, stand confused, or wander about for the duration of the ability. Wandering creatures move as far from the caster as possible according to their most typical mode of movement (characters walk, fish swim, bats fly, etc.). Any confused creature that is attacked perceives the attacker as an enemy and acts according to its basic nature. The ability lasts for 1 round for every level of the caster.~
+@10114 = ~Magma Ball
+
+Range: 15 yards
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: 1/2
+
+This ability launches a ball of molten lava to burn the target, dealing 4d10 fire damage, or half damage upon a successful Saving Throw vs. breath weapon.~
+@10115 = ~Blur
+
+Duration: 105 seconds
+Casting Time: 1
+Area of Effect: The caster
+
+When a Blur ability is cast, the caster causes the outline of his form to become blurred, shifting and wavering. This distortion causes all missile and melee attacks against the caster to be made with a -3 penalty, and the caster also gains a +1 bonus to all of his Saving Throws. Multiple usages of this ability are not cumulative.~
+@10116 = ~Moon Dog Sight
+
+Range: 0
+Duration: Special
+Casting Time: 3
+Area of Effect: Special
+Saving Throw: None
+
+The moon dog can see through (and therefore dispel) Illusion spells of 5rd level and lower, detecting traps and evil in the vicinity.~
+@10117 = ~Mirror Image
+
+Duration: 15 rounds
+Casting Time: 1
+Area of Effect: The caster
+
+When a Mirror Image ability is cast, the caster causes from 2 to 8 exact duplicates of himself to come into being around him. These images do exactly what the caster does. Since the ability causes a blurring and slight distortion when cast, it is impossible for opponents to be certain which are the illusions and which is the actual caster. When an image is struck by a melee or missile attack, magical or otherwise, it disappears, but any other existing images remain intact until they are struck. However, it is important to note that this will not protect the caster against every attack, as it is possible for an enemy to choose the real caster amongst all the images.~
+@10118 = ~Improved Invisibility
+
+Duration: 15 rounds
+Casting Time: 4
+Area of Effect: The caster
+
+This ability is similar to Invisibility, but the recipient is able to attack by missile discharge, melee combat, or spellcasting while remaining unseen. However, telltale traces, a shimmering, allow an observant opponent to attack the invisible spell recipient. These traces are only noticeable when specifically looked for (after the invisible character has made his presence known). Attacks against the invisible character suffer a -4 penalty to attack rolls, and the invisible character's Saving Throws are made with a +4 bonus.
+Note: After making an attack, the character is no longer completely invisible. Opponents can target the character.~
+@10119 = ~Healing Lick
+
+Range: Touch
+Duration: Instant
+Casting Time: 1
+Area of Effect: 1 creature
+
+This ability cures the target of any poison, disease, blindness, or deafness effect, and also restores 20 Hit Points to the target. The slobber is... just an added bonus.~
+@10120 = ~Moon Dog Howl
+
+Range: 0
+Duration: Special
+Casting Time: 2
+Area of Effect: 30-ft. radius
+Saving Throw: Special
+
+This ability casts Protection From Evil and Resist Fear on party members for 15 rounds, while also forcing all evil creatures in the area to save vs. spell with a -2 penalty or become panicked. Targets who fail their Saving Throw also suffer 5 points of magical damage and +5 additional damage per round for 2 next rounds.~
+@10121 = ~Web Tangle
+
+Range: Visual range of the caster
+Duration: 2 rounds
+Casting Time: 2
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability sprays a stream of webbing at one target. The target must save vs. spell at -2 or be held by the webbing for 2 rounds.~
+@10122 = ~Sooty Ball
+
+Range: Visual range of the caster
+Duration: Special
+Casting Time: 1
+Area of Effect: 1 creature
+Saving Throw: None
+
+This ability launches a hardened ball of soot, dealing 1d4 crushing damage and rendering the target blind for 10 seconds.~

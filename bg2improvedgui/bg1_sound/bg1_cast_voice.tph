@@ -1,0 +1,16 @@
+DEFINE_ACTION_FUNCTION ~BG1CASTVOICE~ INT_VAR option = 1 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/bg1_sound/files/TobEx_ini.txt"
+BUT_ONLY
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/bg1_sound/files/TobEx_ini_level.txt"
+    BUT_ONLY
+END
+
+COPY ~bg2improvedgui/bg1_sound/files/CHA~ ~override~
+COPY ~bg2improvedgui/bg1_sound/files/CAS~ ~override~
+
+END

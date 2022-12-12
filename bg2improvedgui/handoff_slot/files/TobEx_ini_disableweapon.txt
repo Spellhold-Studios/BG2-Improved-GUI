@@ -1,0 +1,1 @@
+UI:Disable Off Hand Weapon for BG1=1

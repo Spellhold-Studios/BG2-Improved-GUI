@@ -1,0 +1,37 @@
+DEFINE_ACTION_FUNCTION ~ACTIVE_ZONES~ INT_VAR option = 0 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini.txt"
+BUT_ONLY
+
+ACTION_IF (%option% = 0) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_action.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_action.txt"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_question.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_action.txt"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_question.txt"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_steps.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 3) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_action.txt"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_question.txt"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_steps.txt"
+        APPEND_FILE "bg2improvedgui/active_zones/files/TobEx_ini_doors.txt"
+    BUT_ONLY
+END
+
+END  //DEFINE_ACTION_FUNCTION

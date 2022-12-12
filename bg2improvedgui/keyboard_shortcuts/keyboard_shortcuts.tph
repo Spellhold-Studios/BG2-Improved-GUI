@@ -1,0 +1,12 @@
+DEFINE_ACTION_FUNCTION ~SHORTCUTS~ BEGIN
+
+ACTION_IF !FILE_CONTAINS "TobEx_ini/TobExTweak.ini" "UI:Additional Keyboard ShortCuts=" BEGIN
+ COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/keyboard_shortcuts/files/TobEx_ini.txt"
+ BUT_ONLY
+END
+
+COPY ~bg2improvedgui/keyboard_shortcuts/files/KEYTOGON.WAV~ ~override~
+COPY ~bg2improvedgui/keyboard_shortcuts/files/KEYTOGOF.WAV~ ~override~
+
+END // FUNCTION

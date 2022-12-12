@@ -1,0 +1,2 @@
+UI:Log Active Buffs=1
+UI:Log Active Buffs Filter List=

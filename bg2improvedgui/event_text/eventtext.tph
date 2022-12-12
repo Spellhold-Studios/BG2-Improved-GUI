@@ -1,0 +1,21 @@
+DEFINE_ACTION_FUNCTION ~EVENTTEXT~ BEGIN
+
+STRING_SET 6564 @6564
+STRING_SET 6565 @6565
+STRING_SET 6566 @6566
+STRING_SET 6567 @6567
+STRING_SET 3720 @3720
+
+STRING_SET 17576 @17576
+STRING_SET 17577 @17577
+STRING_SET 10959 @10959
+STRING_SET 11360 @11360
+
+COPY "bg2improvedgui/event_text/files/FOLSTART.WAV" ~override~
+COPY "bg2improvedgui/event_text/files/TADA.WAV" ~override~
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/event_text/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

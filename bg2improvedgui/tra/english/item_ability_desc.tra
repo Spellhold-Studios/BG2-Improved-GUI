@@ -1,0 +1,784 @@
+// (c) Prozh (http://www.shsforums.net/user/38456-prozh)
+
+@11001 = ~Neutralize Poison
+
+Range: 10 yards
+Duration: Instant
+Area of Effect: 1 creature
+
+This ability removes all toxins from the body, both natural and magical in nature. When this ability is cast upon a poisoned individual, it immediately neutralizes any poison and restores 10 lost Hit Points. This ability will also cure any diseases that the target might be suffering from, as well as blindness and deafness.~
+@11002 = ~Missile Blast
+
+Range: Visual range of the wearer
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: 1/2
+
+This ability launches a exploding projectile, dealing 6d6 fire damage upon anyone within the area. A successful Saving Throw vs. spell reduces this damage to half.~
+@11003 = ~Shield
+
+Duration: 5 turns
+Area of Effect: The wearer
+
+When this ability is cast, an invisible barrier comes into being in front of the character. It sets the character's Armor Class to 4 against all melee weapons, and 2 against missile weapons. It also grants the character immunity from the spell Magic Missile. The effect lasts for the duration of the ability or until dispelled.~
+@11004 = ~Mind Shield
+
+Duration: 1 turn
+Area of Effect: The wearer
+
+This ability renders the character immune to magical commands. The character becomes immune to charm, confusion, fear, domination, ESP, Know Alignment, hold, stun, psionics, sleep, and feeblemind.~
+@11005 = ~Cure Poison
+
+Range: Touch
+Duration: Instant
+Area of Effect: 1 creature
+
+This ability removes all toxins from the body, both natural and magical in nature. When this ability is cast upon a poisoned individual, it immediately neutralizes any poison.~
+@11006 = ~Improved Haste
+
+Duration: 23 rounds
+Casting Time: 3
+Area of Effect: The wearer
+
+The character functions at double its normal movement and attack rates and receives a +2 bonus to its initiative. Thus, the character moving at 6 and attacking once per round would move at 12 and attack twice per round. Spellcasting and spell effects are not sped up. There are two major differences between the 3rd-level wizard spell Haste and this ability: First, there is no period of fatigue following the expiration of the ability; second, this ability actually doubles the number of attacks per round of the hasted character. This ability also negates the effects of a Slow spell, but it is not cumulative with itself or with other similar magic. Its effects will last for the duration or until dispelled.~
+@11007 = ~Dispel Magic
+
+Range: Visual range of the wielder
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+This ability removes magical effects upon anyone within the area. This includes effects given from spells, potions and certain magical items such as wands. The chance of the dispel succeeding is determined by the level of the character and the level of the magic being dispelled.~
+@11008 = ~Increase Constitution
+
+Duration: 8 hours
+Area of Effect: The wearer
+
+This ability sets the Constitution of the character to 18.~
+@11009 = ~Etherealness
+
+Duration: 5 rounds
+Area of Effect: The wearer
+
+This ability confers complete invulnerability to all non-magical weapons.~
+@11010 = ~Stoneskin
+
+Duration: 12 hours
+Area of Effect: The wearer
+
+This ability covers the character 2 stone skins.~
+@11011 = ~Aim
+
+Duration: 9 seconds
+Area of Effect: The wielder
+
+The character gains a +7 bonus to THAC0 with missile weapons.~
+@11012 = ~Improved Haste
+
+Duration: 23 rounds
+Casting Time: 3
+Area of Effect: The wielder
+
+The character functions at double its normal movement and attack rates and receives a +2 bonus to its initiative. Thus, the character moving at 6 and attacking once per round would move at 12 and attack twice per round. Spellcasting and spell effects are not sped up. There are two major differences between the 3rd-level wizard spell Haste and this ability: First, there is no period of fatigue following the expiration of the ability; second, this ability actually doubles the number of attacks per round of the hasted character. This ability also negates the effects of a Slow spell, but it is not cumulative with itself or with other similar magic. Its effects will last for the duration or until dispelled.~
+@11013 = ~Improved Haste
+
+Duration: 20 seconds
+Area of Effect: The wearer
+
+The character functions at double its normal movement and attack rates and receives a +2 bonus to its initiative. Thus, the character moving at 6 and attacking once per round would move at 12 and attack twice per round. Spellcasting and spell effects are not sped up. There are two major differences between the 3rd-level wizard spell Haste and this ability: First, there is no period of fatigue following the expiration of the ability; second, this ability actually doubles the number of attacks per round of the hasted character. This ability also negates the effects of a Slow spell, but it is not cumulative with itself or with other similar magic. Its effects will last for the duration or until dispelled.~
+@11014 = ~Healing
+
+Range: Touch
+Duration: Instant
+Area of Effect: 1 creature
+
+This ability removes all toxins from the body, both natural and magical in nature. When this ability is cast upon a poisoned individual, it immediately neutralizes any poison and restores 10 lost Hit Points.~
+@11015 = ~Resurrection
+
+Range: Touch
+Duration: Permanent
+Casting Time: 9
+Area of Effect: 1 person
+
+Like the 5th-level spell Raise Dead, Resurrection will return a character back to life. However, Resurrection also heals the character so that they are ready for the adventuring life right away.~
+@11016 = ~Cure Critical Wounds
+
+Range: Touch
+Duration: Permanent
+Casting Time: 8
+Area of Effect: 1 creature
+
+The Cure Critical Wounds ability is a very potent version of the Cure Light Wounds spell. The character lays his hands upon a creature and heals 27 points of damage from wounds or other injuries. The ability does not affect creatures without corporeal bodies, those of extraplanar origin, or those not living.~
+@11017 = ~Cone of Cold
+
+Range: 12 yards
+Duration: Instant
+Casting Time: 5
+Area of Effect: 90-degree arc
+Saving Throw: 1/2
+
+When this ability is cast, it generates a cone-shaped area of extreme cold originating at the character's hand and extending outward in a cone 35 ft. long with a 90-deg. arc. It drains heat and causes 10d4 +10 points of cold damage. A creature that successfully saves vs. spell receives half damage.~
+@11018 = ~Polymorph into a Wolf
+
+Duration: 2 turns
+Area of Effect: The wearer
+
+The character can change into a wolf. Characteristics of a wolf form:
+ - Strength: 18
+ - Dexterity: 17
+ - 100% chance of spellcasting failure
+ - Number of Attacks: 2
+ - Attack Damage: 1d8 (piercing); strikes as an enchanted weapon +1~
+@11019 = ~Charm
+
+Range: Touch
+Duration: 12 hours
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single creature it is cast upon. The creature is allowed a save vs. breath to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed creature will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed creature by some overt action, or if a Dispel Magic spell is cast upon the charmed creature, the ability is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+@11020 = ~Charm
+
+Range: Visual range of the wearer
+Duration: 12 hours
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single creature it is cast upon. The creature is allowed a save vs. breath (with a -1 modifier) to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed creature will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed creature by some overt action, or if a Dispel Magic spell is cast upon the charmed creature, the ability is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+@11021 = ~Shield
+
+Duration: 1 turn
+Area of Effect: The wearer
+
+When this ability is cast, an invisible barrier comes into being in front of the character. The ability gives a bonus of 5 to Armor Class against missile weapons, and 1 against crushing, piercing, and slashing weapons. The effect lasts for the duration of the ability or until dispelled.~
+@11022 = ~Create Darts
+
+Duration: 24 hours
+Area of Effect: The wearer
+
+This ability creates six +5 darts.~
+@11023 = ~Shapeshift: Rat
+
+Duration: 2 turns
+Area of Effect: The wearer
+
+The character can change into a rat. Characteristics of a rat form:
+ - Strength: 18/00
+ - Dexterity: 18
+ - Constitution: 9
+ - Base Armor Class: 20
+ - Armor Class: +4 bonus
+ - 90% resistance to crushing, piercing, slashing, and missile damage
+ - Number of Attacks: 1
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d2 (slashing); strikes as an enchanted weapon +3~
+@11024 = ~Shapeshift: Giant Troll
+
+Duration: 2 turns
+Area of Effect: The wearer
+
+The character can change into a giant troll. Characteristics of a giant troll form:
+ - Strength: 17
+ - Dexterity: 11
+ - Constitution: 22
+ - Base Armor Class: 4
+ - Regenerates 1 Hit Point per second
+ - Double movement rate
+ - Immune to hold, paralysis, sleep, and stun
+ - Number of Attacks: 3
+ - Attack Damage: 2d6 (slashing); strikes as an enchanted weapon +2~
+@11025 = ~Shapeshift: Mustard Jelly
+
+Duration: 2 turns
+Area of Effect: The wearer
+
+The character can change into a mustard jelly. Characteristics of a mustard jelly form:
+ - Strength: 18/01
+ - Dexterity: 9
+ - Constitution: 9
+ - Base Armor Class: 4
+ - Armor Class: +4 bonus
+ - 10% resistance to magic
+ - 50% resistance to cold
+ - 100% resistance to missile damage
+ - Number of Attacks: 1
+ - Hasted (1 extra attack per round, double movement rate)
+ - Attack Damage: 1d6 (crushing); target must save vs. polymorph or be slowed for 20 seconds; strikes as an enchanted weapon +3~
+@11026 = ~Improved Invisibility
+
+Duration: 23 rounds
+Casting Time: 4
+Area of Effect: The wearer
+
+This ability is similar to Invisibility, but the recipient is able to attack by missile discharge, melee combat, or spellcasting while remaining unseen. However, telltale traces, a shimmering, allow an observant opponent to attack the invisible spell recipient. These traces are only noticeable when specifically looked for (after the invisible character has made his presence known). Attacks against the invisible character suffer a -4 penalty to attack rolls, and the invisible character's Saving Throws are made with a +4 bonus.
+Note: After making an attack, the character is no longer completely invisible. Opponents can target the character.~
+@11027 = ~Blindness
+
+Range: 10 yards
+Duration: 2 hours
+Area of Effect: 10-ft. radius
+Saving Throw: Negates effect
+
+This ability temporarily blinds its target. A Saving Throw is allowed and, if successful, there are no harmful effects. If a victim is blinded, he receives a -4 penalty to his attack rolls and Armor Class.~
+@11028 = ~Cloak of Fear
+
+Range: 0
+Duration: Instant
+Casting Time: 6
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+Cloak of Fear empowers the character to radiate a personal aura of fear out to a 30-ft. radius. All other characters and creatures within this aura must roll a successful save vs. spell or run away in panic for 4 rounds. Party members are immune to the effects, although the aura of fear may still disturb them.~
+@11029 = ~Fire Giant Strength
+
+Duration: 8 hours
+Area of Effect: The wearer
+
+This ability sets the Strength of the character to 22.~
+@11030 = ~Mass Cure
+
+Range: 0
+Duration: Permanent
+Casting Time: 5
+Area of Effect: 30-ft. radius
+
+When casting this ability, the character must picture the faces of his fellow party members clearly and focus on the unity of the group. Upon completion, all party members within a 30-ft. radius of the character are healed 1d8 +20 Hit Points. Curing is permanent only insofar as the creature does not sustain further damage; caused wounds will heal - or can be cured - just as any normal injury.~
+@11031 = ~Fireball
+
+Range: Visual range of the wearer
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: 1/2
+
+A fireball is an explosive burst of flame that detonates with a low roar and delivers 6d6 points of fire damage. The character points his finger and speaks the range (distance and height) at which the fireball is to burst. A streak flashes from the pointing digit and, unless it impacts upon a material body or solid barrier prior to attaining the prescribed range, blossoms into the fireball (an early impact results in an early detonation). Creatures failing their saves vs. spell each suffer full damage from the blast. Those who roll successful Saving Throws manage to dodge, fall flat, or roll aside, each receiving half.~
+@11032 = ~Prismatic Spray
+
+Range: 15 yards
+Duration: Special
+Area of Effect: 90-degree arc
+Saving Throw: Special
+
+When casting this ability, the character causes seven shimmering multicolored rays of light to flash from his hand, portraying all colors of the visible spectrum. Any creature with fewer than 8 Hit Dice struck by a ray is blinded for 5 rounds, regardless of any other effect. All creatures caught within the area of effect will be touched by 1 or 2 of the rays, each of which has a different power and purpose:
+  Red - Inflicts 20 points of magical damage (save vs. spell for half).
+  Orange - Inflicts 40 points of magical damage (save vs. spell for half).
+  Yellow - Inflicts 80 points of magical damage (save vs. spell for half).
+  Green - Save vs. poison or die; survivors take 20 points of poison damage.
+  Blue - Save vs. petrification or be turned to stone.
+  Indigo - Save vs. wand or be feebleminded.
+  Violet - Save vs. spell or be disintegrated.~
+@11033 = ~Sunray
+
+Range: 0
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: Special
+
+When this spell is ability, it causes a ray of sunlight to beam down upon the character and everyone within a 30-ft. radius. All creatures within the area of effect take 3d6 points of magical damage and must save vs. spell or be blinded for 1 turn. Undead that are hit by the sunray take 1d6 damage per level of the character, and must save vs. spell or be destroyed.~
+@11034 = ~Death Spell
+
+Range: Visual range of the wearer
+Duration: Instant
+Casting Time: 6
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+When a Death Spell is cast, it snuffs out the life force of creatures within the area of effect, instantly and irrevocably. Creatures with more than 8 Hit Dice are immune to this ability with the exception of summoned creatures, which are automatically slain. Only enemies are affected by this ability.~
+@11035 = ~True Sight
+
+Range: 0
+Duration: 1 turn
+Area of Effect: 235-ft. radius
+Saving Throw: None
+
+Instantly and once each round for 1 turn after this ability is cast, all hostile Illusion/Phantasm spells in a 235-ft. radius around the character will be dispelled. The target's Magic Resistance, if any, does not affect this.~
+@11036 = ~Aura of Command
+
+Range: Visual range of the wearer
+Duration: 5 rounds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+The target of this ability must save vs. spell at -2 or flee in terror. Certain creatures are immune to the effects of fear, including all undead.~
+@11037 = ~Create Goodberries
+
+Duration: Permanent
+Area of Effect: The wielder
+
+This ability creates 5 magical berries that the character can carry with him. Each berry restores 1 Hit Point when eaten.~
+@11038 = ~Detect Invisibility
+
+Range: Visual range of the wearer
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+When the character casts a Detect Invisibility ability, he is able to see clearly any objects or beings that are invisible, as well as any that are astral, ethereal, or out of phase. In addition, this ability enables the character to detect hidden or concealed creatures (e.g., thieves hiding in shadows, halflings in underbrush, and so on). It does not reveal illusions or enable the character to see through physical objects.
+Note: If an invisible creature enters the area of effect after the ability has already been cast, the creature will remain invisible.~
+@11039 = ~Protection From Normal Missiles
+
+Duration: 1 hour
+Area of Effect: The wielder
+
+By means of this ability, the character bestows total invulnerability to non-magical hurled and launched missiles such as arrows, bolts, bullets, darts, throwing axes, and throwing daggers. Note, however, that this ability does not convey any protection from such magical attacks as Fireball, Lightning Bolt, or Magic Missile, nor does it protect against magical missiles such as arrows +1.~
+@11040 = ~Dire Charm
+
+Range: Visual range of the wearer
+Duration: 1 turn
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability works in the exact same manner as Charm Person, with one difference: There is no Saving Throw bonus. Dire Charm affects any single person it is cast upon. The person is allowed a Saving Throw vs. spell to negate the effect. If the ability's recipient fails his Saving Throw, he regards the character as a trusted friend and ally to be heeded and protected. The character may give him orders, and the charmed individual will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed person by some overt action, or if a Dispel Magic spell is cast upon the charmed person, the Dire Charm ability is broken. If two or more Charm effects simultaneously affect a creature, the most recent Charm takes precedence. Note that the subject has full memory of the events that took place while he was charmed. Also note that you cannot have a charmed creature leave the area where he is charmed.~
+@11041 = ~Charm Animal
+
+Range: Visual range of the wearer
+Duration: 10 turns
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single animal it is cast upon. The animal is allowed a save vs. wand to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed animal will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed animal by some overt action, or if a Dispel Magic spell is cast upon the charmed animal, the ability is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+@11042 = ~Invisibility
+
+Duration: Special
+Area of Effect: The wearer
+
+This ability causes the character to vanish from sight and be undetectable by normal vision or even infravision. Of course, the invisible creature is not magically silenced, and certain other conditions can render the creature detectable. Even allies cannot see the invisible creature or its gear, unless these allies can normally see invisible things or employ magic to do so. Items dropped or put down by the invisible creature become visible; items picked up disappear if tucked into the clothing or pouches worn by the creature. The ability remains in effect until it is magically broken or dispelled, until the recipient cancels it, until the recipient attacks any creature, until the recipient's location is given away by manipulating objects or initiating dialog, or until 12 hours have passed. Thus the invisible being can move, open doors, talk if spoken to first, climb stairs, or drop items while remaining invisible. However, if the invisible being picks up objects, initiates dialog or attacks, the invisibility is broken, although the invisibility enables a surprise attack.~
+@11043 = ~Energy Strike
+
+Range: Visual range of the wearer
+Duration: 1 round
+Area of Effect: Special
+Saving Throw: None
+
+This ability inflicts 2d6 points of magical damage. The energy jet strikes a second time halfway through its duration, and the character may move while the ability is in effect.~
+@11044 = ~Summon Djinni
+
+Range: 20 yards
+Duration: 1 turn
+Area of Effect: Special
+
+With this ability, the character can cajole a djinni, a massive genie with powerful abilities. The djinni will serve the character for the duration of the ability, attacking his enemies.
+
+Characteristics of a djinni:
+ - Hit Points: 59
+ - Armor Class: 4
+ - Can cast Magic Missile, Melf's Acid Arrow, Stinking Cloud, Agannazar's Scorcher, Lightning Bolt, and Ghost Armor
+ - Also can cast Invisibility
+ - Combat: 1 attack per round at 8 THAC0 for 2d8 +11 crushing damage; strikes as an enchanted weapon +4~
+@11045 = ~Charm Fire Elemental
+
+Range: Touch
+Duration: 45 seconds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any fire elemental it is cast upon. The elemental is allowed a save vs. spell at +2 to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed elemental will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed elemental by some overt action, or if a Dispel Magic spell is cast upon the charmed elemental, the ability is broken. If two or more charms simultaneously affect a elemental, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed elemental leave the area where it was charmed.~
+@11046 = ~Flame Strike
+
+Range: Visual range of the wearer
+Duration: Instant
+Area of Effect: 1 creature
+Saving Throw: None
+
+When the character calls down a Flame Strike ability, a vertical column of fire roars downward in the exact location called for by the character. The creature sustains 6d8 points of fire damage.~
+@11047 = ~Burning Hands
+
+Range: 5 yards
+Duration: Instant
+Area of Effect: 90-degree arc
+Saving Throw: None
+
+When the character casts this ability, a jet of searing flame shoots from his fingertips. The character's hands must be held so as to send forth a fanlike sheet of flames: his thumbs must touch each other and the fingers must be spread. The burning hands send out flame jets of 5 ft. length in a horizontal arc of about 90 degrees in front of the character. Any creature in the area of the flames suffers 1d3 +2 points of fire damage.~
+@11048 = ~Charm Air Elemental
+
+Range: Touch
+Duration: 45 seconds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any air elemental it is cast upon. The elemental is allowed a save vs. spell at +2 to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed elemental will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed elemental by some overt action, or if a Dispel Magic spell is cast upon the charmed elemental, the ability is broken. If two or more charms simultaneously affect a elemental, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed elemental leave the area where it was charmed.~
+@11049 = ~Improved Invisibility
+
+Range: Touch
+Duration: 1 turn
+Casting Time: 4
+Area of Effect: 1 creature
+
+This ability is similar to Invisibility, but the recipient is able to attack by missile discharge, melee combat, or spellcasting while remaining unseen. However, telltale traces, a shimmering, allow an observant opponent to attack the invisible spell recipient. These traces are only noticeable when specifically looked for (after the invisible character has made his presence known). Attacks against the invisible character suffer a -4 penalty to attack rolls, and the invisible character's Saving Throws are made with a +4 bonus.
+Note: After making an attack, the character is no longer completely invisible. Opponents can target the character.~
+@11050 = ~Charm Earth Elemental
+
+Range: Touch
+Duration: 45 seconds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any earth elemental it is cast upon. The elemental is allowed a save vs. spell at +2 to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed elemental will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed elemental by some overt action, or if a Dispel Magic spell is cast upon the charmed elemental, the ability is broken. If two or more charms simultaneously affect a elemental, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed elemental leave the area where it was charmed.~
+@11051 = ~Stone to Flesh
+
+Range: Visual range of the wearer
+Duration: Permanent
+Area of Effect: 1 creature
+
+This ability is the reverse of Flesh to Stone and will return any creature that has been turned to stone back to flesh. All possessions on the creature likewise return to normal. The effect is instantaneous and there are no Saving Throw checks required.~
+@11052 = ~Charm
+
+Range: Visual range of the wearer
+Duration: 100 seconds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single creature it is cast upon. The creature is allowed a save vs. spell (with a +3 modifier) to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed creature will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed creature by some overt action, or if a Dispel Magic spell is cast upon the charmed creature, the ability is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+@11053 = ~Ram
+
+Range: Visual range of the wearer
+Duration: Instant
+Area of Effect: 1 creature
+Saving Throw: None
+
+This ability pushes target away from character and inflicts 5d6 points of magical damage.~
+@11054 = ~Minor Spell Turning
+
+Duration: 15 rounds
+Area of Effect: The wearer
+
+This ability causes the spells cast against the character to rebound upon the original caster. This affects a total of 4 spell levels, including spells cast from scrolls and innate spell-like abilities, but excludes the following: area effects that are not centered directly upon the character, as well as area effects that are stationary, such as Cloudkill and Stinking Cloud. As long as the spell is cast directly at the character, it will be reflected back upon the original caster. This ability will only affect up to 4th-level spells, but as long as there are levels remaining, a spell will be reflected. For example, if there is only 1 level left and a 3rd-level spell is cast at the character, the spell will be reflected while canceling the Spell Turning. This ability will not protect the character from Dispel Magic, but will not be dispelled by Dispel Magic either.~
+@11055 = ~Improved Haste
+
+Duration: 10 seconds
+Area of Effect: The wearer
+
+The character functions at double its normal movement and attack rates and receives a +2 bonus to its initiative. Thus, the character moving at 6 and attacking once per round would move at 12 and attack twice per round. Spellcasting and spell effects are not sped up. There are two major differences between the 3rd-level wizard spell Haste and this ability: First, there is no period of fatigue following the expiration of the ability; second, this ability actually doubles the number of attacks per round of the hasted character. This ability also negates the effects of a Slow spell, but it is not cumulative with itself or with other similar magic. Its effects will last for the duration or until dispelled.~
+@11056 = ~Improved Invisibility
+
+Duration: 12 hours
+Area of Effect: The wearer
+
+This ability is similar to Invisibility, but the recipient is able to attack by missile discharge, melee combat, or spellcasting while remaining unseen. However, telltale traces, a shimmering, allow an observant opponent to attack the invisible spell recipient. These traces are only noticeable when specifically looked for (after the invisible character has made his presence known). Attacks against the invisible character suffer a -4 penalty to attack rolls.
+Note: After making an attack, the character is no longer completely invisible. Opponents can target the character.~
+@11057 = ~Transformation weapon
+
+Range: Visual range of the wielder
+Duration: Permanent
+
+This mace may transform into the rod at will.~
+@11058 = ~Transformation weapon
+
+Range: Visual range of the wielder
+Duration: Permanent
+
+This spear may transform into the rod at will.~
+@11059 = ~Transformation weapon
+
+Range: Visual range of the wielder
+Duration: Permanent
+
+This sword may transform into the rod at will.~
+@11060 = ~Sonic Boom
+
+Range: Visual range of the wielder
+Duration: 3 rounds
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+This ability stuns the target for 3 rounds unless it makes a Saving Throw vs. spell.~
+@11061 = ~Create Bullets
+
+Duration: Permanent
+Area of Effect: The wielder
+
+This ability creates five +4 bullets.~
+@11062 = ~Domination
+
+Range: Visual range of the wielder
+Duration: 12 hours
+Area of Effect: 1 creature
+Saving Throw: None
+
+The Domination ability enables the character to control the actions of any creature while the ability is in effect. This control is maintained through a telepathic link between the character and the victim. This effect can only be reversed by Dispel Magic.~
+@11063 = ~Cure
+
+Range: Touch
+Duration: Instant
+Area of Effect: 1 creature
+
+This ability removes all toxins from the body, both natural and magical in nature. When this ability is cast upon a poisoned individual, it immediately neutralizes any poison and restores 3d6 +3 lost Hit Points. This ability will also cure any diseases that the target might be suffering from.~
+@11064 = ~Fireball-Lightning Bolt
+
+Range: Visual range of the wielder
+Duration: Instant
+Area of Effect: Special
+Saving Throw: 1/2
+
+This ability casts Fireball and Lightning Bolt at the same time. The fireball inflicts 10d6 points of fire damage to all creatures in a 30-ft. radius (save vs. spell for half). The lightning bolt inflicts 10d6 points of electrical damage to all creatures in its path (save vs. spell for half).~
+@11065 = ~Spell Trap
+
+Duration: 18 rounds
+Area of Effect: The wielder
+
+This ability creates a barrier of magical protection around the character. Every spell that hits the barrier is absorbed by the power of the spell trap -- making the character recall a previously cast spell. The spell trap provides 30 levels of protection (i.e., ten Flame Arrows or five Fingers of Death). The spell trap can absorb any level of spell, from one to nine.~
+@11066 = ~Lightning Bolt of Paralyzation
+
+Range: Visual range of the wielder
+Duration: Special
+Casting Time: 3
+Area of Effect: Path of bolt
+Saving Throw: Special
+
+Upon casting this ability, the character releases a powerful stroke of electrical energy that inflicts 10d6 points of electrical damage to each creature within its area of effect. A successful Saving Throw vs. spell reduces this damage to half. If the lightning bolt intersects with a wall, it will bounce until it reaches its full length. Also stuns (no save) the target for 5 rounds.~
+@11067 = ~Globe of Invulnerability
+
+Range: The wielder
+Duration: 1 round/level
+Area of Effect: 5-ft. radius sphere
+
+This ability creates an immobile, faintly shimmering magical sphere around the character that prevents any 1st-, 2nd-, 3rd-, or 4th-level spell effects from penetrating (i.e., the area of effect of any such spells does not include the area of the Globe of Invulnerability). This includes innate abilities and effects from devices. However, any type of spell can be cast out of the magical sphere, and these pass from the character of the globe to their subject without affecting the globe. 5th- and higher level spells are not affected by the globe, and magical attacks of 5th-level or higher, such as Spellstrike and Pierce Magic, can bring it down.~
+@11068 = ~Lightning Bolt
+
+Range: Visual range of the wielder
+Duration: Until expended
+Casting Time: 3
+Area of Effect: Path of bolt
+Saving Throw: 1/2
+
+Upon casting this ability, the character releases a powerful stroke of electrical energy that inflicts 10d6 points of electrical damage to each creature within its area of effect. A successful Saving Throw vs. spell reduces this damage to half. If the lightning bolt intersects with a wall, it will bounce until it reaches its full length.~
+@11069 = ~Call Lightning
+
+Range: Visual range of the wielder
+Duration: Special
+Area of Effect: 360-ft. radius
+Saving Throw: None
+
+Call Lightning must be cast outside; otherwise, it will not work, and the ability is wasted. The character is able to call down three bolts of lightning (one bolt per round). Each bolt causes 3d8 points of electrical damage. The bolt of lightning flashes down in a vertical stroke at any of the character's enemies. The first enemy struck by the lightning will be the enemy targeted. After that, any enemy (but no allies) may be struck by the ensuing lightning storm.~
+@11070 = ~Enhanced Charm Animal
+
+Range: Visual range of the wielder
+Duration: 1 hour
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability affects any single animal it is cast upon. The animal is allowed a save vs. wand (with a -4 modifier) to negate the effect. If the ability's recipient fails its Saving Throw, it regards the character as a trusted friend and ally to be heeded and protected. The character may give it orders, and the charmed animal will carry them out as quickly as possible. If the character harms, or attempts to harm, the charmed animal by some overt action, or if a Dispel Magic spell is cast upon the charmed animal, the ability is broken. If two or more charms simultaneously affect a creature, the most recent charm takes precedence. Note that the subject will be hostile when the charm expires, regardless of its original attitude. Also note that you cannot have a charmed creature leave the area where it was charmed.~
+@11071 = ~Summon Shambling Mound
+
+Range: Visual range of the wielder
+Duration: 100 seconds
+Area of Effect: Special
+
+With this ability, the character can summon a shambling mound. The creature will fight at the character's side until the ability expires or until slain.
+
+Characteristics of a shambling mound:
+ - Hit Points: 64
+ - Armor Class: 2
+ - Immune to non-magical weapons and enchanted weapons +1
+ - Combat: 1 attack per round at 10 THAC0 for 4d8 +7 crushing damage; strikes as an enchanted weapon +3~
+@11072 = ~Sleep Cloud
+
+Range: Visual range of the wielder
+Duration: 1 turn
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+This ability creates a billowing mass of vapors. Any creature caught within the cloud must roll a successful Saving Throw vs. poison or fall asleep for 3 rounds. Those who make successful Saving Throws can leave the cloud without suffering any ill effects, although those remaining in the cloud must continue to save each round.~
+@11073 = ~Conjure Lesser Air Elemental
+
+Range: 20 yards
+Duration: 1 hour
+Area of Effect: Special
+
+With this ability, the character can summon a lesser air elemental. The elemental will serve the character's every whim until banished back to its home plane, the ability's duration expires, or the elemental dies.
+
+Characteristics of an air elemental:
+ - Hit Points: 64
+ - Armor Class: 2
+ - Immune to non-magical weapons and enchanted weapons +1
+ - Combat: 1 attack per round at 10 THAC0 for 1d20 +7 crushing damage; strikes as an enchanted weapon +3~
+@11074 = ~Stone to Flesh
+
+Range: Touch
+Duration: Permanent
+Area of Effect: 1 creature
+
+This ability is the reverse of Flesh to Stone and will return any creature that has been turned to stone back to flesh. All possessions on the creature likewise return to normal. The effect is instantaneous and there are no Saving Throw checks required.~
+@11075 = ~Conjure Lesser Earth Elemental
+
+Range: 20 yards
+Duration: 1 hour
+Area of Effect: Special
+
+With this ability, the character can summon a lesser earth elemental. The elemental will serve the character's every whim until banished back to its home plane, the ability's duration expires, or the elemental dies.
+
+Characteristics of an earth elemental:
+ - Hit Points: 64
+ - Armor Class: 2
+ - Immune to non-magical weapons and enchanted weapons +1
+ - Combat: 1 attack per round at 10 THAC0 for 4d8 +7 crushing damage; strikes as an enchanted weapon +3~
+@11076 = ~Conjure Lesser Fire Elemental
+
+Range: 20 yards
+Duration: 1 hour
+Area of Effect: Special
+
+With this ability, the character can summon a lesser fire elemental. The elemental will serve the character's every whim until banished back to its home plane, the ability's duration expires, or the elemental dies.
+
+Characteristics of a fire elemental:
+ - Hit Points: 64
+ - Armor Class: 2
+ - 125% resistance to fire
+ - Immune to non-magical weapons and enchanted weapons +1
+ - Combat: 1 attack per round at 10 THAC0 for 3d8 +7 crushing damage, +1d6 fire damage; strikes as an enchanted weapon +3~
+@11077 = ~Fireshield (Red)
+
+Range: 0
+Duration: 13 rounds
+Area of Effect: The wielder
+Saving Throw: None
+
+The red Fireshield protects the user from fire damage by surrounding the character with a shield of flame. This shield not only grants the user 50% Fire Resistance, but also protects the character from attacks made within a 5-ft. radius around the character. An opponent that hits the character with any weapons or spells within this radius suffers 1d8 +2 fire damage.~
+@11078 = ~Mirror Image
+
+Duration: 1 turn
+Area of Effect: The wielder
+
+When a Mirror Image ability is cast, the character causes from 4 to 8 exact duplicates of himself to come into being around him. These images do exactly what the character does. Since the ability causes a blurring and slight distortion when cast, it is impossible for opponents to be certain which are the illusions and which is the actual character. When an image is struck by a melee or missile attack, magical or otherwise, it disappears, but any other existing images remain intact until they are struck. However, it is important to note that this will not protect the character against every attack, as it is possible for an enemy to choose the real character amongst all the images.~
+@11079 = ~Haste
+
+Duration: 2 rounds
+Area of Effect: The wielder
+
+When this ability is cast, the character affected function at double movement rate, gain a -2 initiative bonus, and receive an extra attack per round. Spellcasting and spell effects are not affected. Note that this ability negates the effects of a Slow spell.~
+@11080 = ~Detect Invisibility
+
+Range: 10 yards
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+When the character casts a Detect Invisibility ability, he is able to see clearly any objects or beings that are invisible, as well as any that are astral, ethereal, or out of phase. In addition, this ability enables the character to detect hidden or concealed creatures (e.g., thieves hiding in shadows, halflings in underbrush, and so on). It does not reveal illusions or enable the character to see through physical objects.
+Note: If an invisible creature enters the area of effect after the ability has already been cast, the creature will remain invisible.~
+@11081 = ~Sword Dance
+
+Range: 0
+Duration: 4 rounds
+Area of Effect: Special
+
+Upon casting this ability, sword leaps from the wielder's hands. Dancing sword can attack on its own.
+
+Characteristics of the dancing sword:
+ - Hit Points: 36
+ - Armor Class: -20
+ - 100% resistance to magic
+ - 100% resistance to acid, cold, fire, and electricity
+ - 100% resistance to crushing, slashing, piercing, and missile damage
+ - Immune to charm, confusion, disease, disintegrate, fear, feeblemind, hold, imprisonment, level drain, maze, morale failure, paralysis, petrification, poison, polymorph, slay, sleep, and stun
+ - Combat: 1 attack per round at 8 THAC0 for 1d8 +4 slashing damage; strikes as an enchanted weapon +2~
+@11082 = ~Detect Invisibility
+
+Range: 0
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+When the character casts a Detect Invisibility ability, he is able to see clearly any objects or beings that are invisible, as well as any that are astral, ethereal, or out of phase. In addition, this ability enables the character to detect hidden or concealed creatures (e.g., thieves hiding in shadows, halflings in underbrush, and so on). It does not reveal illusions or enable the character to see through physical objects.
+Note: If an invisible creature enters the area of effect after the ability has already been cast, the creature will remain invisible.~
+@11083 = ~Mass Silence
+
+Range: Visual range of the wielder
+Duration: 1 turn
+Area of Effect: 30-ft. radius
+Saving Throw: Negates effect
+
+Upon casting this ability, complete silence prevails in the affected area. All sound is stopped: Conversation is impossible and spells cannot be cast unless an affected caster then casts Vocalize. Each creature in the area must make a Saving Throw vs. spell with a -5 penalty; if the save is failed, then they are silenced for the duration of the ability. Note that this ability does not continue to affect the area after being cast; only those in the area at the time of the casting are affected by the silence.~
+@11084 = ~Blindness
+
+Range: Visual range of the wielder
+Duration: 2 rounds
+Area of Effect: 1 creature
+Saving Throw: Negates effect
+
+This ability temporarily blinds its target. A Saving Throw is allowed and, if successful, there are no harmful effects. If a victim is blinded, he receives a -4 penalty to his attack rolls and Armor Class.~
+@11085 = ~Lightning Bolt
+
+Range: Visual range of the wielder
+Duration: Instant
+Casting Time: 3
+Area of Effect: 1 creature
+Saving Throw: 1/2
+
+Upon casting this ability, the character releases a powerful stroke of electrical energy that inflicts 10d6 points of electrical damage. A successful Saving Throw vs. spell reduces this damage to half.~
+@11086 = ~Dispel Magic
+
+Range: Visual range of the wielder
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+This ability removes magical effects upon anyone within the area. This includes effects given from spells, potions and certain magical items such as wands. The ability is cast at level 20.~
+@11087 = ~Summon Spectral Blade
+
+Range: 0
+Duration: 4 rounds
+Area of Effect: Special
+
+With this ability, the character can summon a spectral blade. This dancing sword fights on behalf of the one who wields Spectral Brand.
+
+Characteristics of the dancing sword:
+ - Hit Points: 36
+ - Armor Class: -20
+ - 100% resistance to magic
+ - 100% resistance to acid, cold, fire, and electricity
+ - 100% resistance to crushing, slashing, piercing, and missile damage
+ - Immune to charm, confusion, disease, disintegrate, fear, feeblemind, hold, imprisonment, level drain, maze, morale failure, paralysis, petrification, poison, polymorph, slay, sleep, and stun
+ - Combat: 1 attack per round at 9 THAC0 for 1d8 +3 slashing damage; strikes as an enchanted weapon +3~
+@11088 = ~Armor Piercing Strike
+
+Duration: 3 rounds
+Area of Effect: The wielder
+
+The character gains a +10 bonus to THAC0.~
+@11089 = ~Lesser Restoration
+
+Range: Touch
+Duration: Permanent
+Casting Time: 2
+Area of Effect: 1 creature
+
+When this ability is cast, the life energy level of the recipient is raised. This reverses any previous life energy level drain of the creature by a force or monster. The casting of this ability is very draining on the character and he will likely require rest immediately after the casting, as it will cause days' worth of fatigue almost instantaneously.~
+@11090 = ~Greater Restoration
+
+Range: Touch
+Duration: Permanent
+Casting Time: 3
+Area of Effect: 1 creature
+
+When this ability is cast, the life energy level of the recipient is raised. This reverses any previous life energy level drain of the creature by a force or monster. A Greater Restoration ability will also restore the Intelligence score of a creature affected by the Feeblemind spell and negate any form of insanity, such as confusion or berserk. It fully heals the target and cures any diseases or poisons. The casting of this ability is very draining on the character, and he will likely require rest immediately afterward.~
+@11091 = ~Dispel Magic
+
+Range: Visual range of the wielder
+Duration: Instant
+Area of Effect: 30-ft. radius
+Saving Throw: None
+
+This ability removes magical effects upon anyone within the area. This includes effects given from spells, potions and certain magical items such as wands. The ability is cast at level 15.~
+@11092 = ~Simulacrum
+
+Range: 0
+Duration: 16 rounds
+Casting Time: 9
+Area of Effect: Special
+
+A duplicate of the character is created with this ability. The duplicate is almost identical to the character, making it a very powerful ally. It is created at 60% of the character's level and has all the spells and abilities that the character would have at that level. It also has 60% of the character's Hit Points and is fully under his control.~
+@11100 = ~Transformation weapon~
+@11101 = ~Shapeshifts Rat~
+@11102 = ~Lightning Bolt of Paralyzation~
+@11103 = ~Enhanced Charm Animal~
+@11104 = ~Missile Blast~
+@11105 = ~Cure Poison~
+@11106 = ~Increase Constitution~
+@11107 = ~Etherealness~
+@11108 = ~Polymorph into a Wolf~
+@11109 = ~Create Darts~
+@11110 = ~Create Goodberries~
+@11111 = ~Energy Strike~
+@11112 = ~Ram~
+@11113 = ~Sonic Boom~
+@11114 = ~Create Bullets~
+@11115 = ~Sleep Cloud~

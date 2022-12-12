@@ -1,0 +1,3 @@
+UI:Improved Invisibility Icon=1
+UI:Blur/Mirror Image Icon=1
+UI:Morale Break Icon=1

@@ -1,0 +1,66 @@
+DEFINE_ACTION_FUNCTION ~patch~ INT_VAR option = 0 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini.txt"
+BUT_ONLY
+
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_enemy.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_enemy.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_ally.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 3) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_enemy.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_ally.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_party.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 4) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_enemy.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_neutral.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 5) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_enemy.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_ally.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_neutral.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 6) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_enemy.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_ally.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_neutral.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_party.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 7) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_ally.txt"
+    BUT_ONLY
+END
+
+ACTION_IF (%option% = 8) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_ally.txt"
+        APPEND_FILE "bg2improvedgui/show_hp/files/TobEx_ini_party.txt"
+    BUT_ONLY
+END
+
+END // FUNC ~patch~

@@ -1,0 +1,1 @@
+Engine:Block Area Transition in Combat=1

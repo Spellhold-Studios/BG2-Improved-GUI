@@ -1,0 +1,602 @@
+// (c) Prozh (http://www.shsforums.net/user/38456-prozh)
+
+COPY ~bg2improvedgui/panel_rightclick/files/XSHAPE01.BAM~ ~override~
+
+///////////////////////////////////////
+// class/kit descriptions
+
+COPY_EXISTING ~spcl321.spl~ ~override~
+  SAY 0x50 @10001
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl144.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl144~ #8 // description icon
+  SAY 0x50 @10002
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl152.spl~ ~override~
+  SAY 0x50 @10003
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl211.spl~ ~override~
+              ~spin109.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl815~ #8 // description icon
+  SAY 0x50 @10004
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl212.spl~ ~override~
+              ~spin120.spl~ ~override~
+  SAY 0x50 @10005
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl213.spl~ ~override~
+  SAY 0x50 @10006
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl222.spl~ ~override~
+  SAY 0x50 @10007
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl231.spl~ ~override~
+  SAY 0x50 @10008
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl232.spl~ ~override~
+              ~spcl732.spl~ ~override~
+  SAY 0x50 @10009
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl311.spl~ ~override~
+              ~spin108.spl~ ~override~
+  SAY 0x50 @10010
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl121.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl121~ #8 // description icon
+  SAY 0x50 @10011
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl342.spl~ ~override~
+  SAY 0x50 @10012
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl412.spl~ ~override~
+  WRITE_ASCII 0x3a ~settrap~ #8 // description icon
+  SAY 0x50 @10013
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl423.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl423~ #8 // description icon
+  SAY 0x50 @10014
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl414.spl~ ~override~
+  WRITE_ASCII 0x3a ~setsnare~ #8 // description icon
+  SAY 0x50 @10015
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl721.spl~ ~override~
+  SAY 0x50 @10016
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl722.spl~ ~override~
+  SAY 0x50 @10017
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl731.spl~ ~override~
+  SAY 0x50 @10018
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl741.spl~ ~override~
+  SAY 0x50 @10019
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl742.spl~ ~override~
+  SAY 0x50 @10020
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl521.spl~ ~override~
+  SAY 0x50 @10021
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl522.spl~ ~override~
+  SAY 0x50 @10022
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl611.spl~ ~override~
+              ~spin107.spl~ ~override~
+  SAY 0x50 @10023
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl612.spl~ ~override~
+              ~spin110.spl~ ~override~
+  SAY 0x50 @10024
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl613.spl~ ~override~
+              ~spin111.spl~ ~override~
+  SAY 0x50 @10025
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl621.spl~ ~override~
+  SAY 0x50 @10026
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl643.spl~ ~override~
+  SAY 0x50 @10027
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl644.spl~ ~override~
+  SAY 0x50 @10028
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin122.spl~ ~override~
+              ~spin123.spl~ ~override~
+              ~spin124.spl~ ~override~
+              ~spin150.spl~ ~override~
+              ~spin151.spl~ ~override~
+              ~spinhum.spl~ ~override~
+              ~spwi489.spl~ ~override~
+              ~spwi490.spl~ ~override~
+              ~spwi491.spl~ ~override~
+  SAY 0x50 @10029
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl632.spl~ ~override~
+              ~spin125.spl~ ~override~
+  SAY 0x50 @10030
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl633.spl~ ~override~
+              ~spin126.spl~ ~override~
+  WRITE_ASCII 0x3a ~plywyvnb~ #8 // description icon
+  SAY 0x50 @10031
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin126.spl~ ~override~
+  WRITE_ASCII 0x76 ~plywyvnb~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl634.spl~ ~override~
+  SAY 0x50 @10032
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin160.spl~ ~override~
+  SAY 0x50 @10033
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl811.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl811~ #8 // description icon
+  SAY 0x50 @10034
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl815.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl815~ #8 // description icon
+  SAY 0x50 @10035
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl820.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl820~ #8 // description icon
+  SAY 0x50 @10036
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// hla
+
+STRING_SET 70397 @10037
+STRING_SET 70398 @10038
+STRING_SET 70399 @10039
+STRING_SET 70400 @10040
+STRING_SET 70401 @10041
+STRING_SET 70404 @10042
+STRING_SET 70299 @10043
+STRING_SET 70300 @10045
+STRING_SET 70298 @10046
+STRING_SET 70403 @10047
+STRING_SET 70309 @10048
+STRING_SET 70310 @10049
+STRING_SET 70311 @10050
+STRING_SET 70312 @10051
+STRING_SET 70313 @10052
+STRING_SET 70314 @10053
+STRING_SET 70315 @10054
+STRING_SET 70316 @10055
+STRING_SET 70317 @10056
+STRING_SET 70318 @10057
+STRING_SET 71467 @10058
+
+COPY_EXISTING ~spcl900.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl900b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl901.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl901b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl902.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl902b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl903.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl903b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl904.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl904b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl905.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl905b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl906.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl906b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl907.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl907b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl908.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl908b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl909.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl909b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl910.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl910b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl911.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl911b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl912.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl912b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl913.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl913b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl914.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl914b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl916.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl916b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl917.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl917b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl918.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl918b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl919.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl919b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl921.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl921b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl922.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl920b~ #8 // description icon
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spcl923.spl~ ~override~
+  SAY 0x50 @10059
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// BG2 NPC
+
+COPY_EXISTING ~spin117.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin117~ #8 // description icon
+  SAY 0x50 @10060
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin676.spl~ ~override~
+  SAY 0x50 @10061
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin827.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl815~ #8 // description icon
+  SAY 0x50 @10062
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin828.spl~ ~override~
+  SAY 0x50 @10063
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin826.spl~ ~override~
+  SAY 0x50 @10064
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin829.spl~ ~override~
+  WRITE_ASCII 0x3a ~ispin829~ #8 // description icon
+  SAY 0x50 @10065
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// player1
+
+COPY_EXISTING ~spin101.spl~ ~override~
+  SAY 0x50 @10066
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin102.spl~ ~override~
+  SAY 0x50 @10067
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin103.spl~ ~override~
+  SAY 0x50 @10068
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin104.spl~ ~override~
+  SAY 0x50 @10069
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin105.spl~ ~override~
+  SAY 0x50 @10070
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin106.spl~ ~override~
+  SAY 0x50 @10071
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin822.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin822~ #8 // description icon
+  SAY 0x50 @10072
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin718.spl~ ~override~
+  WRITE_ASCII 0x3a ~ihum~ #8 // description icon
+  SAY 0x50 @10073
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin649.spl~ ~override~
+  SAY 0x50 @10074
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// spell
+
+COPY_EXISTING ~spin152.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin152~ #8 // description icon
+  SAY 0x50 @10075
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin974.spl~ ~override~
+  WRITE_ASCII 0x3a ~xshape01~ #8 // description icon
+  SAY 0x50 @10076
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin153.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin153~ #8 // description icon
+  SAY 0x50 @10077
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin154.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin154~ #8 // description icon
+  SAY 0x50 @10078
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin155.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin155~ #8 // description icon
+  SAY 0x50 @10079
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin156.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin156~ #8 // description icon
+  SAY 0x50 @10080
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin157.spl~ ~override~
+  WRITE_ASCII 0x3a ~spin157~ #8 // description icon
+  SAY 0x50 @10081
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi493.spl~ ~override~
+  SAY 0x50 @10082
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi494.spl~ ~override~
+  SAY 0x50 @10083
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi495.spl~ ~override~
+  SAY 0x50 @10084
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi496.spl~ ~override~
+  SAY 0x50 @10085
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi497.spl~ ~override~
+  SAY 0x50 @10086
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi498.spl~ ~override~
+  SAY 0x50 @10087
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spwi499.spl~ ~override~
+  SAY 0x50 @10088
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// BG1 NPC
+
+COPY_EXISTING ~spin112.spl~ ~override~
+  SAY 0x50 @10089
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin113.spl~ ~override~
+  SAY 0x50 @10090
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin114.spl~ ~override~
+  SAY 0x50 @10091
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin115.spl~ ~override~
+  SAY 0x50 @10092
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin116.spl~ ~override~
+  SAY 0x50 @10093
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin118.spl~ ~override~
+  SAY 0x50 @10094
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// other creature
+
+COPY_EXISTING ~spin121.spl~ ~override~
+  SAY 0x50 @10095
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin119.spl~ ~override~
+  SAY 0x50 @10096
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin929.spl~ ~override~
+  SAY 0x50 @10097
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spyanc01.spl~ ~override~
+  WRITE_ASCII 0x3a ~spcl900b~ #8 // description icon
+  SAY 0x50 @10098
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin926.spl~ ~override~
+  SAY 0x50 @10099
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin927.spl~ ~override~
+  SAY 0x50 @10100
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin934.spl~ ~override~
+  SAY 0x50 @10101
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin938.spl~ ~override~
+  SAY 0x50 @10102
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin939.spl~ ~override~
+  SAY 0x50 @10103
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin930.spl~ ~override~
+  SAY 0x50 @10104
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin941.spl~ ~override~
+  SAY 0x50 @10105
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin935.spl~ ~override~
+  SAY 0x50 @10106
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spogre01.spl~ ~override~
+  SAY 0x50 @10107
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spimix01.spl~ ~override~
+  SAY 0x50 @10108
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin933.spl~ ~override~
+  SAY 0x50 @10109
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin936.spl~ ~override~
+  SAY 0x50 @10110
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin913.spl~ ~override~
+  WRITE_ASCII 0x3a ~spwi211c~ #8 // description icon
+  WRITE_ASCII 0x76 ~spwi211b~ #8 // description icon
+  SAY 0x50 @10111
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin914.spl~ ~override~
+  WRITE_ASCII 0x3a ~spwi215c~ #8 // description icon
+  WRITE_ASCII 0x76 ~spwi215b~ #8 // description icon
+  SAY 0x50 @10112
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin704.spl~ ~override~
+  SAY 0x50 @10113
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin539.spl~ ~override~
+  SAY 0x50 @10114
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin943.spl~ ~override~
+  SAY 0x50 @10115
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin696.spl~ ~override~
+  SAY 0x50 @10116
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin697.spl~ ~override~
+  SAY 0x50 @10117
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin698.spl~ ~override~
+  SAY 0x50 @10118
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin699.spl~ ~override~
+  SAY 0x50 @10119
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin891.spl~ ~override~
+  SAY 0x50 @10120
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin683.spl~ ~override~
+  SAY 0x50 @10121
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin931.spl~ ~override~
+  SAY 0x50 @10122
+  BUT_ONLY_IF_IT_CHANGES
+
+
+///////////////////////////////////////
+// icons
+
+COPY_EXISTING ~spin109.spl~ ~override~
+  READ_LONG   0x64 "abil_off"
+  READ_SHORT  0x68 "abil_num"
+  WHILE ("%abil_num%" > 0) BEGIN
+    SET "abil_num" = ("%abil_num%" - 1)
+    WRITE_ASCII ("%abil_off%" + 0x04 + (0x28 * "%abil_num%")) ~SPCL815~ #8
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+COPY_EXISTING ~spin935.spl~ ~override~
+  WRITE_ASCII 0x3a ~spwi224c~ #8
+  WRITE_ASCII 0x76 ~spwi224b~ #8
+  BUT_ONLY_IF_IT_CHANGES

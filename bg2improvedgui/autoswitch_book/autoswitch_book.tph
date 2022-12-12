@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~SWITCHBOOK~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/autoswitch_book/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

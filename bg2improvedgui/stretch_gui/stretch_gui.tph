@@ -1,0 +1,33 @@
+DEFINE_ACTION_FUNCTION ~STRETCHGUI~ INT_VAR option = 0 BEGIN
+ ACTION_IF ((%option% = 0) OR (%option% = 1)) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+         APPEND_FILE "bg2improvedgui/stretch_gui/files/TobEx_ini.txt"
+    BUT_ONLY
+ END
+ 
+ ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/stretch_gui/files/TobEx_ini_cursor.txt"
+    BUT_ONLY
+ END
+ 
+ ACTION_IF (%option% = 2) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/stretch_gui/files/TobEx_ini_all.txt"
+    BUT_ONLY
+ END
+END
+
+
+DEFINE_ACTION_FUNCTION ~STRETCHGUIWIDESCREENMODE~ INT_VAR option = 0 BEGIN
+ COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/stretch_gui/files/TobEx_ini_widescreenmod.txt"
+ BUT_ONLY
+END
+
+
+DEFINE_ACTION_FUNCTION ~SHIFTSUBTITLES~ INT_VAR option = 0 BEGIN
+ COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+    APPEND_FILE "bg2improvedgui/stretch_gui/files/TobEx_ini_subtitles.txt"
+ BUT_ONLY
+END
