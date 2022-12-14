@@ -1,0 +1,19 @@
+#include "chitin.h"
+
+void InventoryScreen_LabelText_asm();
+void InventoryScreen_SetTooltips_asm();
+void InventoryScreen_DragInventoryArea_asm();
+void InventoryScreen_DragInventoryAreaOnBag_asm();
+void InventoryScreen_DragBodyArea_asm();
+void InventoryScreen_DragContainerArea_asm();
+void InventoryScreen_PortraitRedraw_asm();
+void CScreenCreateChar_ResetAbilities_asm();
+void RollScreen_RecallButtonClick_asm();
+void DragToBag_asm();
+void CStore__GetNumItems_asm();
+void HighlightLabel_asm();
+void CScreenChar_UpdateMainPanel_AddNewInfo_asm();
+void CScreenCharacter_UpdateStyleBonus_AddPenalty_asm();
+void InventoryScreen_CheckCheats_asm();
+void CScreenCharacter_UpdateMainPanel_AddDamageOneHand_asm();
+void CScreenCharacter_UpdateMainPanel_AddDamageTwoHand_asm();
