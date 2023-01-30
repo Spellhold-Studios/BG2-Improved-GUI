@@ -16,4 +16,28 @@ void CScreenWorldMap_EngineGameInit_asm();
 void CScreenWorldMap_EngineActivated_asm();
 void xxx_InvalidateCursorRect_asm();
 
+void CScreenWorld_Pause_asm();
+void CTimerWorld_HardPause_asm();
+void CTimerWorld_StopTime_asm();
+
+void CScreenWorld_Unpause_asm();
+void CTimerWorld_HardUnPause_asm();
+void CTimerWorld_StartTime_asm();
+void CGameArea_OnActivation_asm();
+
+void UpdateSoundList_ActivateFromAllLoopingQueue_asm();
+void SoundPlay0CheckPause_asm();
+void SoundPlay1CheckPause_asm();
+void SetVolumeCheckPause_asm();
+void CSoundMixer_UpdateSoundList_RemoveFromPlayingNow_asm();
+void CSoundMixer_UpdateSoundList_MismatchAreaRemoveFromPlayingNow_asm();
+void CSoundMixer_UpdateSoundListPriority_RemoveFromPlayingNow_asm();
+void CSoundMixer_UpdateSoundListPriority_MismatchAreaRemoveFromPlayingNow_asm();
+void CSound_PlayWaiting_asm();
+void CSoundMixer_TransferBuffer_asm();
+void CMessage_TimeStop_asm();
+void TimeStopEnded_asm();
+void CVoice_CVoice_asm();
+
+
 #endif //ENGINEWORLD_H

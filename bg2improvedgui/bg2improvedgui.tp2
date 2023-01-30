@@ -1,7 +1,7 @@
 BACKUP ~bg2improvedgui/backup~
 AUTHOR ~Insomniator (http://www.shsforums.net/topic/60986-bg2-improved-gui/)~
 
-VERSION ~5.5~
+VERSION ~5.6~
 
 LANGUAGE ~English~ ~english~
          ~bg2improvedgui/tra/english/setup.tra~
@@ -740,4 +740,31 @@ REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
 INCLUDE ~bg2improvedgui/tobex.tph~
 INCLUDE ~bg2improvedgui/bg1_sound/more_cast_voice.tph~
 LAUNCH_ACTION_FUNCTION ~MORECASTVOICE~ INT_VAR option = 2 END
+
+
+////////////////////////////////
+// Restore BG1/BG2 XP Limits
+BEGIN @4300 DESIGNATED 4300
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/xp_limit/xplimit.tph~
+LAUNCH_ACTION_FUNCTION ~XPLIMIT~ END
+
+
+////////////////////////////////
+// DSOAL
+BEGIN @4400 DESIGNATED 4400
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/dsoal/dsoal.tph~
+LAUNCH_ACTION_FUNCTION ~DSOAL~ END
+
+
+////////////////////////////////
+// Freeze/Unfreeze sounds
+BEGIN @4500 DESIGNATED 4500
+REQUIRE_PREDICATE FILE_EXISTS ~tobex.dll~ @-10003
+INCLUDE ~bg2improvedgui/tobex.tph~
+INCLUDE ~bg2improvedgui/freeze_snd/freezesnd.tph~
+LAUNCH_ACTION_FUNCTION ~FREEZESND~ END
 

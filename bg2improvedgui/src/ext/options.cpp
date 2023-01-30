@@ -34,8 +34,6 @@ CGameOptionsEx::CGameOptionsEx() {
     bDebugLogNetworkErrors = FALSE;
     bDebugRestoreCombatInfoText = FALSE;
     bDebugVerbose = FALSE;
-    bDisableHiddenPatches = FALSE;
-    bDisarmTrapDistanceFix = FALSE;
 
     bEffApplyConcCheckDamage = FALSE;
     bEffApplyEffItemFix = FALSE;
@@ -136,7 +134,6 @@ CGameOptionsEx::CGameOptionsEx() {
     bEngineSummonLimitFix = FALSE;
     bEngineTargetDeadFix = FALSE;
     bEngineWeapSpecNumAttacksMod = FALSE;
-    bEngineCharacterBehindPolygonFix = FALSE;
 
     bItemsAbilityItemAnim = FALSE;
     bItemsBackstabRestrictionsConfig = FALSE;
@@ -147,7 +144,6 @@ CGameOptionsEx::CGameOptionsEx() {
     bItemsUseAnimPercentThrowingWeapons = FALSE;
 
     bMusicSonglistExtend = FALSE;
-    bContinuousBattleMusic = FALSE;
 
     bSoundAnimSoundFix = FALSE;
     bSoundAnimAttackSounds = FALSE;
@@ -219,6 +215,10 @@ CGameOptionsEx::CGameOptionsEx() {
     bNightmareBonusGold                 = FALSE;
     bNightmarePartySummon               = FALSE;
 
+    bDisableHiddenPatches               = FALSE;
+    bDisarmTrapDistanceFix              = FALSE;
+    bEngineCharacterBehindPolygonFix    = FALSE;
+    bContinuousBattleMusic              = FALSE;
     bEngineShamanClass                  = FALSE;
     bUI_StartNewGameWithBG1Animation    = FALSE;
     bUI_GreetingBeforeDialog            = FALSE;
@@ -297,6 +297,11 @@ CGameOptionsEx::CGameOptionsEx() {
     bSound_BG2ClearCastingSound         = FALSE;
     bSound_NWNCastingSound              = FALSE;
     bEngine_FakeDiskFreeSpace           = FALSE;
+    bVideo_7313_PaletteFix              = FALSE;
+    bEngine_LimitXP                     = FALSE;
+    bSound_DSOAL                        = FALSE;
+    bSound_44KhzMixer                   = FALSE;
+    bSound_FreezeOnPause                = FALSE;
 
     Init();
 }
@@ -325,8 +330,6 @@ void CGameOptionsEx::Init() {
     bDebugLogNetworkErrors = GetCoreIniValue("Debug", "Log Network Errors");
     bDebugRestoreCombatInfoText = GetCoreIniValue("Debug", "Restore Extra Combat Info Text");
     bDebugVerbose = GetCoreIniValue("Debug", "Verbose Logging");
-    bDisableHiddenPatches = GetCoreIniValue("Debug", "Disable Hidden TobEx Patches");
-    bDisarmTrapDistanceFix = GetCoreIniValue("Action", "Disarm Trap Distance Fix");
 
     bEffApplyConcCheckDamage = GetTweakIniValue("Tweak", "Effect Opcodes:Apply Concentration Check On Damage");
     bEffApplyEffItemFix = GetCoreIniValue("Effect Opcodes", "Apply Effect Item Fix");
@@ -427,7 +430,6 @@ void CGameOptionsEx::Init() {
     bEngineSummonLimitFix = GetCoreIniValue("Engine", "Summon Limit Fix");
     bEngineTargetDeadFix = GetCoreIniValue("Engine", "Targetting Dead Animations Fix");
     bEngineWeapSpecNumAttacksMod = GetTweakIniValue("Tweak", "Engine:Weapon Specialisation Number of Attacks Mod");
-    bEngineCharacterBehindPolygonFix = GetCoreIniValue("Engine", "Character Behind Polygon Fix");
 
     bItemsAbilityItemAnim = GetCoreIniValue("Items", "Ability-specific Use Item Animations");
     bItemsBackstabRestrictionsConfig = GetCoreIniValue("Items", "Configurable Backstab Restrictions");
@@ -439,7 +441,6 @@ void CGameOptionsEx::Init() {
     bItemsUseAnimPercentThrowingWeapons = GetTweakIniValue("Tweak", "Items:Use Animation Percentages for Throwing Weapons");
 
     bMusicSonglistExtend   = GetCoreIniValue("Music", "Extended Songlist");
-    bContinuousBattleMusic = GetCoreIniValue("Music", "Continuous Battle Music Fix");
 
     bSoundAnimSoundFix = GetCoreIniValue("Sound", "Animation Sound Fix");
     bSoundDlgGreetingSubtitles = GetTweakIniValue("Tweak", "Sound:Dialogue Greeting Subtitles");
@@ -507,6 +508,8 @@ void CGameOptionsEx::Init() {
     bUI_ShowActionOnPortrait =          GetTweakIniValue("Tweak", "UI:Show Action On Portrait");
     bUI_ShowActionOnPortrait_Always =   GetTweakIniValue("Tweak", "UI:Show Action On Portrait Always");
     bUI_YellowBorderOnPortraitIfTooFar= GetTweakIniValue("Tweak", "UI:Yellow Border On Portrait If Too Far");
+    bDisableHiddenPatches =         GetCoreIniValue("Debug",  "Disable Hidden TobEx Patches");
+    bDisarmTrapDistanceFix =        GetCoreIniValue("Action", "Disarm Trap Distance Fix");
     bUI_NightmareMode =             GetTweakIniValue("Tweak", "UI:Legacy of Bhaal Difficulty");
     bNightmarePartySummon =         GetTweakIniValue("Tweak", "UI:Legacy of Bhaal Difficulty Party Summons");
     bNightmareBonusXP =             GetTweakIniValue("Tweak", "UI:Legacy of Bhaal Difficulty Bonus XP");
@@ -525,7 +528,7 @@ void CGameOptionsEx::Init() {
     bNightmareBonusSpawns =         GetTweakIniValue("Tweak", "UI:Legacy of Bhaal Difficulty Bonus.Rest Encounter Spawn Addon");
     bNightmareBonusNoMoraleBreak =  GetTweakIniValue("Tweak", "UI:Legacy of Bhaal Difficulty Bonus.No Morale Break");
     bNightmareBonusMovementRate =   GetTweakIniValue("Tweak", "UI:Legacy of Bhaal Difficulty Bonus.Movement Rate");
-
+    bContinuousBattleMusic =            GetCoreIniValue("Music", "Continuous Battle Music Fix");
     bEngineShamanClass  =               GetCoreIniValue("Engine", "Shaman Class");
     bUI_StartNewGameWithBG1Animation =  GetTweakIniValue("Tweak", "UI:Set BG1 Animation during Character Generation");
     bUI_GreetingBeforeDialog =          GetTweakIniValue("Tweak", "UI:Greeting Before Dialog");
@@ -554,8 +557,6 @@ void CGameOptionsEx::Init() {
     bUI_SequenceWindowButton =              GetTweakIniValue("Tweak", "UI:Spell Sequencer Panel");
     bEffProtectionFromSpellContingencyFix = GetCoreIniValue("Effect Opcodes", "Protection From Spell for Contingency Fix");
     bEngine_RunInBackground  =              GetTweakIniValue("Tweak", "Engine:Run In Background");
-
-    //Improved GUI v5.0 / AfterLife v29.9
     bUI_SpellIconRightClick =               GetTweakIniValue("Tweak", "UI:Spell Icon Right Click");
     bUI_HideStaticPortraitIcons =           GetTweakIniValue("Tweak", "UI:Hide Static Portrait Icons");
     bUI_ShortCuts =                         GetTweakIniValue("Tweak", "UI:Additional Keyboard ShortCuts");
@@ -563,6 +564,7 @@ void CGameOptionsEx::Init() {
     bUI_PartyColorCirclesExcludeNPCColors = GetTweakIniValue("Tweak", "UI:Party Color Circles Exclude NPC Colors");
     bEff_StopInterruptedCastingAnimation =  GetCoreIniValue("Effect Opcodes", "Stop Animation/Sound of Interrupted Casting");
     bUI_SpellSelectMenu =                   GetTweakIniValue("Tweak", "UI:Spell Selection Menu");
+    bEngineCharacterBehindPolygonFix =      GetCoreIniValue("Engine", "Character Behind Polygon Fix");
     bUI_FullScreenWorldMap =                GetTweakIniValue("Tweak", "UI:FullScreen World Map");
     bUI_ShowNPCFloatHP =                    GetTweakIniValue("Tweak", "UI:Show NPC Float HP");
     bUI_ShowNPCFloatHP_Enemy =              GetTweakIniValue("Tweak", "UI:Show NPC Float HP Enemy");
@@ -609,6 +611,11 @@ void CGameOptionsEx::Init() {
     bSound_BG2ClearCastingSound   = GetTweakIniValue("Tweak", "UI:BG2 Clear Casting Voice");
     bSound_NWNCastingSound        = GetTweakIniValue("Tweak", "UI:NWN Casting Voice");
     bEngine_FakeDiskFreeSpace     = GetCoreIniValue("Engine", "2TB+ Disk Free Space Fix");
+    bVideo_7313_PaletteFix        = GetCoreIniValue("Video", "Small Purple Elemental Palette Fix");
+    bEngine_LimitXP               = GetTweakIniValue("Tweak", "Engine:Limit XP");
+    bSound_DSOAL                  = GetTweakIniValue("Tweak", "Sound:EAX Emulation");
+    bSound_44KhzMixer             = GetCoreIniValue("Sound", "44Khz Mixer");
+    bSound_FreezeOnPause          = GetTweakIniValue("Tweak", "Sound:Freeze On Pause");
 
 }
 
@@ -632,7 +639,6 @@ int GetTweakIniValue(LPCTSTR szSection, LPCTSTR szKey) {
     sscanf_s(s_szBuf, "%d", &n);
     return n;
 }
-
 
 int GetTweakIniValue(LPCTSTR szSection, LPCTSTR szKey, LPCTSTR szDefault) {
     int n = 0;

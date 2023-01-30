@@ -36,11 +36,22 @@ void CGameSprite_VerbalConstant_asm();
 
 //void CCreatureObject_PlaySound_LimitActionSoundToBG1_asm();
 void CSound_Stop_Logging_asm();
+void CSound_Stop_Logging2_asm();
 void CSoundMixer_ClearChannel_Logging_asm();
 void CGameSprite_DecodeSwingSound_DisableExclusive_asm();
 void CGameSprite_ApplyCastingEffect_PatchFilePrefix_asm();
 void CGameSprite_ApplyCastingEffectPost_PatchFilePrefix_asm();
 void CGameSprite_ApplyCastingEffect_PatchAnimId_asm();
+void CSoundMixer_CleanUp_Log_asm();
+void CSoundMixer_Initialize_Log_asm();
+void CGameArea_OnActivation_Log_asm();
+
+void CCacheStatus_Update_Log_asm();
+void CSound_SetVolume_Log2_asm();
+void CSound_ResetVolume_Log2_asm();
+void CSoundMixer_Initialize_Log3_asm();
+void CInfGame_LoadGame_ReActivateArea_asm();
+
 
 
 #endif //SOUNDCORE_H

@@ -650,7 +650,7 @@ __asm
     ret
 
 CScreenWizSpell_UpdateMainPanel_CheckSequenceList_nobutton:
-    add     esp,4
+    add     esp, 4
     push    07B8C05h
     ret
 }

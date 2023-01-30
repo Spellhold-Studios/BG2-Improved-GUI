@@ -49,6 +49,8 @@
 #include "ItemCore.h"
 
 CRuleTable** ClassAbilityTable;
+HMODULE DSOAL_DLL;
+
 
 uchar DamageTypeACModText[] = " +DamageTypeACMod:%d";
 extern CRITICAL_SECTION gCriticalSectionSetAnimationSequence;
@@ -63,13 +65,13 @@ typedef unsigned char   uchar;
 
 #define pack_bytes(x) x, sizeof(x)
 
-#define CallInject(a,b,c)   CallInject_vDataList(   a, (void *)b, c, sizeof(c), &vDataList) 
-#define OffsetInject(a,b)   OffsetInject_vDataList( a, (void *)b, &vDataList)
-#define PointerInject(a,b)  PointerInject_vDataList(a, (void *)b, &vDataList)
-#define JumpInject(a,b)     JumpInject_vDataList(   a, (void *)b, &vDataList)
+#define CallInject(a,b,c)   CallInject_vDataList(     a, (void *)b, c, sizeof(c), &vDataList) // opcode, opcode
+#define RelativeInject(a,b) RelativeInject_vDataList( a, (void *)b, &vDataList)               // call bbb pc-relative
+#define PointerInject(a,b)  PointerInject_vDataList(  a, (void *)b, &vDataList)               // [bbb]
+#define JumpInject(a,b)     JumpInject_vDataList(     a, (void *)b, &vDataList)               // jmp far bbb
 
 void
-OffsetInject_vDataList (
+RelativeInject_vDataList (
     DWORD Addr,
     void *InjectProc,
     std::vector<Data> *vDataList
@@ -118,7 +120,7 @@ CallInject_vDataList (
     )
 {
     vDataList->push_back( Data(Addr, patchsize, patchdata) );
-    OffsetInject_vDataList(Addr, InjectProc, vDataList);
+    RelativeInject_vDataList(Addr, InjectProc, vDataList);
 }
 
 void MakeWord_x2_(ushort *addr, std::vector<Data> *vDataList) {
@@ -330,11 +332,13 @@ void ApplyPatch(Data& d) {
 void InitUserPatches(std::vector<Patch>* pvPatchList, std::vector<Data>* pvDataList) {
     WIN32_FIND_DATA w32fd = {0};
     LPCSTR szRegexp = "./TobEx_ini/patch/*.patch";
-    DWORD nErrorCode;
+    DWORD nErrorCode = ERROR_SUCCESS;
     HANDLE hFind;
 
     hFind = FindFirstFile(szRegexp, &w32fd);
-    nErrorCode = GetLastError();
+    if (hFind == INVALID_HANDLE_VALUE)
+        nErrorCode = GetLastError();
+
     if (nErrorCode == ERROR_FILE_NOT_FOUND ||
         nErrorCode == ERROR_PATH_NOT_FOUND) {
         //do nothing
@@ -717,6 +721,16 @@ void InitPatches() {
     std::vector<Patch> vPatchList;
     std::vector<Patch>::iterator vPatchItr;
     std::vector<Data> vDataList;
+
+    // zeroing new allocated objects
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
+        JumpInject(0xA50608, Malloc_asm); // malloc() + memset()
+
+        //RelativeInject(0x435D64, CAlloc_asm); // 1) CInfGame
+        //RelativeInject(0x680AE4, CAlloc_asm); // 2) CArea
+
+        COMMIT_vDataList
+    }
 
     if (pGameOptionsEx->bActionAddKitFix) {
         //AddKit()
@@ -2269,11 +2283,9 @@ void InitPatches() {
 
         COMMIT_vDataList;
     } else {
-        uchar bytes5[]  = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                          };
         uchar bytes6[]  = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                             0x90 };
-        CallInject(0x90BA0C,   CCreatureObject_ShouldAvertCriticalHit_SpellOnly_asm, bytes5);
+        CallInject(0x90BA0C,   CCreatureObject_ShouldAvertCriticalHit_SpellOnly_asm, bytes6);
         CallInject(0x53B20A,   CEffectSpellOnCondition_Apply_AddCriticalHit_asm, bytes6);
 
         COMMIT_vDataList;
@@ -3703,19 +3715,19 @@ void InitPatches() {
         // CInfGame::FindItemInStore
         // Apply only if tobex's original Optimise Bag Search Code is disabled
         if (pGameOptionsEx->bTriggerOptimiseBagSearch == FALSE) {
-            OffsetInject (0x68F80E, CStore__GetNumItems_asm);
-            OffsetInject (0x68F569, CStore__GetNumItems_asm);
+            RelativeInject (0x68F80E, CStore__GetNumItems_asm);
+            RelativeInject (0x68F569, CStore__GetNumItems_asm);
         }
 
         // CInfGame::TakeItemFromStore
         // CInfGame::GetItemFromStore
         // CInfGame::DrainItemInStore
-        OffsetInject (0x690EBD, CStore__GetNumItems_asm);
-        OffsetInject (0x69167A, CStore__GetNumItems_asm);
-        OffsetInject (0x6904E5, CStore__GetNumItems_asm);
-        OffsetInject (0x690B4C, CStore__GetNumItems_asm);
-        OffsetInject (0x68FAD2, CStore__GetNumItems_asm);
-        OffsetInject (0x690179, CStore__GetNumItems_asm);
+        RelativeInject (0x690EBD, CStore__GetNumItems_asm);
+        RelativeInject (0x69167A, CStore__GetNumItems_asm);
+        RelativeInject (0x6904E5, CStore__GetNumItems_asm);
+        RelativeInject (0x690B4C, CStore__GetNumItems_asm);
+        RelativeInject (0x68FAD2, CStore__GetNumItems_asm);
+        RelativeInject (0x690179, CStore__GetNumItems_asm);
 
         // CInfGame::AddItemToStore  ?
         // 0x68EC16
@@ -3738,7 +3750,6 @@ void InitPatches() {
     //  BG1+BG2 Mage Armor Sound
     //  0x10XX Ready Sound
     //  0xA0XX Ready Sound
-    //  Allow Off Hand weapon for BG1 animation 
     if (!pGameOptionsEx->bDisableHiddenPatches) {
         // call InventoryScreen_CheckMageAnimation_asm 
         uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -3793,13 +3804,13 @@ void InitPatches() {
     // Green Highlight Stats on Inventory Screen
     if (!pGameOptionsEx->bDisableHiddenPatches) {
 
-        OffsetInject(0x6E6045, HighlightLabel_asm);
-        OffsetInject(0x6E609A, HighlightLabel_asm);
-        OffsetInject(0x6E6234, HighlightLabel_asm);
-        OffsetInject(0x6E6262, HighlightLabel_asm);
-        OffsetInject(0x6E6290, HighlightLabel_asm);
-        OffsetInject(0x6E62BE, HighlightLabel_asm);
-        OffsetInject(0x6E62EC, HighlightLabel_asm);
+        RelativeInject(0x6E6045, HighlightLabel_asm);
+        RelativeInject(0x6E609A, HighlightLabel_asm);
+        RelativeInject(0x6E6234, HighlightLabel_asm);
+        RelativeInject(0x6E6262, HighlightLabel_asm);
+        RelativeInject(0x6E6290, HighlightLabel_asm);
+        RelativeInject(0x6E62BE, HighlightLabel_asm);
+        RelativeInject(0x6E62EC, HighlightLabel_asm);
 
         COMMIT_vDataList;
     }
@@ -3808,51 +3819,51 @@ void InitPatches() {
     //////////////////////////////////////////////////////////////////////////////////////////////
     // fix creating/assign CString from not null-ended ResRef::GetResRef()
     if (!pGameOptionsEx->bDisableHiddenPatches) {
-        OffsetInject(0x4896CE, GetResRefNulled_asm);
-        OffsetInject(0x4896F1, GetResRefNulled_asm);
-        OffsetInject(0x48976D, GetResRefNulled_asm);
-        OffsetInject(0x489790, GetResRefNulled_asm);
-        //OffsetInject(0x489942, GetResRefNulled_asm);  see AreaCheckObject() fix
-        //OffsetInject(0x489969, GetResRefNulled_asm);
-        OffsetInject(0x491AD0, GetResRefNulled_asm);
-        OffsetInject(0x4AC0A2, GetResRefNulled_asm);
-        OffsetInject(0x4C2F4A, GetResRefNulled_asm);
-        OffsetInject(0x4C3026, GetResRefNulled_asm);
-        OffsetInject(0x4C4833, GetResRefNulled_asm);
-        OffsetInject(0x4C5EFA, GetResRefNulled_asm);
-        OffsetInject(0x4C86F4, GetResRefNulled_asm);
-        OffsetInject(0x4D2D0D, GetResRefNulled_asm);
-        OffsetInject(0x4D78FA, GetResRefNulled_asm);
-        OffsetInject(0x4D7A3C, GetResRefNulled_asm);
-        OffsetInject(0x4D7ACC, GetResRefNulled_asm);
-        OffsetInject(0x4D7D80, GetResRefNulled_asm);
-        OffsetInject(0x4D80AB, GetResRefNulled_asm);
-        OffsetInject(0x4D9118, GetResRefNulled_asm);
-        OffsetInject(0x4D91C5, GetResRefNulled_asm);
-        OffsetInject(0x53CCFE, GetResRefNulled_asm);
-        OffsetInject(0x576431, GetResRefNulled_asm);
-        OffsetInject(0x6B8F6A, GetResRefNulled_asm);
-        OffsetInject(0x7B9F03, GetResRefNulled_asm);
-        OffsetInject(0x7B9F41, GetResRefNulled_asm);
-        OffsetInject(0x7B9F7F, GetResRefNulled_asm);
-        OffsetInject(0x7BC9B6, GetResRefNulled_asm);
-        OffsetInject(0x7BC9F7, GetResRefNulled_asm);
-        OffsetInject(0x7BCA38, GetResRefNulled_asm);
-        OffsetInject(0x7C0D8A, GetResRefNulled_asm);
-        OffsetInject(0x7C1380, GetResRefNulled_asm);
-        OffsetInject(0x7C1475, GetResRefNulled_asm);
-        OffsetInject(0x88BAAE, GetResRefNulled_asm);
-        OffsetInject(0x8D6237, GetResRefNulled_asm);
-        OffsetInject(0x91BA19, GetResRefNulled_asm);
+        RelativeInject(0x4896CE, GetResRefNulled_asm);
+        RelativeInject(0x4896F1, GetResRefNulled_asm);
+        RelativeInject(0x48976D, GetResRefNulled_asm);
+        RelativeInject(0x489790, GetResRefNulled_asm);
+        //RelativeInject(0x489942, GetResRefNulled_asm);  see AreaCheckObject() fix
+        //RelativeInject(0x489969, GetResRefNulled_asm);
+        RelativeInject(0x491AD0, GetResRefNulled_asm);
+        RelativeInject(0x4AC0A2, GetResRefNulled_asm);
+        RelativeInject(0x4C2F4A, GetResRefNulled_asm);
+        RelativeInject(0x4C3026, GetResRefNulled_asm);
+        RelativeInject(0x4C4833, GetResRefNulled_asm);
+        RelativeInject(0x4C5EFA, GetResRefNulled_asm);
+        RelativeInject(0x4C86F4, GetResRefNulled_asm);
+        RelativeInject(0x4D2D0D, GetResRefNulled_asm);
+        RelativeInject(0x4D78FA, GetResRefNulled_asm);
+        RelativeInject(0x4D7A3C, GetResRefNulled_asm);
+        RelativeInject(0x4D7ACC, GetResRefNulled_asm);
+        RelativeInject(0x4D7D80, GetResRefNulled_asm);
+        RelativeInject(0x4D80AB, GetResRefNulled_asm);
+        RelativeInject(0x4D9118, GetResRefNulled_asm);
+        RelativeInject(0x4D91C5, GetResRefNulled_asm);
+        RelativeInject(0x53CCFE, GetResRefNulled_asm);
+        RelativeInject(0x576431, GetResRefNulled_asm);
+        RelativeInject(0x6B8F6A, GetResRefNulled_asm);
+        RelativeInject(0x7B9F03, GetResRefNulled_asm);
+        RelativeInject(0x7B9F41, GetResRefNulled_asm);
+        RelativeInject(0x7B9F7F, GetResRefNulled_asm);
+        RelativeInject(0x7BC9B6, GetResRefNulled_asm);
+        RelativeInject(0x7BC9F7, GetResRefNulled_asm);
+        RelativeInject(0x7BCA38, GetResRefNulled_asm);
+        RelativeInject(0x7C0D8A, GetResRefNulled_asm);
+        RelativeInject(0x7C1380, GetResRefNulled_asm);
+        RelativeInject(0x7C1475, GetResRefNulled_asm);
+        RelativeInject(0x88BAAE, GetResRefNulled_asm);
+        RelativeInject(0x8D6237, GetResRefNulled_asm);
+        RelativeInject(0x91BA19, GetResRefNulled_asm);
 
         // _mbscmp()
-        OffsetInject(0x4D884C, GetResRefNulled_asm);
-        OffsetInject(0x4D8C29, GetResRefNulled_asm);
+        RelativeInject(0x4D884C, GetResRefNulled_asm);
+        RelativeInject(0x4D8C29, GetResRefNulled_asm);
 
         // CString::operator=(char *)
-        OffsetInject(0x8CB6E6, GetCharPtrNulled_asm);
-        OffsetInject(0x8CB569, GetCharPtrNulled_asm);
-        OffsetInject(0x8CB3D4, GetCharPtrNulled_asm);
+        RelativeInject(0x8CB6E6, GetCharPtrNulled_asm);
+        RelativeInject(0x8CB569, GetCharPtrNulled_asm);
+        RelativeInject(0x8CB3D4, GetCharPtrNulled_asm);
 
         COMMIT_vDataList;
     }
@@ -4090,11 +4101,11 @@ void InitPatches() {
         uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                            0x90 };
 
-        OffsetInject (0x56FEBA, InteractiveJournal_QuestEntryAdd_asm);
-        OffsetInject (0x5711A7, InteractiveJournal_ClearText_asm);
+        RelativeInject (0x56FEBA, InteractiveJournal_QuestEntryAdd_asm);
+        RelativeInject (0x5711A7, InteractiveJournal_ClearText_asm);
         CallInject (0x759EB0,   InteractiveJournal_CheckClickedNode_asm, bytes5);
         CallInject (0x7581F3,   InteractiveJournal_SortingInfoLabel_asm, bytes7);
-        OffsetInject (0x7583D9, InteractiveJournal_FillText_asm);
+        RelativeInject (0x7583D9, InteractiveJournal_FillText_asm);
 
         COMMIT_vDataList;
     }
@@ -4401,7 +4412,7 @@ void InitPatches() {
                            0x90 };
 
         CallInject  (0x90BC5D, ThacRollMessage_asm, bytes1);
-        OffsetInject(0x8FD2DD, ThacRollMessage2_asm);
+        RelativeInject(0x8FD2DD, ThacRollMessage2_asm);
         CallInject  (0x508B82, AMOUNT_damage_asm, bytes2);
         // See also DETOUR_CEffect::DETOUR_CheckSave()
 
@@ -4453,6 +4464,7 @@ void InitPatches() {
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     // int16->int32 Wild Mage Kit Fix
+    // Fixes school to Generalist
     if (pGameOptionsEx->bActionAddKitFix ||
         pGameOptionsEx->bTriggerKitFix) {
 
@@ -4522,8 +4534,8 @@ void InitPatches() {
         CallInject  (0x67CEBF, DestroyGame_asm, bytes6);
         CallInject  (0x780167, GameplayOptions_Init_asm, bytes7);
 
-        OffsetInject(0x8E92BD, CheckMorale_asm);
-        OffsetInject(0x717D7A, SetButtonStatus_asm);
+        RelativeInject(0x8E92BD, CheckMorale_asm);
+        RelativeInject(0x717D7A, SetButtonStatus_asm);
         CallInject  (0x4C3657, CGameArea_CheckRestEncounter_asm, bytes7);
 
         COMMIT_vDataList;
@@ -4573,14 +4585,14 @@ void InitPatches() {
                             0x90, 0x90, 0x90, 0x90, 0x90 };
         uchar buttonid[] = { 18 };
 
-        OffsetInject(0x62B998, CRuleTables_GetClassString_asm);
+        RelativeInject(0x62B998, CRuleTables_GetClassString_asm);
         CallInject(0x635DC3,   CRuleTables_GetClassStringLower_asm, bytes5);
         CallInject(0x636AD1,   CRuleTables_GetClassStringMixed_asm, bytes10);
         CallInject(0x734085,   ButtonCharGenClassSelection_GetClassFromButtonIndex_asm, bytes5);
         CallInject(0x733DBF,   ButtonCharGenClassSelection_OnLButtonClick_SetKitDescriptionSTRREF_asm, bytes5);
         CallInject(0x733F4A,   ButtonCharGenClassSelection_OnLButtonClick_OpenSubKits_asm, bytes5);
         CallInject(0x723D08,   CScreenCreateChar_CompleteCharacterClass_SetAnimIDClassSuffix_asm, bytes5);
-        OffsetInject(0x6324C6, CRuleTables_GetTHAC0_asm);
+        RelativeInject(0x6324C6, CRuleTables_GetTHAC0_asm);
         vDataList.push_back(   Data(0x720F60+3, sizeof(buttonid), buttonid) );  // additional class button
         CallInject(0x71CAF4,   CScreenCreateChar_ResetAbilities_RollStrengthEx_asm, bytes5);
         CallInject(0x72B53A,   CScreenCreateChar_IsDoneButtonClickable_EnableMultiClassPanel_asm, bytes5);
@@ -4592,11 +4604,11 @@ void InitPatches() {
         CallInject(0x63ACAD,   CRuleTables_GetClassAbilityTable_asm, bytes5);
         CallInject(0x8D2DBD,   CGameSprite_AddNewSpecialAbilities_asm, bytes6);
         CallInject(0x8D38C0,   CGameSprite_RemoveNewSpecialAbilities_asm, bytes6);
-        OffsetInject(0x63328A, CRuleTables_GetNextLevel_asm);
+        RelativeInject(0x63328A, CRuleTables_GetNextLevel_asm);
 
         //CScreenCharacter
         CallInject(0x6DF57C,   CScreenCharacter_ResetLevelUpPanel_SetSkillPoints_asm, bytes5);
-        OffsetInject(0x6DDE79, CScreenCharacter_ResetLevelUpPanel_ShowNewPriestSpells_asm);
+        RelativeInject(0x6DDE79, CScreenCharacter_ResetLevelUpPanel_ShowNewPriestSpells_asm);
         CallInject(0x6DC23D,   CScreenCharacter_ResetLevelUpPanel_SetOldSorcererLevel_asm, bytes5);
         CallInject(0x6E3687,   CScreenCharacter_UpdateLevelUpPanel_SelectSkills_asm, bytes5);
         CallInject(0x6E2AE3,   CScreenCharacter_UpdateLevelUpPanel_SetFirstSkillType_asm, bytes6);
@@ -4606,7 +4618,7 @@ void InitPatches() {
 
         // CScreenGenChar::ResetChooseMagePanel
         CallInject(0x71B4B4,   CScreenGenChar_ResetChooseMagePanel_SwitchToShaman_asm, bytes6);
-        OffsetInject(0x71B71A, GetXXXSpell_asm);
+        RelativeInject(0x71B71A, GetXXXSpell_asm);
         CallInject(0x71B84A,   CScreenGenChar_ResetChooseMagePanel_CheckAllowedSpell_asm, bytes6);
         CallInject(0x71B5EB,   CScreenGenChar_ResetChooseMagePanel_PushBOOKNAME_asm, bytes5);
 
@@ -4618,26 +4630,26 @@ void InitPatches() {
         CallInject(0x72521C,   CScreenCreateChar_CompleteCharacterWrapup_MageSpells_asm, bytes5);
 
         // CharGenChooseMageSelection::ButtonClick
-        OffsetInject(0x732E54, ButtonCharGenChooseMageSelection_AddKnownSpell_asm);
-        OffsetInject(0x732D5D, ButtonCharGenChooseMageSelection_RemoveKnownSpell_asm);
+        RelativeInject(0x732E54, ButtonCharGenChooseMageSelection_AddKnownSpell_asm);
+        RelativeInject(0x732D5D, ButtonCharGenChooseMageSelection_RemoveKnownSpell_asm);
 
         CallInject(0x631C5A,   CRuleTables_GetHitPoints_asm, bytes8);
         CallInject(0x6312CB,   CRuleTables_RollHitPoints_asm, bytes6);
         CallInject(0x8DA336,   CGameSprite_GetSkillValue_asm, bytes7); 
         CallInject(0x630647,   CRuleTables_FindSavingThrow_asm, bytes6);
-        OffsetInject(0x630BF8, CRuleTables_GetSavingThrow_asm);
+        RelativeInject(0x630BF8, CRuleTables_GetSavingThrow_asm);
         CallInject(0x63342B,   CRuleTables_GetNextLevelXP_asm, bytes5);
         CallInject(0x415DB5,   Object_IsUsableSubClass_asm, bytes6);
         CallInject(0x62BB58,   CRuleTables_GetClassHelp_asm, bytes6);
         CallInject(0x631603,   CRuleTables_GetHPCONBonusTotal_asm, bytes5);
-        OffsetInject(0x8CE643, CGameSprite_CheckCombatStatsWeapon_SetTHACPenalty_asm);
+        RelativeInject(0x8CE643, CGameSprite_CheckCombatStatsWeapon_SetTHACPenalty_asm);
 
         CallInject(0x69E03E,   CheckItemNotUsableByClass_asm, bytes7);
         CallInject(0x69E0B2,   CheckItemUsableByClass_asm, bytes7);
 
         // CScreenWizSpell
         CallInject(0x7B84E7,   CScreenWizSpell_UpdateMainPanel_SetSorcererViewMode_asm, bytes5);
-        OffsetInject(0x7B894D, CScreenWizSpell_UpdateMainPanel_GetKnownSpellMage_asm);
+        RelativeInject(0x7B894D, CScreenWizSpell_UpdateMainPanel_GetKnownSpellMage_asm);
         CallInject(0x7BCCF5,   IsArcaneClass_asm, bytes7);
         CallInject(0x8DAEAB,   CGameSprite_SorcererSpellCount_asm, bytes7);
         CallInject(0x7B8787,   CScreenWizSpell_UpdateMainPanel_GetCDSMaxMemSpells_asm, bytes8);
@@ -4680,8 +4692,8 @@ void InitPatches() {
         CallInject(0x8FB15C,   CGameSprite_FeedBack_StopFindTraps_asm, bytes7);
 
         CallInject(0x6EA5C6,   CScreenCharacter_OnDoneButtonClick_FakeSorcerer_asm, bytes5);
-        OffsetInject(0x6EA722, CScreenCharacter_OnDoneButtonClick_GetXXXLevel_asm);
-        OffsetInject(0x6EAEB5, CScreenCharacter_OnDoneButtonClick_GetXXXLevel_asm);
+        RelativeInject(0x6EA722, CScreenCharacter_OnDoneButtonClick_GetXXXLevel_asm);
+        RelativeInject(0x6EAEB5, CScreenCharacter_OnDoneButtonClick_GetXXXLevel_asm);
         CallInject(0x6EA767,   CScreenCharacter_OnDoneButtonClick_SPLSRCKN_asm, bytes6);
         CallInject(0x6EA857,   CScreenCharacter_OnDoneButtonClick_SPLSRCKN_asm, bytes6);
         CallInject(0x6EAEFA,   CScreenCharacter_OnDoneButtonClick_SPLSRCKN_asm, bytes6);
@@ -4691,11 +4703,11 @@ void InitPatches() {
         CallInject(0x6E1335,   CScreenCharacter_ResetChooseMagePanel_BookName_asm, bytes6);
         CallInject(0x6E16B5,   CScreenCharacter_ResetChooseMagePanel_CheckAllowedSpell_asm, bytes6);
 
-        OffsetInject(0x6E148B, GetXXXSpell_asm);
-        OffsetInject(0x6E14F7, GetKnownSpellIndexXXX_asm);
+        RelativeInject(0x6E148B, GetXXXSpell_asm);
+        RelativeInject(0x6E14F7, GetKnownSpellIndexXXX_asm);
 
-        OffsetInject(0x6FAA0A, ButtonCharacterChooseMageSelection_OnLButtonClick_RemoveKnownSpell_asm);
-        OffsetInject(0x6FAB31, ButtonCharacterChooseMageSelection_OnLButtonClick_AddKnownSpell_asm);
+        RelativeInject(0x6FAA0A, ButtonCharacterChooseMageSelection_OnLButtonClick_RemoveKnownSpell_asm);
+        RelativeInject(0x6FAB31, ButtonCharacterChooseMageSelection_OnLButtonClick_AddKnownSpell_asm);
 
         CallInject(0x66579D,   CInfButtonArray_UpdateButtons_ToolTipFindTraps_asm, bytes5);
         CallInject(0x6650C7,   CInfButtonArray_UpdateButtons_ToolTipBattleSong_asm, bytes5);
@@ -4709,16 +4721,16 @@ void InitPatches() {
         CallInject(0x639C43,   CRuleTables_GetNumQuickWeaponSlots_asm, bytes5);
 
         CallInject(0x47490E,   CDerivedStats_GetWizardLevel_asm, bytes6);
-        OffsetInject(0x6EC90C, CScreenCharacter_OnCancelButtonClick_GetXXXLevel_asm);
+        RelativeInject(0x6EC90C, CScreenCharacter_OnCancelButtonClick_GetXXXLevel_asm);
         CallInject(0x6EC934,   CScreenCharacter_OnCancelButtonClick_SPLSRCKN1_asm, bytes6);
         CallInject(0x6EC9F5,   CScreenCharacter_OnCancelButtonClick_SPLSRCKN2_asm, bytes5);
 
-        OffsetInject(0x6EF3B7, CScreenCharacter_RemoveAbilities_RemoveAllSpellsPriest_asm);
+        RelativeInject(0x6EF3B7, CScreenCharacter_RemoveAbilities_RemoveAllSpellsPriest_asm);
 
         CallInject(0x538A25,   CGameEffectLevelDrain_ApplyEffect_DrainSkillPoints_asm, bytes10);
         CallInject(0x53452B,   CGameEffectLevelDrain_OnAddSpecific_asm, bytes6);
 
-        OffsetInject(0x52BBF8, CGameEffectDisableSpellType_ApplyEffect_asm);
+        RelativeInject(0x52BBF8, CGameEffectDisableSpellType_ApplyEffect_asm);
         CallInject(0x52BC40,   CGameEffectDisableSpellType_ApplyEffect_TextFeedBack_asm, bytes6);
         CallInject(0x52BCA1,   CGameEffectDisableSpellType_ApplyEffect_RemoveQuickSpells_asm, bytes6);
 
@@ -5240,8 +5252,8 @@ void InitPatches() {
         vDataList.push_back( Data(0xA51873, 1, bytes_jmp) );
 
         // replace zlib to updated(asm optimized) version
-        OffsetInject(0x99F033, z_uncompress);
-        OffsetInject(0x99EFAF, z_compress2);
+        RelativeInject(0x99F033, z_uncompress);
+        RelativeInject(0x99EFAF, z_compress2);
 
         COMMIT_vDataList;
     }
@@ -5299,9 +5311,9 @@ void InitPatches() {
     // Restore "min level" field in .ITM,
     // take only 2 bytes when converting .itm's AnimCode to String
     if (!pGameOptionsEx->bDisableHiddenPatches) {
-        OffsetInject(0x5AB014, CItem_TranslateAnimationType_FixAnimCode_asm);
-        OffsetInject(0x5AB035, CItem_TranslateAnimationType_FixAnimCode_asm);
-        OffsetInject(0x5AB056, CItem_TranslateAnimationType_FixAnimCode_asm);
+        RelativeInject(0x5AB014, CItem_TranslateAnimationType_FixAnimCode_asm);
+        RelativeInject(0x5AB035, CItem_TranslateAnimationType_FixAnimCode_asm);
+        RelativeInject(0x5AB056, CItem_TranslateAnimationType_FixAnimCode_asm);
 
         COMMIT_vDataList;
     }
@@ -5337,7 +5349,7 @@ void InitPatches() {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    // enable any resolution in window mode
+    // Enable any resolution in window mode
     if (!pGameOptionsEx->bDisableHiddenPatches) {
         uchar bytes_jmp[] =   { 0xEB };
 
@@ -5775,8 +5787,8 @@ void InitPatches() {
                                0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90,
                                0x90 };
 
-        OffsetInject(0x7B03BA, ScreenStoreRightPanelButtonClick_CheckShiftKey_asm);
-        OffsetInject(0x7AF498, ScreenStoreLeftPanelButtonClick_CheckShiftKey_asm);
+        RelativeInject(0x7B03BA, ScreenStoreRightPanelButtonClick_CheckShiftKey_asm);
+        RelativeInject(0x7AF498, ScreenStoreLeftPanelButtonClick_CheckShiftKey_asm);
 
         CallInject(0x79E175, ScreenStoreLeftPanel_FetchItem_asm, bytes31);
         CallInject(0x7ADF06, ScreenStore_GetLeftListCountEAX_asm, bytes6);
@@ -5827,7 +5839,7 @@ void InitPatches() {
     //////////////////////////////////////////////////////////////////////////////////////////////
     // Hide Innate Button if all innates spent
     if(pGameOptionsEx->bUI_DisableInnateToolBar) {
-        OffsetInject(0x666632, CInfButtonArray_UpdateButtons_CheckInnateList_asm);
+        RelativeInject(0x666632, CInfButtonArray_UpdateButtons_CheckInnateList_asm);
 
         COMMIT_vDataList;
     }
@@ -5868,9 +5880,9 @@ void InitPatches() {
         PointerInject(0xAB7730, CUIControlButtonAction_OnRButtonClick_asm); // CUIControlButtonAction::OnRButtonClick
         CallInject(0x787CBA, CScreenPriestSpell_OnDoneButtonClick_asm, bytes8);
         CallInject(0x787DA3, CScreenPriestSpell_EscapeKeyDown_asm, bytes8);
-        OffsetInject(0x78A2E4, CScreenPriestSpell_IconAssign_asm);
-        OffsetInject(0x787E83, CScreenPriestSpell_UpdateInfoPanel_GetGenericName_asm);
-        OffsetInject(0x787F05, CScreenPriestSpell_UpdateInfoPanel_GetDescription_asm);
+        RelativeInject(0x78A2E4, CScreenPriestSpell_IconAssign_asm);
+        RelativeInject(0x787E83, CScreenPriestSpell_UpdateInfoPanel_GetGenericName_asm);
+        RelativeInject(0x787F05, CScreenPriestSpell_UpdateInfoPanel_GetDescription_asm);
         CallInject(0x78A2B9, CScreenPriestSpell_LoadIconSpell_asm, bytes6);
         
         COMMIT_vDataList;
@@ -5936,9 +5948,9 @@ void InitPatches() {
         uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                            0x90 };
         CallInject(0x7CD6D2, CScreenWorld_NoBindedKeyHandle_asm, bytes6);
-        OffsetInject(0x6D8053, CScreenCharacter_NoBindedKeyHandle_asm);
-        OffsetInject(0x740A73, CScreenInventory_NoBindedKeyHandle_asm);
-        OffsetInject(0x761E60, CScreenMap_NoBindedKeyHandle_asm);
+        RelativeInject(0x6D8053, CScreenCharacter_NoBindedKeyHandle_asm);
+        RelativeInject(0x740A73, CScreenInventory_NoBindedKeyHandle_asm);
+        RelativeInject(0x761E60, CScreenMap_NoBindedKeyHandle_asm);
 
         COMMIT_vDataList;
     }
@@ -5958,7 +5970,7 @@ void InitPatches() {
     ////////////////////////////////////////////////////////////////////////////
     // Color party foot circle
     if (pGameOptionsEx->bUI_PartyColorCircles) {
-        OffsetInject(0x95CDFB, CMarker_RenderSprite_asm);
+        RelativeInject(0x95CDFB, CMarker_RenderSprite_asm);
 
         COMMIT_vDataList;
     }
@@ -6015,11 +6027,11 @@ void InitPatches() {
 
         CallInject(0x662AF6, CInfButtonArray_SetState_OpenSpellToolbar_asm, bytes10);
         CallInject(0x662CFD, CInfButtonArray_SetState_OpenMixedSpellToolbar_asm, bytes10);
-        //OffsetInject(0x66211A, CInfButtonArray_SetState_ClearPrevState_asm);
+        //RelativeInject(0x66211A, CInfButtonArray_SetState_ClearPrevState_asm);
         //CallInject(0x6619E3, CInfButtonArray_ResetState_Log_asm, bytes6);
         PointerInject(0xAB57DC, CScreenWorld_OnLButtonUp_CheckClick_asm);
-        OffsetInject(0x694680, CInfButtonArray_ResetState_CloseMenu_asm);
-        OffsetInject(0x7CC3EA, CInfButtonArray_ResetState_CloseMenu_asm);
+        RelativeInject(0x694680, CInfButtonArray_ResetState_CloseMenu_asm);
+        RelativeInject(0x7CC3EA, CInfButtonArray_ResetState_CloseMenu_asm);
         CallInject(0x4D0AFD, CGameArea_Render_PostDraw_asm, bytes6);
         CallInject(0x4D09A0, CGameArea_Render_InjectCheck_asm, bytes6);
         CallInject(0x66E6CB, CInfButtonArray_OnLButtonPressed_SwitchBook_asm, bytes6);
@@ -6065,8 +6077,8 @@ void InitPatches() {
         uchar bytes10[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                             0x90, 0x90, 0x90, 0x90, 0x90 };
         uchar bytes5[] = { 0x05 };
-        OffsetInject(0x7ECE11, CScreenWorldMap_EngineGameInit_asm);
-        OffsetInject(0x7ECDBB, CScreenWorldMap_EngineGameInit_asm);
+        RelativeInject(0x7ECE11, CScreenWorldMap_EngineGameInit_asm);
+        RelativeInject(0x7ECDBB, CScreenWorldMap_EngineGameInit_asm);
         vDataList.push_back( Data(0x7ECE16+3, sizeof(bytes5), bytes5) ); // disable STONE* panels
 
         COMMIT_vDataList;
@@ -6080,7 +6092,7 @@ void InitPatches() {
         uchar bytes_B0[] = { 0xB0, 0x00, 0x00, 0x00};  // enlarge stack AC->B0 (+4 bytes)
         vDataList.push_back( Data(0x957AB7+2, sizeof(bytes_B0), bytes_B0) );
 
-        OffsetInject(0x957C37, CInfGame_GetCharacterPortrait_FakePartyMember_asm);
+        RelativeInject(0x957C37, CInfGame_GetCharacterPortrait_FakePartyMember_asm);
 
         if (pGameOptionsEx->bUI_ShowNPCFloatHP_Party == FALSE) {
             uchar bytes_5nop[] = { 0x90, 0x90, 0x90, 0x90, 0x90};
@@ -6099,7 +6111,7 @@ void InitPatches() {
             uchar bytes_B0[] = { 0xB0, 0x00, 0x00, 0x00};  // enlarge stack AC->B0 (+4 bytes)
             vDataList.push_back( Data(0x957AB7+2, sizeof(bytes_B0), bytes_B0) );
 
-            OffsetInject(0x957C37, CInfGame_GetCharacterPortrait_FakePartyMember_asm);
+            RelativeInject(0x957C37, CInfGame_GetCharacterPortrait_FakePartyMember_asm);
         }
 
         // push    1
@@ -6126,7 +6138,8 @@ void InitPatches() {
     if (
         pGameOptionsEx->bEngine_AddPauseToSaveGame  ||
         pGameOptionsEx->bUI_NightmareMode           ||
-        pGameOptionsEx->bUI_GreyBackgroundOnPause
+        pGameOptionsEx->bUI_GreyBackgroundOnPause   ||
+        pGameOptionsEx->bEngine_LimitXP
         ) {
 
         uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -6183,7 +6196,7 @@ void InitPatches() {
                            0x90, 0x90 };
         uchar bytes_6nops[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90};
 
-        OffsetInject(0x6E88E1, CScreenChar_UpdateMainPanel_AddNewInfo_asm);
+        RelativeInject(0x6E88E1, CScreenChar_UpdateMainPanel_AddNewInfo_asm);
 
         vDataList.push_back( Data(0x6E8DA1, sizeof(bytes_6nops), bytes_6nops) );   // enable with WeaponStyle=0
         vDataList.push_back( Data(0x6E8DAE, sizeof(bytes_6nops), bytes_6nops) );   // enable with Level=0
@@ -6270,7 +6283,7 @@ void InitPatches() {
     // Trigger AreaCheckObject() crash fix
     if (!pGameOptionsEx->bDisableHiddenPatches) {
 
-        OffsetInject (0x489962, CGameAIBase_EvaluateStatusTrigger_AreaCheckObject_asm);
+        RelativeInject (0x489962, CGameAIBase_EvaluateStatusTrigger_AreaCheckObject_asm);
 
         COMMIT_vDataList;        
     }
@@ -6326,7 +6339,7 @@ void InitPatches() {
 
         CallInject(0x6A09FF, CInfGame_GetAnimationBam_InjectPaperDollPrefix_asm, bytes6);
         CallInject(0x84710A, CAnimation5000_EquipArmor_SkipPrefixChange_asm, bytes6);
-        //OffsetInject(0x74B64A, CUIButtonInventoryAppearance_GetAnimationVidCell_asm);
+        //RelativeInject(0x74B64A, CUIButtonInventoryAppearance_GetAnimationVidCell_asm);
 
         COMMIT_vDataList;
     }
@@ -6484,7 +6497,7 @@ void InitPatches() {
             uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                                0x90 };
             CallInject(0x9DDE38, CSound_Stop_Logging_asm, bytes6);
-            //CallInject(0x9DF4E6, CSound_Stop_Logging_asm, bytes6);
+            CallInject(0x9DF4E6, CSound_Stop_Logging2_asm, bytes6);
             CallInject(0x9E0F12, CSoundMixer_ClearChannel_Logging_asm, bytes6);
 
             COMMIT_vDataList;
@@ -6506,7 +6519,7 @@ void InitPatches() {
 
 
     ////////////////////////////////////////////////////////////////////////////
-    // Enable spell hotkeys only for memorized spells
+    // Enable spell hotkeys only for memorized spells, removes exploit
     if (!pGameOptionsEx->bDisableHiddenPatches) {
 
         uchar bytes10[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -6562,14 +6575,14 @@ void InitPatches() {
                          };
         CallInject  (0x8CF199, CGameSprite_CheckCombatStatsWeapon_AddElfRacialThacBonus_asm, bytes5);
         CallInject  (0x8CF1F1, CGameSprite_CheckCombatStatsWeapon_AddHalflingRacialThacBonus_asm, bytes5);
-        OffsetInject(0x8CE3EB, CGameSprite_CheckCombatStatsWeapon_SwapWeaponText_asm);
+        RelativeInject(0x8CE3EB, CGameSprite_CheckCombatStatsWeapon_SwapWeaponText_asm);
 
         COMMIT_vDataList;
     }
     
     
     ////////////////////////////////////////////////////////////////////////////
-    // CAnimation1200() forget to set wAnimId
+    // CAnimation1200::CAnimation1200() forget to set wAnimId
     if (!pGameOptionsEx->bDisableHiddenPatches) {
 
         //  mov     edx, [ebp+animid]
@@ -6649,8 +6662,11 @@ void InitPatches() {
     //  1) Going to walk
     //  2) Already have SEQ_HEAD_TURN
     if (!pGameOptionsEx->bDisableHiddenPatches) {
+        uchar bytes8[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90, 0x90 };
 
-        OffsetInject (0x40D1EC, CAIGroup_ClearActions_asm);
+        RelativeInject (0x40D1EC, CAIGroup_ClearActions_asm);
+        CallInject   (0x8FA613, CCreativeObject_SetCurrentAction_SetREADY_asm, bytes8);
 
         COMMIT_vDataList;
     }
@@ -6673,13 +6689,24 @@ void InitPatches() {
 
     #ifdef _DEBUG
     {
-
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90};
         uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                            0x90, 0x90 };
+        uchar bytes10[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                            0x90, 0x90, 0x90, 0x90, 0x90 };
 
-        CallInject (0x8AD66A, CGameSprite_SetSequence_Log_asm, bytes7);
+        //CallInject (0x8AD66A, CGameSprite_SetSequence_Log_asm, bytes7);
 
-        COMMIT_vDataList;
+        //CallInject (0x9E011B, CSoundMixer_CleanUp_Log_asm, bytes7);
+        //CallInject (0x9E068E, CSoundMixer_Initialize_Log_asm, bytes7);
+        //CallInject (0x4CC589, CGameArea_OnActivation_Log_asm, bytes6);
+        //CallInject (0x467E47, CCacheStatus_Update_Log_asm, bytes6);
+        //CallInject (0x9E0417, CCacheStatus_Update_Log_asm, bytes6);
+        //CallInject (0x9DF3BB, CSound_SetVolume_Log2_asm, bytes7);
+        //CallInject (0x9DEB29, CSound_ResetVolume_Log2_asm, bytes6);
+
+        //COMMIT_vDataList;
     }
     #endif
 
@@ -6767,7 +6794,7 @@ void InitPatches() {
 
 
     #ifdef _DEBUG
-    // allow load damaged savegame
+    // allow loading damaged savegame
     if (1) {
         uchar bytes1[] = { 0xEB } ;
 
@@ -6801,7 +6828,7 @@ void InitPatches() {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     // GetDiskFreeSpaceA 2Tb bug
-    if (pGameOptionsEx->bEngine_FakeDiskFreeSpace) {
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
         PointerInject(0xAA5374, FakeGetDiskFreeSpaceA_asm);
 
         COMMIT_vDataList;
@@ -6868,6 +6895,188 @@ void InitPatches() {
 
         COMMIT_vDataList;
     }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  0x7313 Animation Palette Fix
+    //  MFIEG1B->MFISG1B, MFIEG2B->MFISG2B
+    if (pGameOptionsEx->bVideo_7313_PaletteFix) {
+        uchar byteS[]   = { 'S' }; // 'S'
+        vDataList.push_back( Data(0xB4DD34+3, sizeof(byteS), byteS) );
+        vDataList.push_back( Data(0xB4DD3C+3, sizeof(byteS), byteS) );
+        vDataList.push_back( Data(0xB4DD44+3, sizeof(byteS), byteS) );
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Fix for ambient sound muted after QuickLoad
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+        CallInject (0x68AE55, CInfGame_LoadGame_ReActivateArea_asm, bytes7);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Restore XP Limits for BGT
+    if (pGameOptionsEx->bEngine_LimitXP) {
+        // Savedata[5Ch]:
+        // 1 BG1 TotSC
+        // 3 XNewArea, used in NewGame Screen
+        // 4 BG2 of ToB
+        // 5 ToB of ToB
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+
+        uchar byte1[]   = { 1 }; // 1 BG1 TotSC
+        uchar byte4[]   = { 4 }; // 4 BG2 of ToB
+        vDataList.push_back( Data(0x68648C+3, sizeof(byte4), byte4) );
+        vDataList.push_back( Data(0x684069+3, sizeof(byte1), byte1) );
+        vDataList.push_back( Data(0x686625+3, sizeof(byte1), byte1) );
+        CallInject (0x63855C, CRuleTables_GetXPCap_asm, bytes6);
+
+        COMMIT_vDataList;
+    } else {    // undone patched savegames if bEngine_LimitXP disabled
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+
+        CallInject (0x68643A, OldSaveGame_Undone_asm, bytes7);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  EAX/DirectSound3D emulation through DSOAL
+    if (pGameOptionsEx->bSound_DSOAL) {
+        void* ptr;
+        DSOAL_DLL = LoadLibrary("dsoal-dsound.dll");
+
+        if (DSOAL_DLL == NULL) {
+            console.writef("dsoal-dsound.dll not found \n");
+        } else {
+            ptr = GetProcAddress(DSOAL_DLL, "DirectSoundCreate");
+            if (ptr == NULL) {
+                console.writef("DirectSoundCreate error in dsoal-dsound.dll \n");
+            } else {
+                PointerInject(0xAA5044, ptr);   // __imp_DirectSoundCreate
+                COMMIT_vDataList;
+            }
+        }
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Freeze/Unfreeze sounds when game pause/unpaused
+    if (pGameOptionsEx->bSound_FreezeOnPause) {
+        uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                         };
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+        uchar bytes9[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90, 0x90, 0x90 };
+
+        uchar bytes[]    = {0x30}; // 16->30 new CVoice size
+        vDataList.push_back( Data(0x9DFE8A+1, sizeof(bytes), bytes) );
+
+        uchar DSBCAPS_High[]    = {0x01, 0x00}; // set DSBCAPS_GETCURRENTPOSITION2
+        vDataList.push_back( Data(0x9DD6D5+5, sizeof(DSBCAPS_High), DSBCAPS_High) );
+        vDataList.push_back( Data(0x9DD8A0+5, sizeof(DSBCAPS_High), DSBCAPS_High) );
+
+        //CallInject (0x7D43B7,  CScreenWorld_Unpause_asm, bytes6);
+        //CallInject (0x7D4443,  CScreenWorld_Pause_asm, bytes6);
+        RelativeInject(0x7D43BD, CTimerWorld_HardUnPause_asm);  // CScreenWorld::TogglePauseGame
+        RelativeInject(0x4CC592, CGameArea_OnActivation_asm);   // CGameArea::OnActivation
+        CallInject (0x7CF925,  TimeStopEnded_asm, bytes6);
+        //RelativeInject(0x7D7C4D, CTimerWorld_StartTime_asm);    // CScreenWorld::EndDialog
+
+        RelativeInject(0x7D4449, CTimerWorld_HardPause_asm);    // CScreenWorld::TogglePauseGame
+        RelativeInject(0x7C61DB, CTimerWorld_StopTime_asm);     // CScreenWorld::EngineDeActivated
+        CallInject (0x5E3801,  CMessage_TimeStop_asm, bytes6);
+        //RelativeInject(0x7D5F85, CTimerWorld_StopTime_asm);     // CScreenWorld::StartDialog
+
+        uchar reorder[]    = {0x8B, 0x45, 0xFC, 0x50}; // mov     eax, [ebp-4]; push eax
+        uchar reorder2[]   = {0x8B, 0x45, 0xFC, 0x50,  // mov     eax, [ebp-4]; push eax
+                              0x90, 0x90, 0x90, 0x90}; // nops
+        vDataList.push_back( Data(0x9E1864+6, sizeof(reorder),  reorder)  );
+        vDataList.push_back( Data(0x9E1C26+5, sizeof(reorder2), reorder2) );
+        CallInject (0x9E1864,  CSoundMixer_UpdateSoundList_RemoveFromPlayingNow_asm, bytes6);
+        CallInject (0x9E1C26,  CSoundMixer_UpdateSoundListPriority_RemoveFromPlayingNow_asm, bytes5);
+
+        // area mismatch 
+        //vDataList.push_back( Data(0x9E194A+6, sizeof(reorder),  reorder)  );
+        //vDataList.push_back( Data(0x9E1CFA+5, sizeof(reorder2), reorder2) );
+        //CallInject (0x9E194A,  CSoundMixer_UpdateSoundList_MismatchAreaRemoveFromPlayingNow_asm, bytes6);
+        //CallInject (0x9E1CFA,  CSoundMixer_UpdateSoundListPriority_MismatchAreaRemoveFromPlayingNow_asm, bytes5);
+
+        RelativeInject(0x9E1B63, CSound_PlayWaiting_asm);
+        RelativeInject(0x9DEB40, CSound_PlayWaiting_asm);
+        RelativeInject(0x9DF3DE, CSound_PlayWaiting_asm);
+
+        RelativeInject(0x4D1572, SoundPlay1CheckPause_asm); // SetDay
+        RelativeInject(0x4D191C, SoundPlay1CheckPause_asm); // SetNight
+        RelativeInject(0x4D263C, SoundPlay1CheckPause_asm); // SetDusk
+        RelativeInject(0x4D2A76, SoundPlay1CheckPause_asm); // SetDusk
+        RelativeInject(0x4D1D8B, SoundPlay1CheckPause_asm); // SetDawn
+        RelativeInject(0x4D21C5, SoundPlay1CheckPause_asm); // SetDawn
+        RelativeInject(0x6CE348, SoundPlay1CheckPause_asm); // AIUpdate(Lightning)
+        RelativeInject(0x65975E, SoundPlay1CheckPause_asm); // SetRainSound
+        RelativeInject(0x65954A, SoundPlay1CheckPause_asm); // SetRainSound
+        RelativeInject(0x6596E7, SoundPlay1CheckPause_asm); // SetRainSound
+        RelativeInject(0x659BA1, SoundPlay1CheckPause_asm); // SetWind
+        RelativeInject(0x659E49, SoundPlay1CheckPause_asm); // SetWind
+        RelativeInject(0x65A049, SoundPlay1CheckPause_asm); // SetWind
+
+        CallInject (0x9DF571,  CVoice_CVoice_asm, bytes7);
+        CallInject (0x9DFF5E,  CSoundMixer_TransferBuffer_asm, bytes6);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Set 44100Hz Sound Mixer Frequency
+    //  Compatible with 1pp High Quality Music Mod
+    if (pGameOptionsEx->bSound_44KhzMixer) {
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+
+        uchar byte44[]    = {0x44, 0xAC}; // 44100
+        uchar byteNOP2[]  = {0x90, 0x90}; // nop nop
+        uchar byteNOP6[]  = {0x90, 0x90, 0x90, 0x90, 0x90, 0x90}; // nop nop
+        uchar byteShift[]  = {0x8B, 0x55, 0xF4, 0x69, 0xC0, 0xF4, 0x01, 0x00, 0x00};
+        uchar byteNoCheckRange[] = {0xEB, 0x14}; // jmp 9DDFBC
+
+        vDataList.push_back( Data(0x9DD5FC, sizeof(byteNOP2), byteNOP2) ); // reinit frequency for reused csound
+        vDataList.push_back( Data(0x9E094D+6, sizeof(byte44), byte44) ); // primary buffer + 3D 0x11
+        vDataList.push_back( Data(0x9F95E4+3, sizeof(byte44), byte44) ); // static  buffer + 3D 0x12
+        vDataList.push_back( Data(0x9DD60B, sizeof(byteNOP2), byteNOP2) ); // freq/500
+        vDataList.push_back( Data(0x5AE340, sizeof(byteNOP2), byteNOP2) ); // freq/500
+        vDataList.push_back( Data(0x9DD829, sizeof(byteNOP6), byteNOP6) ); // freq*500
+        vDataList.push_back( Data(0x9DDB06, sizeof(byteNOP6), byteNOP6) ); // freq*500
+
+        vDataList.push_back( Data(0x9DDF93, sizeof(byteShift), byteShift) ); // shift*500
+        vDataList.push_back( Data(0x9DDFBF, sizeof(byteNOP6), byteNOP6) );   // freq*500
+        vDataList.push_back( Data(0x9DDFA6, sizeof(byteNoCheckRange), byteNoCheckRange) );
+
+        // Music patch disabled, 1pp HQ Music Mod has wrong .ACM headers,
+        // they have 44100 body with 22050 header, there is no way to determinate proper format
+        //vDataList.push_back( Data(0x9E0A4E+1, sizeof(byte44), byte44) ); // music primary buffer 0x01
+
+        COMMIT_vDataList;
+    }
+
+
+
+
 
 
 

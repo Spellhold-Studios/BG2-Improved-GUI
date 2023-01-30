@@ -330,7 +330,7 @@
             Author: Insomniator
         </p>
         <p class="about">
-            <a href="http://www.spellholdstudios.net/">Mod Website</a> &#8226; <a href="http://www.shsforums.net/topic/60986-bg2-improved-gui/">Mod Forum</a> &#8226; <a href="http://www.shsforums.net/files/file/1265-bg2-improved-gui/">Download</a> &#8226; <a href="https://github.com/SpellholdStudios/BG2_Improved_GUI/">GitHub</a> &#8226;  Version 5.5
+            <a href="http://www.spellholdstudios.net/">Mod Website</a> &#8226; <a href="http://www.shsforums.net/topic/60986-bg2-improved-gui/">Mod Forum</a> &#8226; <a href="http://www.shsforums.net/files/file/1265-bg2-improved-gui/">Download</a> &#8226; <a href="https://github.com/SpellholdStudios/BG2_Improved_GUI/">GitHub</a> &#8226;  Version 5.6
         </p>
         <hr style="margin: 10px 0 10px 0; padding: 0; height: 1px; border: 0; color: #aaa; background-color: #aaa;" />
 
@@ -400,6 +400,9 @@
         <li><a href="#castbg1"  >Restore BG1 Casting Sounds</a></li>
         <li><a href="#castbg2"  >BG2 clear voice(without background effect/noise) Casting Sounds for Innate Casting</a></li>
         <li><a href="#castnwn"  >Neverwinter Nights Casting Sounds for Wizard Spell Level 9(+HLAs) and Priest Spell Level 7(+HLAs)</a></li>
+        <li><a href="#xplimits" >Restore BG1/BG2 XP Limits</a></li>
+        <li><a href="#dsoal"    >EAX/DirectSound3D emulation through DSOAL</a></li>
+        <li><a href="#freezesnd">Freeze/Unfreeze sounds when game paused/unpaused (Beta)</a></li>
         </ul>
 
         <address>
@@ -428,10 +431,11 @@
         </ul>
 
         <p>
-            Mod is NOT compatible with mods:
+            Mod is NOT compatible with:
         </p>
         <ul>
-            <li><a href="http://www.shsforums.net/forum/618-w-gui/"><strong>W_GUI</strong></a> (components: Loot panel, THAC0 and Damage info on Inventory screen, Journal with fold/unfold quests, Legacy of Bhaal difficulty mode, Total Roll info on Character creation screen, Borderless World Map)</li>
+<li><a href="http://www.shsforums.net/forum/618-w-gui/"><strong>W_GUI</strong></a> (components: Loot panel, THAC0 and Damage info on Inventory screen, Journal with fold/unfold quests, Legacy of Bhaal difficulty mode, Total Roll info on Character creation screen, Borderless World Map)</li>
+<li><strong>Creative Alchemy/X-Fi MB</strong> or other EAX emulator (components: EAX/DirectSound3D emulation through DSOAL)</li>
         </ul>
         
         <address>
@@ -482,7 +486,8 @@
         <li>BG2 GUI in 1280x720</li>
         <li>1pp</li>
         <li>Infinity Animations</li>
-        <li>BGT (components: Legacy of Bhaal/Heart of Fury difficulty mode)</li>
+        <li>BGT </strong>(components: Legacy of Bhaal/Heart of Fury difficulty mode)</li>
+        <strong>
         </strong></ul>
 
         <address>
@@ -1323,6 +1328,64 @@ Neverwinter Nights Casting Sounds for High Spell Levels
         <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
 
 
+<!-- ============================================================================== -->
+        <a name="xplimits" id="xplimits"></a>
+        <p><h7>
+Restore BG1/BG2 XP Limits
+        </h7></p><br>
+        <p>
+        Set XP cap:
+        <ul>
+        BG1 - <strong>161,000</strong><br>
+        BG2 - <strong>2,950,000</strong><br>
+        </ul>
+        </p>
+        <p>
+        Save and load existing savegames to activate limits<br>
+        </p>
+        
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+
+
+<!-- ============================================================================== -->
+        <a name="dsoal" id="dsoal"></a>
+        <p><h7>
+EAX/DirectSound3D emulation through DSOAL
+        </h7></p><br>
+        <p>
+        Component does same as manual <a href="https://github.com/kcat/dsoal/"><strong>DSOAL</strong></a> 1.4 installing (DSOAL is EAX/DirectSound3D->OpenAL convertor, uses <a href="https://www.openal-soft.org"><strong>OpenAL Soft</strong></a> as EAX implemenation), but dsound.dll renamed to dsoal-dsound.dll. HRTF enabled by default if headphones detected, you can change many options by editing alsoft.ini, see DSOAL documentation.<br>
+        Original game option "Environmental Sound" is bugged, it only enables/disables DirectSound 3-D positional sounds, EAX effects still always enabled if EAX detected. Offical documentation tells about <strong>A3D effects</strong>, but A3D API is not used in engine.<br>
+        <br>
+        <strong>
+        Component not compatible with Creative Alchemy/X-Fi MB3 or other EAX emulator !        
+        </strong>
+        </p>
+        
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>
+        
+        
+<!-- ============================================================================== -->
+        <a name="freezesnd" id="freezesnd"></a>
+        <p><h7>
+Freeze/Unfreeze sounds when game paused/unpaused (Beta)
+        </h7></p><br>
+        <p>
+        Freeze/unfreeze playing sounds if game was stopped by
+        </p>
+        <ul>
+        1) Pause<br>
+        2) Switched to other game screen<br>
+        3) Time Stop casted<br>
+        </ul>
+        <p>
+        It changes sound experience, when game stopped, sounds of birds or rain now also paused, you can still hear GUI sounds or NPC/Party remarks. There's many situation when sounds may be still losted due switching between areas or chars in party, component tries to track as much sounds as possible.
+        </p>
+        
+        <div style="width: 95%;" align = "right"><a href="#intro">back to overview</a></div>
+        <hr style="width: 90%; color: #781808; background-color: #781808; " /><br>        
+
 
 <!-- ======================= C r e d i t s ====================== -->
       <a name="credits" id="credits"></a>
@@ -1331,7 +1394,9 @@ Neverwinter Nights Casting Sounds for High Spell Levels
         <h2>Credits</h2><br>
 
             <span class="t1">Author:</span> <span class="t2"><a href="http://www.shsforums.net/user/41628-insomniator/">Insomniator</a></span><br>
-            <span class="t1">Original TobEx source code:</span> <span class="t2"><a href="https://github.com/Ascension64/TobEx/">Ascension64</a></span><br>            
+            <span class="t1">Original TobEx source code:</span> <span class="t2"><a href="https://github.com/Ascension64/TobEx/">Ascension64</a></span><br>
+            <span class="t1">Innate/Spell Text Descriptions:</span> <span class="t2"><a href="http://www.shsforums.net/user/38456-prozh/">Prozh</a></span><br>
+            <span class="t1">Spell/Item fixes:</span> <span class="t2"><a href="http://www.shsforums.net/user/38456-prozh/">Prozh</a></span><br>
             <span class="t1"><acronym title="Weimer Dialogue Utility">WeiDU</acronym> coding:</span> <span class="t2"><a href="http://www.shsforums.net/user/41628-insomniator/">Insomniator</a></span><br>
 
         <hr style="clear: both; width: 90%; color: transparent; background-color: transparent; " />
@@ -1369,6 +1434,9 @@ Neverwinter Nights Casting Sounds for High Spell Levels
             <li>
             TADA.wav, FOLSTART.wav, Speech On.wav, Speech Off.wav by Microsoft Windows
             </li>
+            <li>
+            DSOAL and OpenAL Soft DLLs by <a href="https://github.com/kcat/"> kcat</a>
+            </li>
             </ul>
             
           <div class="important" style="border-color: #781808;">
@@ -1396,7 +1464,12 @@ Neverwinter Nights Casting Sounds for High Spell Levels
       <div class="content">
 
         <h2>Version History</h2><br>
-
+        <h6>Version 5.6</h6>
+          <ul>
+            <li>Added: Restore BG1/BG2 XP Limits</li>
+            <li>Added: EAX/DirectSound3D emulation through DSOAL</li>
+            <li>Added: Freeze/Unfreeze sounds when game paused/unpaused</li>
+          </ul>
         <h6>Version 5.5</h6>
           <ul>
             <li>Added: x2 Full Scaled Graphics mode</li>

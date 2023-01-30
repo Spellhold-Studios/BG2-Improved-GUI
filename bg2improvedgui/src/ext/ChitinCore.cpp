@@ -22,3 +22,42 @@ int __stdcall CBaldurChitin_MessageBox(HWND hWnd, LPCSTR lpText, LPCSTR lpCaptio
 	} while (dwSuspendCount > 1);
 	return MessageBox(hWnd, lpText, lpCaption, uType);
 }
+
+
+//void __declspec(naked)
+//CAlloc_asm()
+//{
+//__asm {
+//    push    1               // size= 1 * arg
+//    push    [esp+8h]        // arg
+//    mov     eax, 0A3B45Ch   // __cdecl calloc()
+//    call    eax
+//    add     esp, 8          // restore stack
+//
+//	ret     
+//}
+//}
+
+
+void __declspec(naked)
+Malloc_asm()
+{
+__asm {
+    push    [esp+4h]        // arg
+    mov     eax, 0A3949Fh   // __cdecl _malloc()
+    call    eax
+    add     esp, 4
+
+    push    eax             // ptr
+
+    push    [esp+8h]        // arg
+    push    0               // fill
+    push    eax             // ptr
+    mov     eax, 0A3C020h   // __cdecl _memset()
+    call    eax
+    add     esp, 0Ch
+
+    pop     eax             // ptr
+	ret     
+}
+}

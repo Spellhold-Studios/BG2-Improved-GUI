@@ -84,12 +84,12 @@ CResWave_CopyWaveData_Normalize(short* PCM, unsigned long Len, DWORD* Stack, Res
     }
 
     if (wrong) {
-        console.write_debug("wrong \tsound: %s \n", resname.GetResRefNulled());
+        console.write_debug("wrong WAV format : %s \n", resname.GetResRefNulled());
         return;
     }
 
     if (exclude) {
-        console.write_debug("exclude \tsound: %s \n", resname.GetResRefNulled());
+        console.write_debug("exclude from normalize: %s \n", resname.GetResRefNulled());
         return;
     }
 
@@ -193,7 +193,55 @@ CResWave_CopyWaveData_Normalize(short* PCM, unsigned long Len, DWORD* Stack, Res
                     if (StackPrev[1] == 0x57564D)
                         console.write_debug("AreaGameSound \t\t\t"); 
                     else
+                    if (StackPrev[1] == 0x9DEAB5) {
+                        StackPrev = (DWORD*) StackPrev[0];
+                        if (StackPrev[1] == 0x9DF3E3) {
+                            StackPrev = (DWORD*) StackPrev[0];
+                            if (StackPrev[1] == 0x9E1ABA)
+                                console.write_debug("SndMixer::UpdateSoundList1 loop\t");
+                            else
+                            if (StackPrev[1] == 0x4d1567)
+                                console.write_debug("SetDay loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4d1911)
+                                console.write_debug("SetNight loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4d2a68 ||
+                                StackPrev[1] == 0x4D262E)
+                                console.write_debug("SetDusk loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4d1d7d ||
+                                StackPrev[1] == 0x4d21b7)
+                                console.write_debug("SetDawn loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4b8eea ||
+                                StackPrev[1] == 0x4b8f1b)
+                                console.write_debug("ApplyWindToAmbients loop \t");
 
+                            else
+                                console.write_debug("SetVolume loop \t\t\t"); 
+                        }
+                        else
+                        if (StackPrev[1] == 0x9DEB45) {
+                            StackPrev = (DWORD*) StackPrev[0];
+                            if (StackPrev[1] == 0x9E1ABA)
+                                console.write_debug("SndMixer::UpdateSoundList2 loop\t"); 
+                            else
+                            if (StackPrev[1] == 0x9e1e79)
+                                console.write_debug("UpdateSoundPositions1 loop \t"); 
+
+                            else
+                                console.write_debug("ResetVolume1 loop \t\t");
+                        }
+                        else
+                        if (StackPrev[1] == 0x9E1B68)
+                            console.write_debug("SndMixer::UpdateSoundList3 loop\t");
+                    }
+                    else
+                    if (StackPrev[1] == 0x574F85)
+                        console.write_debug("CGameSound::DoAIUpdate \t\t"); 
+
+                    else
                         console.write_debug("unknow CSound::Play caller %X \t", StackPrev[1]);
                     // CSound::Play
                     ////////////////////////////////////////////////////////////////
@@ -315,8 +363,59 @@ CResWave_CopyWaveData_Normalize(short* PCM, unsigned long Len, DWORD* Stack, Res
                     if (StackPrev[1] == 0x8BD8B1) {
                         console.write_debug("CGameTemporal \t\t\t");
                     } else
+                    if (StackPrev[1] == 0x9DEAA9) {
+                        StackPrev = (DWORD*) StackPrev[0];
+                        if (StackPrev[1] == 0x9DF3E3) {
+                            StackPrev = (DWORD*) StackPrev[0];
+                            if (StackPrev[1] == 0x9E1ABA)
+                                console.write_debug("SndMixer::UpdateSoundList4 loop\t");
+                            else
+                            if (StackPrev[1] == 0x4d1567)
+                                console.write_debug("SetDay loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4d1911)
+                                console.write_debug("SetNight loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4d2a68 ||
+                                StackPrev[1] == 0x4D262E)
+                                console.write_debug("SetDusk loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4d1d7d ||
+                                StackPrev[1] == 0x4d21b7)
+                                console.write_debug("SetDawn loop \t\t\t");
+                            else
+                            if (StackPrev[1] == 0x4b8eea ||
+                                StackPrev[1] == 0x4b8f1b)
+                                console.write_debug("ApplyWindToAmbients loop \t");
 
+                            else
+                                console.write_debug("SetVolume loop \t\t\t"); 
+                        }
+                        else
+                        if (StackPrev[1] == 0x9DEB45) {
+                            StackPrev = (DWORD*) StackPrev[0];
+                            if (StackPrev[1] == 0x9E1ABA)
+                                console.write_debug("SndMixer::UpdateSoundList5 loop\t"); 
+                            else
+                            if (StackPrev[1] == 0x9e1e79)
+                                console.write_debug("UpdateSoundPositions2 loop \t"); 
 
+                            else
+                                console.write_debug("ResetVolume2 loop \t\t");
+                        }
+                        else
+                        if (StackPrev[1] == 0x9E1B68)
+                            console.write_debug("SndMixer::UpdateSoundList6 loop\t");
+                    } else
+                    if (StackPrev[1] == 0x91EF7A) {
+                        console.write_debug("JumpToPoint \t\t\t");
+                    } else
+                    if (StackPrev[1] == 0x574FB0 ||
+                        StackPrev[1] == 0x57566F) {
+                        console.write_debug("CGameSound::DoAIUpdate \t\t");
+                    }
+
+                    else
                     // default
                     if (gTobexSoundCaller)
                         gSoundFileName = resname;
@@ -657,11 +756,15 @@ DWORD gDirectSoundBuffer_GetStatus_Result;
 
 void static __stdcall
 CSound_Stop_Logging(CSound& snd) {
+    //if (snd.m_pSoundBuffer)
+    //    console.write_debug("CSound::Remove sound: %s\t ch:%d\n", snd.wav.soundName.GetResRefNulled(), snd.nChannelIdx);
+
     if (snd.wav.pResWav) {
         if (gDirectSoundBuffer_GetStatus_Result & 1) // DSBSTATUS_PLAYING 
             console.write_debug("CSound::Abort................\tsound: %s\t ch:%d\n", snd.wav.soundName.GetResRefNulled(), snd.nChannelIdx);
         else
-            console.write_debug("CSound::Stop finished........\tsound: %s\t ch:%d\n", snd.wav.soundName.GetResRefNulled(), snd.nChannelIdx);
+            //console.write_debug("CSound::Stop empty........\tsound: %s\t ch:%d\n", snd.wav.soundName.GetResRefNulled(), snd.nChannelIdx);
+            ;
     }
 }
 
@@ -896,6 +999,48 @@ PlayToggleSound(bool On_Off) {
         else
             g_pChitin->pEngineActive->PlayGUISound(ResRef("KEYTOGOF"));
     }
+}
+
+
+//void static __stdcall
+//CSoundMixer_CleanUp_Log() {
+//    console.write_debug("CSoundMixer_CleanUp \n");
+//}
+//
+//void static __stdcall
+//CSoundMixer_Initialize_Log() {
+//    console.write_debug("CSoundMixer_Initialize \n");
+//}
+//
+//void static __stdcall
+//CGameArea_OnActivation_Log() {
+//    console.write_debug("CGameArea_OnActivation \n");
+//}
+//
+//void static __stdcall
+//CCacheStatus_Update_Log() {
+//    console.write_debug("CCacheStatus_Update \n");
+//}
+//
+//void static __stdcall
+//CSound_SetVolume_Log2() {
+//    console.write_debug("CSound_SetVolume2 \n");
+//}
+//
+//void static __stdcall
+//CSound_ResetVolume_Log2() {
+//    console.write_debug("CSound_ResetVolume2 \n");
+//}
+
+
+void static __stdcall
+CInfGame_LoadGame_ReActivateArea(CInfGame& Game) {
+    if (!g_pChitin->m_mixer.IsChannelUsed(1)) { // if ambient channel is empty
+        //console.write_debug("ReActivate Ambient\n");
+        Game.m_pLoadedAreas[Game.m_VisibleAreaIdx]->OnDeactivation();
+        Game.m_pLoadedAreas[Game.m_VisibleAreaIdx]->OnActivation();
+    } else
+        console.write_debug("ReActivate Ambient failed, channel used \n");
 }
 
 
@@ -1879,6 +2024,27 @@ __asm
 
 
 void __declspec(naked)
+CSound_Stop_Logging2_asm() {
+__asm
+{
+    push    ecx
+    push    edx
+    push    eax
+
+    push    [ebp-8] // CSound
+    call    CSound_Stop_Logging
+
+    pop     eax
+    pop     edx
+    pop     ecx
+
+    and     edx, 0FFh   // Stolen bytes
+    ret
+}
+}
+
+
+void __declspec(naked)
 CSoundMixer_ClearChannel_Logging_asm() {
 __asm
 {
@@ -1986,5 +2152,147 @@ __asm {
 
     mov     [ebp-208h], eax  // stolen bytes
 	ret     
+}
+}
+
+
+//void __declspec(naked)
+//CSoundMixer_CleanUp_Log_asm()
+//{
+//__asm {
+//	push    ecx
+//	push    edx
+//    push    eax
+//
+//    call    CSoundMixer_CleanUp_Log
+//   
+//    pop     eax
+//	pop     edx
+//	pop     ecx
+//
+//    mov     dword ptr [eax+5Ch], 0 // stolen bytes
+//	ret     
+//}
+//}
+//
+//
+//void __declspec(naked)
+//CSoundMixer_Initialize_Log_asm()
+//{
+//__asm {
+//	push    ecx
+//	push    edx
+//    push    eax
+//
+//    call    CSoundMixer_Initialize_Log
+//   
+//    pop     eax
+//	pop     edx
+//	pop     ecx
+//
+//    mov     dword ptr [ecx+5Ch], 1 // stolen bytes
+//	ret     
+//}
+//}
+
+
+//void __declspec(naked)
+//CGameArea_OnActivation_Log_asm()
+//{
+//__asm {
+//	push    ecx
+//	push    edx
+//    push    eax
+//
+//    call    CGameArea_OnActivation_Log
+//   
+//    pop     eax
+//	pop     edx
+//	pop     ecx
+//
+//    mov     [ecx+10Ch], edx // stolen bytes
+//	ret     
+//}
+//}
+
+
+//void __declspec(naked)
+//CCacheStatus_Update_Log_asm()
+//{
+//__asm {
+//	push    ecx
+//	push    edx
+//    push    eax
+//
+//    call    CCacheStatus_Update_Log
+//   
+//    pop     eax
+//	pop     edx
+//	pop     ecx
+//
+//    mov     [eax+10Ch], ecx // stolen bytes
+//	ret     
+//}
+//}
+//
+//
+//void __declspec(naked)
+//CSound_SetVolume_Log2_asm()
+//{
+//__asm {
+//	push    ecx
+//	push    edx
+//    push    eax
+//
+//    call    CSound_SetVolume_Log2
+//   
+//    pop     eax
+//	pop     edx
+//	pop     ecx
+//
+//    mov     eax, [ebp-0Ch] // stolen bytes
+//    cmp     dword ptr [eax+38h], 0
+//	ret     
+//}
+//}
+//
+//
+//void __declspec(naked)
+//CSound_ResetVolume_Log2_asm()
+//{
+//__asm {
+//	push    ecx
+//	push    edx
+//    push    eax
+//
+//    call    CSound_ResetVolume_Log2
+//   
+//    pop     eax
+//	pop     edx
+//	pop     ecx
+//
+//    and     ecx, 0FFh // stolen bytes
+//	ret     
+//}
+//}
+
+
+void __declspec(naked)
+CInfGame_LoadGame_ReActivateArea_asm()
+{
+__asm {
+    push    ecx
+    push    edx
+    push    eax
+
+    push    [ebp-150h]
+    call    CInfGame_LoadGame_ReActivateArea
+   
+    pop     eax
+    pop     edx
+    pop     ecx
+
+    mov     dword ptr [ebp-28h], 0 // stolen bytes
+    ret     
 }
 }

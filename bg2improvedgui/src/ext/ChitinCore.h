@@ -12,4 +12,8 @@ public:
 	CBaldurChitin& DETOUR_Construct();
 };
 
+
+void CAlloc_asm();
+void Malloc_asm();
+
 #endif //CHITINCORE_H

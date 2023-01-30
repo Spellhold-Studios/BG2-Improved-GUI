@@ -157,3 +157,9 @@
 
 @4280 = ~BG2 clear voice(without background effect/noise) Casting Sounds for Innate Casting~
 @4290 = ~Neverwinter Nights Casting Sounds for Wizard Spell Level 9(+HLA) and Priest Spell Level 7(+HLA)~
+
+@4300 = ~Restore BG1/BG2 XP Limits~
+
+@4400 = ~EAX/DirectSound3D emulation through DSOAL~
+
+@4500 = ~Freeze/Unfreeze sounds when game paused/unpaused~

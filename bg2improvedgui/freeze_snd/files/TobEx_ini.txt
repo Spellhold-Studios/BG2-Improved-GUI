@@ -1,0 +1,1 @@
+Sound:Freeze On Pause=1

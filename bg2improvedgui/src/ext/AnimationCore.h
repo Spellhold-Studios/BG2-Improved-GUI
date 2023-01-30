@@ -50,6 +50,7 @@ void CAnimation6400_EquipWeapon_SkipOffHand_asm();
 void CAnimation6400_GetAnimationPalette_CheckOffHandWeapon_asm();
 void CAnimation6400_SetColorRange_CheckOffHandWeapon_asm();
 void CGameSprite_SetSequence_Log_asm();
+void CCreativeObject_SetCurrentAction_SetREADY_asm();
 
 #define isInfinityAnimationActive ( *(unsigned int *)0xAA470E == 0x4141B500 )
 

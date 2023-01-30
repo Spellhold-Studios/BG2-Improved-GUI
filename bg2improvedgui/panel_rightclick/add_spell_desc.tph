@@ -1,3 +1,4 @@
+// (c) Prozh (http://www.shsforums.net/user/38456-prozh)
 
 COPY_EXISTING ~spwi590.spl~ ~override~
   SAY 0x50 @12001

@@ -15,4 +15,5 @@ _n int CInfinity::FXRender(CVidCell* pVidCell, int nRefPointX, int nRefPointY, u
 _n int CInfinity::FXUnlock(unsigned long dwFlags, RECT* pFxRect, POINT& ptRef) { _bgmain(0x6C7365) }
 _n int CInfinity::FXBltFrom(int nSurface, RECT& rFXRect, int x, int y, int nRefPointX, int nRefPointY, unsigned long dwFlags) { _bgmain(0x6C6306) }
 _n int CInfinity::FXRenderClippingPolys(int nPosX, int nPosY, int nPosZ, POINT& ptRef, RECT& rGCBounds, bool bDithered, unsigned long dwBlitFlags) { _bgmain(0x6C6B15) }
-
+_n void CArea::OnDeactivation() { _bgmain(0x4CC770) }
+_n void CArea::OnActivation()   { _bgmain(0x4CC436) }

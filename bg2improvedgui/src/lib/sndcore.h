@@ -40,7 +40,7 @@ public:
 	int* vtable;
 	
 	//0: all SFX, no additional behaviour
-	//1: nil, use CPlaylistElement sounds list, always highest priority, always highest channel
+	//1: nil, use CVoice sounds list, always highest priority, always highest channel
 	//2: nil, plays one sound at a time, no interrupt
 	//3: all speech, interruptible
 	int type; //4h
@@ -53,10 +53,73 @@ public:
 	char u31; //pad
 };
 
+struct SongPosition { //Size Ch
+	int nSong;
+	int nPart;
+	int nCursorPos;
+};
+
+struct ResWavContainer { //Size 10h
+	BOOL bLoaded; //0h
+	ResWav* pResWav; //4h
+	ResRef soundName; //8h
+};
+
+class CSound : CObject { //Size 6Ah
+//Constructor: 0x9DCF80
+public:
+	//AB9960
+    CSound();
+    virtual ~CSound();
+    int SetFireForget(BOOL bNewFireForget);
+    int SetChannel(int nNewChannel, CArea* pArea);
+    BOOL Play(BOOL bReplay);
+    BOOL PlayAtCoord(int nNewXCoordinate, int nNewYCoordinate, int nNewZCoordinate, BOOL bReplay);
+    BOOL Stop();
+    BOOL IsSoundPlaying(bool bInSoundUpdate);
+    BOOL SetVolume(int nNewVolume);
+    BOOL ResetVolume();
+
+	ResWavContainer wav; //4h
+	BOOL bPositionedSound; //14h, uses 24h
+	int nBufferSize; //18h
+	int nFrequency; //1ch (1/500 of Hz), bSound_44KhzMixer uses freq without /500
+	int nSRCurveRadius; //20h
+	int nPositionalVolumePercent; //24h
+	int xPos; //28h
+	int yPos; //2ch
+	int zPos; //30h
+	int nPan; //34h, (1/5000 of dB)
+	int nVolume; //38h (in %)
+	BOOL bFrequencySet; // 3ch
+	int nChannelIdx; //40h, channel to use
+	int nPriority; //44h, lower number, higher priority when all buffers full (nTotalChannels[21] - nChannelIdx - 1 ) * 100 + custom
+	BOOL bLoop; //48h
+	int nFrequencyShift; //4ch (in Hz)
+	int nVolumeShift; //50h (in %)
+	BOOL b3DPositionning; //54h
+	int* m_pSoundBuffer; //58h, IDirectSoundBuffer*
+	BOOL bFireForget; //5ch, bAllowHighestPriority, bugged so does not do anything
+	CArea* pArea; //60h
+
+	//bit 0: Use cutscene volume reduction (reduces sound volume 25%)
+	//bit 1: Use custom SR curve radius
+	//bit 2: Use random frequency variation
+	//bit 3: Use random volume variation
+	//bit 4: Do not use environmental audio
+	unsigned int dwWfxFlags; //64h
+
+	bool bSoundIsntDucked; //68h, bCutsceneMode
+	char u69; //pad
+};
+
+
 struct CSoundMixer { //Size 28DAh
 //Constructor: 0x9DFADC
 	BOOL InitSonglist(int nSongs, char** pSongFileArray);
     BOOL IsChannelUsed(int channel);
+    void UpdateSoundList();
+    void AddToLoopingList(CSound* pSoundPtr);
 
 	BOOL bInitDsound; //0h
 	int* lpDirectSound; //4h, LPDIRECTSOUND
@@ -67,18 +130,19 @@ struct CSoundMixer { //Size 28DAh
 	CCriticalSection csSos;
 #endif
 	int u2c[12]; //unused?
-	BOOL bInit; //5ch
+	BOOL bMixerInitialized; //5ch
 	int u60;
 	
 	//locks for access to arrays and lists below
-	BOOL bLockSoundChannelArray; //64h
-	BOOL bLockLoopSoundQueue; //68h
-	BOOL bLockPlaylist; //6ch
-	BOOL bLockAreaLoopSoundQueue; //70h
+	BOOL bInLoopingUpdate;  //64h bLockSoundChannelArray    CSoundMixer::RemoveFromLoopingList()
+	BOOL bInPositionUpdate; //68h bLockLoopSoundQueue       CSoundMixer::UpdateSoundPositions()
+	BOOL bInSoundUpdate;    //6ch bLockPlaylist             CSoundMixer::UpdateSoundList()
+	BOOL bInQueueUpdate;    //70h bLockAreaLoopSoundQueue   CSoundMixer::UpdateQueue()
 	CObArray SoundChannels; //74h
-	CObList SoundQueue; //88h, for new looping CSounds
-	CObList Playlist; //a4h, contains buffered CPlaylistElements
-	CObList AreaLoopSoundQueue; //c0h, looping area CSounds in current area
+	CObList AllLoopingQueue;    //88h, looping CSounds on all areas
+	CObList PlayingNow;         //a4h, currently playing CVoices, max count is CSoundMixer->nMaxSoundBuffers
+	CObList Waiting;            //c0h, 1) CSounds from PlayingNow when it's overlowed,
+                                //     2) looped CSounds if not current area
 
 	HWND hWnd; //dch
 	int ue0[4]; //unused, has get and set functions
@@ -145,75 +209,29 @@ struct CSoundMixer { //Size 28DAh
 
 extern BOOL (CSoundMixer::*CSoundMixer_InitSonglist)(int, char**);
 
-struct SongPosition { //Size Ch
-	int nSong;
-	int nPart;
-	int nCursorPos;
-};
-
-struct ResWavContainer { //Size 10h
-	BOOL bLoaded; //0h
-	ResWav* pResWav; //4h
-	ResRef soundName; //8h
-};
-
-class CSound : CObject { //Size 6Ah
-//Constructor: 0x9DCF80
-public:
-	//AB9960
-    CSound();
-    virtual ~CSound();
-    int SetFireForget(BOOL bNewFireForget);
-    int SetChannel(int nNewChannel, CArea* pArea);
-    BOOL Play(BOOL bReplay);
-    BOOL PlayAtCoord(int nNewXCoordinate, int nNewYCoordinate, int nNewZCoordinate, BOOL bReplay);
-    BOOL Stop();
-    BOOL IsSoundPlaying(bool bInSoundUpdate);
-
-	ResWavContainer wav; //4h
-	BOOL bUsePosition; //14h, uses 24h
-	int nBufferSize; //18h
-	int nFrequency; //1ch (1/500 of Hz)
-	int nSRCurveRadius; //20h
-	int nPositionalVolumePercent; //24h
-	int xPos; //28h
-	int yPos; //2ch
-	int zPos; //30h
-	int nPan; //34h, (1/5000 of dB)
-	int nVolume; //38h (in %)
-	BOOL bFrequencySet; //3ch
-	int nChannelIdx; //40h, channel to use
-	int nPriority; //44h, lower number, higher priority when all buffers full (nTotalChannels[21] - nChannelIdx - 1 ) * 100 + custom
-	BOOL bLoop; //48h
-	int nFrequencyShift; //4ch (in Hz)
-	int nVolumeShift; //50h (in %)
-	BOOL bUpdatePosition; //54h
-	int* m_pSoundBuffer; //58h, IDirectSoundBuffer*
-	BOOL bAllowHighestPriority; //5ch, bugged so does not do anything
-	CArea* pArea; //60h
-
-	//bit 0: Use cutscene volume reduction (reduces sound volume 25%)
-	//bit 1: Use custom SR curve radius
-	//bit 2: Use random frequency variation
-	//bit 3: Use random volume variation
-	//bit 4: Do not use environmental audio
-	unsigned int dwWfxFlags; //64h
-
-	bool bSoundIsntDucked; //68h, bCutsceneMode
-	char u69; //pad
-};
-
-class CPlaylistElement : CObject { //Size 16h
+class CVoice : CObject { //Size 16h, tobex new size 30h
 //Constructor: 0x9DF55E
 public:
 	//AB996C
 
 	CSound* pSound; //4h
-	int* m_pSoundBuffer; //8h, IDirectSoundBuffer* (never used)
+	int* m_pSoundBuffer; //8h, IDirectSoundBuffer, used when pSound == null
 	int nChannel; //ch
-	int u10; //u44 of CSound
-	bool bCutsceneMode; //14h
+	int nPriority; //u44 of CSound
+	bool bDuckedOthers; //14h
 	char u15; //pad
+
+    // tobex new
+    char   bPauseMode;           // 16h
+    char   bTimeStopMode;        // 17h
+    char   bScreenMode;          // 18h
+    char   pad1;                 // 19h
+    char   pad2;                 // 1ah
+    char   pad3;                 // 1bh
+    DWORD  DSBufPosition;        // 1ch, DirectSoundBuffer_GetCurrentPosition()
+    int    nVolume;              // 20h    
+    ResRef soundName;            // 24h
+    CArea *pArea;                // 2ch
 };
 
 #endif //SNDCORE_H

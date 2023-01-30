@@ -1407,9 +1407,28 @@ void static __stdcall
 CGameSprite_SetSequence_Log(CCreatureObject& Cre, short seqID) {
     Enum id = Cre.oBase.eTarget;
     short result = g_pChitin->pGame->GetPartyMemberSlot(id);
-    if (result != -1) {   // Party
+
+    //if (result != -1) {   // Party
+    //if (Cre.wAnimSequenceSimplified != seqID) {
         //console.write_debug("seq= %s \n", GetSeqText(seqID));
-    }
+    //}
+}
+
+
+BOOL static __stdcall
+CCreativeObject_SetCurrentAction_SetREADY(CCreatureObject& Cre, Action& action) {
+    if (Cre.wAnimSequenceSimplified == SEQ_HEAD_TURN && 
+        (action.opcode == 22  || // MoveToObject
+         action.opcode == 23  || // MoveToPoint
+         action.opcode == 90  || // MoveToPointNoRecticle
+         action.opcode == 107 || // MoveToOffset
+         action.opcode == 180 || // MoveToObjectFollow
+         action.opcode == 207 || // MoveToPointNoInterrupt
+         action.opcode == 208    // MoveToObjectNoInterrupt
+        ))
+        return FALSE;   // skip SetSequence(SEQ_READY)
+    else
+        return TRUE;
 }
 
 
@@ -1495,7 +1514,7 @@ __asm {
 	pop     ecx
     pop     eax
 
-    add     esp,4
+    add     esp, 4
     push    0851CF4h    ; calculate filename
     ret
 
@@ -1535,7 +1554,7 @@ __asm {
 	pop     ecx
     pop     eax
 
-    add     esp,4
+    add     esp, 4
     push    08702D2h    ; calculate filename
     ret
 
@@ -1930,7 +1949,7 @@ __asm {
 	pop     ecx
     jz      CAnimation5000_EquipArmor_SkipPrefixChange_asm_Continue
 
-    add     esp,4
+    add     esp, 4
     push    084715Dh        // SkipPrefixChange
     ret
 
@@ -2046,5 +2065,34 @@ __asm {
 
     cmp     dword ptr [ecx+6412h], 0 // stolen bytes
 	ret     
+}
+}
+
+
+void __declspec(naked)
+CCreativeObject_SetCurrentAction_SetREADY_asm()
+{
+__asm {
+	push    ecx
+	push    edx
+    push    eax
+
+    push    [ebp+8]     // Action
+    push    [ebp-14Ch]  // Cre
+    call    CCreativeObject_SetCurrentAction_SetREADY
+    cmp     eax,eax
+
+    pop     eax
+	pop     edx
+	pop     ecx
+    jz      CCreativeObject_SetCurrentAction_SetREADY_Abort
+
+    mov     ecx, 7 // stolen bytes
+	ret
+
+CCreativeObject_SetCurrentAction_SetREADY_Abort:
+    add     esp, 4
+    push   08FA627h // Skip SetSequence()
+    ret
 }
 }

@@ -442,7 +442,7 @@ __asm
     cmp     edx, 1      // Turn Undead
     jnz     ClericThief_TurnUndeadInnate_continue
 
-    pop     eax         // kill ret addr
+    add     esp, 4      // kill ret addr
     push    066E63FH    // non-innate toolbar route
     ret
 

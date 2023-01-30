@@ -462,6 +462,12 @@ CInfGame_Marshal_SaveGame(CSavedGameHeader& savegame) {
         if (g_GreyButtonOn)
             savegame.dwFlags |= 0x400;
     }
+
+    if (pGameOptionsEx->bEngine_LimitXP) {
+        if(IsBG1Part() == 1)
+            g_pChitin->pGame->bBG2 = FALSE; // clear bg2 flag
+    }
+    
 }
 
 void __stdcall
@@ -484,6 +490,7 @@ CInfGame_UnMarshal_LoadGame(CSavedGameHeader& savegame) {
         else
             g_GreyButtonOn = false;
     }
+
 }
 
 
@@ -881,7 +888,7 @@ __asm {
 void  __declspec(naked)
 FakeGetDiskFreeSpaceA_asm() {
 __asm {
-    xor     eax, eax
+    xor     eax, eax    // force return error
     ret     5*4
 }
 }

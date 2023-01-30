@@ -1,0 +1,8 @@
+DEFINE_ACTION_FUNCTION ~FREEZESND~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/freeze_snd/files/TobEx_ini.txt"
+BUT_ONLY
+
+
+END  //DEFINE_ACTION_FUNCTION

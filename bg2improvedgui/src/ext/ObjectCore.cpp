@@ -193,13 +193,13 @@ BOOL DETOUR_CGameAIBase::DETOUR_EvaluateStatusTrigger(Trigger& t) {
 		}
 		break;
 	case TRIGGER_TIME_STOP_COUNTER:
-		bResult = g_pChitin->pGame->m_nTimeStopObjectsTicksLeft == tTemp.i;
+		bResult = g_pChitin->pGame->m_nTimeStopTicksLeft == tTemp.i;
 		break;
 	case TRIGGER_TIME_STOP_COUNTER_GT:
-		bResult = g_pChitin->pGame->m_nTimeStopObjectsTicksLeft > tTemp.i;
+		bResult = g_pChitin->pGame->m_nTimeStopTicksLeft > tTemp.i;
 		break;
 	case TRIGGER_TIME_STOP_COUNTER_LT:
-		bResult = g_pChitin->pGame->m_nTimeStopObjectsTicksLeft < tTemp.i;
+		bResult = g_pChitin->pGame->m_nTimeStopTicksLeft < tTemp.i;
 		break;
 	case TRIGGER_TIME_STOP_OBJECT:
 		tTemp.DecodeIdentifiers(*this);
@@ -538,20 +538,24 @@ CAIGroup_ClearActions_asm()
 {
 __asm {
 
-    cmp     dword ptr [ebp+4], 04CCC51h // called from CGameArea::OnActionButtonClickGround
-	jz      CAIGroup_ClearActions_asm_WALK
+    //cmp     dword ptr [ebp+4], 04CCC51h // called from CGameArea::OnActionButtonClickGround
+	//jz      CAIGroup_ClearActions_asm_WALK
 
     cmp     word ptr [ecx+33ACh], 6     // Cre.wAnimSequenceSimplified = SEQ_HEAD_TURN ?
     jz      CAIGroup_ClearActions_asm_TURNHEAD
 
+//CAIGroup_ClearActions_Orig:
     push    08AD630h    // CGameSprite::SetSequence
     ret
 
 CAIGroup_ClearActions_asm_TURNHEAD:     // skip anything
 	ret     4
 
-CAIGroup_ClearActions_asm_WALK:
-    mov     word ptr [ecx+33ACh], 7     // Cre.wAnimSequenceSimplified = SEQ_READY, skip SetSequence()
-	ret     4
+//CAIGroup_ClearActions_asm_WALK:
+    //cmp     word ptr [ecx+33ACh], 10    // Cre.wAnimSequenceSimplified = SEQ_WALK, already walking
+    //jz      CAIGroup_ClearActions_Orig  // back to original behaviour
+
+    //mov     word ptr [ecx+33ACh], 7     // Cre.wAnimSequenceSimplified = SEQ_READY, skip SetSequence()
+	//ret     4
 }
 }

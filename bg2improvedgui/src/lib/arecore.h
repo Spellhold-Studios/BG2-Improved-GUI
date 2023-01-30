@@ -227,6 +227,8 @@ public:
     char GetSong(short wType);
     BOOL CheckPointsAccessible(POINT& pt1, POINT& pt2, TerrainTable& tt, BOOL bCheckVisibility, int nRadius);
     void OnActionButtonUp(POINT& pt);
+    void OnDeactivation();
+    void OnActivation();
 
     //entire ARE V1.0 header (m_header)
     ResRef areaPrefix; //0h, used for LM, LN, HT, wed, Nwed

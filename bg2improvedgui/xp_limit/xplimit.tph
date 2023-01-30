@@ -1,0 +1,8 @@
+DEFINE_ACTION_FUNCTION ~XPLIMIT~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/xp_limit/files/TobEx_ini.txt"
+BUT_ONLY
+
+
+END  //DEFINE_ACTION_FUNCTION

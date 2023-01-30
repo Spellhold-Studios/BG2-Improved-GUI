@@ -197,7 +197,7 @@ public:
 	int u11d8;
 	Enum u11dc;
 	BOOL u11e0; //bInDialogueMode?
-	char u11e4;
+	char nAutoHideInterface; //11e4h
 	char u11e5; //pad
 	int u11e6;
 	RECT u11ea;

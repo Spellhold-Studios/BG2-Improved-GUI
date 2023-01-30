@@ -1011,6 +1011,17 @@ CScreenWorld_KeyHandle_CheckAvailableSpell(short wBufferIdx) {
 }
 
 
+int static __stdcall
+CRuleTables_GetXPCap(int XP) {
+    if (g_pChitin->pGame->bBG2 == FALSE)
+        return min(*((int *)0xAB725C), XP); // BG1 161000
+    else
+    if (g_pChitin->pGame->bThroneOfBhaal == FALSE)
+        return min(*((int *)0xAB7260), XP); // BG2 2950000
+    else
+        return XP;                          // ToB
+}
+
 
 void __declspec(naked)
 CScreenWorld_NoBindedKeyHandle_asm() {
@@ -1157,6 +1168,39 @@ CScreenWorld_KeyHandle_CheckSpell_asm_abort:
 
     add     esp, 4
     push    07CE8E4h    // abort key
+    ret
+}
+}
+
+
+void __declspec(naked)
+CRuleTables_GetXPCap_asm() {
+__asm
+{   push    ecx
+
+    push    [ebp-10h]   // XP cap
+    call    CRuleTables_GetXPCap
+    mov     edx, eax    // new XP cap
+
+    pop     ecx
+
+    mov     [ebp-24h], edx  // Stolen bytes
+    ret
+}
+}
+
+
+void __declspec(naked)
+OldSaveGame_Undone_asm() {
+__asm
+{
+    mov     edx, [ebp-20h]                      // Stolen bytes
+    cmp     dword ptr [edx+5Ch], 4              // x<4 pre ToB format
+    jnb     OldSaveGame_Undone_asm_Continue     // >=
+    mov     dword ptr [edx+5Ch], 4              // ToB format
+
+OldSaveGame_Undone_asm_Continue:
+    cmp     dword ptr [edx+5Ch], 1
     ret
 }
 }

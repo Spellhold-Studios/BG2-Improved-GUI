@@ -728,7 +728,7 @@ struct CInfGame : public CRuleTables { //Size 4DC8h
 	BOOL m_bTutorialGame; //4ce8h
 	BOOL m_bThroneOfBhaalGame; //4cech - used to determine which song to play at start screen, 1 = use MP in STARTARE.2DA
 	Enum m_eBaldurObject; //4cf0h, BALDUR.BCS CBaldurObject
-	int m_nTimeStopObjectsTicksLeft; //4cf4h, remaining timestop (area sprites) ticks
+	int m_nTimeStopTicksLeft; //4cf4h, remaining timestop (area sprites) ticks
 	Enum m_eTimeStopExempt; //4cf8h, exempt from timestop (area sprites)
 	int m_nTimeStopGreyscaleTicksLeft; //4cfch, remaining timestop (Greyscale) ticks
 	int m_nDreamSepiaTicksLeft; //4d00h, remaining dream (Sepia) ticks
@@ -743,8 +743,8 @@ struct CInfGame : public CRuleTables { //Size 4DC8h
 	int u4d70;
 	IECString u4d74;
 	int u4d78;
-	BOOL m_bThroneOfBhaal; //4d7ch - used to determine if 25-prefixed files are used
-	int u4d80;
+	BOOL bThroneOfBhaal; //4d7ch - used to determine if 25-prefixed files are used
+	BOOL bBG2;
 
 	CPartyLocationList cplStorePartyLoc; //4d84h, used in Store/RestorePartyLocations(), CPartyLocation0 (0x0 Resref areaname, 0x8 POINT)
 	CPartyLocationList cplPrePocketPlane; //4da0h, used in ExitPocketPlane() and Cutscene2 effect, CPartyLocation1 (0x0 Resref areaname, 0x8 POINT)

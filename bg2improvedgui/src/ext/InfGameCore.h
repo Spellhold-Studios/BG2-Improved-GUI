@@ -74,5 +74,7 @@ void CScreenMap_NoBindedKeyHandle_asm();
 void CScreenJournal_NoBindedKeyHandle_asm();
 void CScreenWorld_HandleKeyboard_CheckDialogState_asm();
 void CScreenWorld_KeyHandle_CheckSpell_asm();
+void CRuleTables_GetXPCap_asm();
+void OldSaveGame_Undone_asm();
 
 #endif //INFGAMECORE_H

@@ -311,6 +311,11 @@ struct CGameOptionsEx {
     BOOL bSound_BG2ClearCastingSound;
     BOOL bSound_NWNCastingSound;
     BOOL bEngine_FakeDiskFreeSpace;
+    BOOL bVideo_7313_PaletteFix;
+    BOOL bEngine_LimitXP;
+    BOOL bSound_DSOAL;
+    BOOL bSound_44KhzMixer;
+    BOOL bSound_FreezeOnPause;
 
 protected:
     void Init();

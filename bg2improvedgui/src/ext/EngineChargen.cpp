@@ -904,7 +904,7 @@ __asm {
 
     mov     [ebp-8F4h], eax ; anim_id <- IA anim_id
 
-    pop     eax       ; remove ret addr
+    add     esp, 4
     push    06F0972h  ; skip orig code
     ret
 

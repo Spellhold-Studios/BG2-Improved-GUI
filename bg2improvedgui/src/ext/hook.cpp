@@ -96,7 +96,6 @@ void InitHooks() {
         DetourMemberFunction(Tramp_CEffectDamage_ApplyEffect, DETOUR_CEffectDamage::DETOUR_ApplyEffect);
         DetourMemberFunction(Tramp_CItem_GetAbilityEffect, DETOUR_CItem::DETOUR_GetAbilityEffect);
         DetourMemberFunction(Tramp_ResSplContainer_GetAbilityEffect, DETOUR_ResSplContainer::DETOUR_GetAbilityEffect);
-
         DetourMemberFunction(Tramp_CCreatureObject_ActionPickPockets, DETOUR_CCreatureObject::DETOUR_ActionPickPockets);
 
         //UI
