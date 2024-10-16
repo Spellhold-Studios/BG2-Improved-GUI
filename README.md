@@ -105,7 +105,7 @@ This mod is a collection of GUI/sound/engine improvements and tweaks to make Bal
 
 - Prozh  &nbsp;&ndash;&nbsp; innate/spell text descriptions, spell/item fixes
 
-**Acknowledgements**
+**Special Acknowledgements**
 
 - Spellhold Studios team for hosting the mod.
 - Ascension64 for TobEx and BG2 engine reverse enginering.
