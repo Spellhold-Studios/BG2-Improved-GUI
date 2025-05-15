@@ -1,5 +1,5 @@
 [![Release](https://img.shields.io/github/v/release/Spellhold-Studios/BG2-Improved-GUI?include_prereleases&color=%2392403a)](https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases/latest)
-[![Published](https://img.shields.io/github/release-date/Spellhold-Studios/BG2-Improved-GUI?display_date=published_at&label=published&color=%2392403a)](https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases/latest)
+[![Published](https://img.shields.io/github/release-date-pre/Spellhold-Studios/BG2-Improved-GUI?display_date=published_at&label=published&color=%2392403a)](https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/Spellhold-Studios/BG2-Improved-GUI/total?color=%2392403a)](https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%a0%20Linux%20%a0%20Project%20Infinity-%2392403a)](https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
 [![Games](https://img.shields.io/badge/games-BG2%20%a0%20BGT-%2392403a)](https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
