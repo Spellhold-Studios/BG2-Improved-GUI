@@ -463,6 +463,9 @@ void CGameSprite_SetSequence_StopCastingSound_asm();
 void CGameSprite_ApplyCastingEffect_Trigger_asm();
 void CGameSprite_ApplyCastingEffectPost_Trigger_asm();
 void CEffectCreateInventoryItem_Apply_asm();
+void CEffSummonCreatire_Apply_asm();
+void CCreativeObject_AddEffect_CheckAutoPause_asm();
+void CGameEffectCopySelf_Apply_FixSimulacrum_asm();
 
 
 H_MEMBERHOOK_1args(CEffectInvisibility,      CEffectInvisibility_Apply,      CCreatureObject&)

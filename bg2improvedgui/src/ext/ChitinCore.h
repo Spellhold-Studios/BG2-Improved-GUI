@@ -15,5 +15,6 @@ public:
 
 void CAlloc_asm();
 void Malloc_asm();
+void CBaldurChitinInit_asm();
 
 #endif //CHITINCORE_H

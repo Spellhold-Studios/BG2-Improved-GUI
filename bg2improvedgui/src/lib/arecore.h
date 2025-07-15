@@ -136,18 +136,18 @@ struct CInfinity { //Size 29Eh
     char u163; //bit0: day, bit1: night
     char u164;
     char u165;
-    int u166; //KERNEL32.GetTickCount()
-    int u16a; //u40*10000
-    int u16e; //u44*10000
+    unsigned long LastTickCount; //KERNEL32.GetTickCount()
+    POINT ptCurrentPosExact;    //u16a; u40*10000
+                                //int u16e; //u44*10000
 #ifdef _DEBUG
     _CCriticalSection u172; //172h
 #else
     CCriticalSection u172; //172h
 #endif
-    short u192;
-    POINT u194;
+    short autoScrollSpeed; //192h
+    POINT ptScrollDest;    //194h
     int u19c;
-    char u1a0;
+    uchar nScrollDelay;    //1a0h
     char u1a1;
     BOOL m_bEnableLightning; //1a2h, assoc u146
     int u1a6; //assoc u14a
@@ -298,8 +298,8 @@ public:
     CRITICAL_SECTION u200; //for 1fch and 1e1h, 165h of CWed
     CRITICAL_SECTION u218; //for 906h, 8ceh, 8eah (to RemoveFromArea), 9aeh, 976h, 992h
     CInfGame* pGame; //230h
-    int u234;
-    int u238;
+    long nScrollState;    //234
+    long nKeyScrollState; //238
     char u23c;
     char u23d;
     Enum iPickedOnDown; //23eh

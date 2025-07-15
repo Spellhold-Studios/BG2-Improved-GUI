@@ -102,5 +102,9 @@ void CDerivedStats_GetRealStrengthSpell(char strengthEffective, char& strength, 
 void CDerivedStats_SetStat(CDerivedStats& cds, unsigned short nOpcode, int nValue);
 char CDerivedStats_GetSubclassLevelNoAssertion(CDerivedStats& cds, char nClass, char nSubclass);
 char CDerivedStats_GetEffectiveClericLevelNoAssertion(CDerivedStats& cds, char nClass);
+float CDerivedStats_GetAverageLevelFloat(CDerivedStats &cds, char nClass);
+
+void CGameSprite_CheckStatsChange_Blindness_asm();
+
 
 #endif //OBJECTSTATS_H

@@ -244,7 +244,7 @@
 //0xAA6A84, 10h, CString areaName (CMessageExploreArea)
 //0xAA6AB0, 10h, DW
 //! 0xAA6ACC CMessageAddActionTailInterrupt
-//0xAA6AE8, 16h, ResRef
+//0xAA6AE8, 16h, CMessageUpdateScript(ResRef)
 //0xAA6B04, 10h, DW [treated as char] (CMessageSetBaseReaction)
 //0xAA6B58, 20h, Object oAttacker (CMessageSetLastAttacker)
 //! 0xAA6CE0 CMessageModifyVariable
@@ -270,7 +270,7 @@
 //0xAA6F9C, 64h, CString scope, CVariable (CMessageSetVariable)
 //0xAA6FB8, 14h, dwFlags, wIsTrapDiscovered, wIsTrapped (CMessageUpdateContainerState)
 
-//0xAA7134, ch
+//0xAA7134, ch, CMessageStartCombatMusic
 //0xAA727C, 14h, ResRef rAreaName (CMessageRemoveAreaAirEffects)
 //! 0xAA7298 CMessageHostReleaseServerStore
 //0xAA72D0, 10ah, CItem, short nRecommendedSlot, bool bTrimEmptySlots, pad (CMessageAddItemToContainerOverwrite)
@@ -284,8 +284,8 @@
 //! 0xAA7458, CMessageSetTriggerRemovalTimer
 
 //! 0xAA9758, CMessageInterruptDialogue
-//0xAA9774, 24h, CMessageStatic
-//! 0xAA9790, CMessageCreatureOverlay
+//0xAA9774, 24h, CMessageDisplayText
+//! 0xAA9790, CMessageVisualEffect
 //0xAA97C4, eh, unsigned char, pad
 //0xAA9830, 10h, int nParam2 (CMessageInstantDeath)
 //! 0xAA9970 CMessageCastSpell
@@ -305,7 +305,7 @@
 //0xAAB758, ch (CMessageResetAnimColors)
 //0xAAB7C8, ch
 //0xAAB81C, 10h, DW
-//0xAAB838, 14h, ResRef 
+//0xAAB838, 14h, CMessage::AddVVCInternal(ResRef) 
 //0xAAB86C, 44h, CColorPalList, CColorRgbList (constructor: 0x5BE891 (pSprite, enum, enum)) (CMessageSetAnimColorsFromList)
 //0xAAB888, 12h, short wNumItems, CItem* pItemArray (CMessageUpdateContainerItems)
 //0xAAB8A4, 16h, DW, W, W, pad?, unsigned char (constructor: 0x5C353B (pSprite, enum, enum))

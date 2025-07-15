@@ -25,8 +25,28 @@ CEffect& DETOUR_CEffect::DETOUR_CreateEffect(ITEM_EFFECT& eff, POINT& ptSource, 
 
     CEffect* pEffect = NULL;
     switch (eff.opcode) {
-    case CEFFECT_OPCODE_SET_STAT: //0x13E
+    case CEFFECT_OPCODE_SET_STAT:   //0x13E
         if (pGameOptionsEx->bEngineExpandedStats) pEffect = new CEffectSetStat(eff, ptSource, eSource, ptDest.x, ptDest.y, FALSE, e2);
+        break;
+    case CEFFECT_OPCODE_CAST_SPELL: // 0x92
+        if (pGameOptionsEx->bEffSavingThrowImprovedInvisibleBonus &&
+            pGameOptionsEx->bEffSavingThrowFix) {
+            // bg2fixpack bugged solution workaround
+            ResRef spellname  = eff.resource;
+            spellname.MakeUpper();
+            if (spellname == ResRef("SPWI405A") ||  // Improved invis (mage)
+                spellname == ResRef("SPDR401A") ||  // Invisible Stalker Improved Invisibility
+                spellname == ResRef("SPIN687A") ||  // Create Shadows
+                spellname == ResRef("SPIN698A") ||  // Cerebus Improved Invisibility
+                spellname == ResRef("SPWI505A") ||  // Shadow door (mage)
+                spellname == ResRef("SPWI607A") ||  // Mislead
+                spellname == ResRef("SPWI721A") ||  // Mass invisibility
+                spellname == ResRef("BALTH10A") ||  // Shadow Stance!
+                spellname == ResRef("SPIN544A")     // PSIONIC_SUPERIOR_INVISIBILITY
+               ) {
+                eff.resource = ResRef("nonexist");  // skip casting
+            }
+        }
         break;
     default:
         break;
@@ -247,7 +267,8 @@ BOOL DETOUR_CEffect::DETOUR_CheckSave(CCreatureObject& creTarget, char& rollSave
     }
 
     //Modified from vanilla, use only the lowest char
-    if ((effect.nSaveType & 0xFF) == CEFFECT_SAVETYPE_NONE) return TRUE;
+    if ((effect.nSaveType & 0xFF) == CEFFECT_SAVETYPE_NONE)
+        return TRUE;
 
     if (pGameOptionsEx->bEffSavingThrowFix) {
         char cSaveTypeUsed = 0;
@@ -350,7 +371,7 @@ BOOL DETOUR_CEffect::DETOUR_CheckSave(CCreatureObject& creTarget, char& rollSave
                 if (pGameOptionsEx->bEffSavingThrowImprovedInvisibleBonus) {
                     //improved invis saving throw bonus inserted here
                     if (!pCreSource->CanSeeInvisible() &&
-                        cdsTarget.stateFlags & STATE_IMPROVEDINVISIBILITY) {
+                        (cdsTarget.stateFlags & STATE_IMPROVEDINVISIBILITY)) {
                         wSaveRollTotal += 4;
                     }
                 }

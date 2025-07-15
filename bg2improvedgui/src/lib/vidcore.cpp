@@ -26,6 +26,9 @@ _n void CInfCursor::SetCursor(int nNewCursor, bool bForce, int nPointerNumber) {
 _n void CInfTooltip::SetTextRef(STRREF *textRef, IECString *sExtraText)  { _bgmain(0x6748AA) };
 _n void CVidPalette::SetRange(ushort nRange, ushort nValue, CVidBitmap& bmpMasterPalette) { _bgmain(0x9F42C2) };
 
+_n int CVideoMode::OutlinePoly(POINT *pPoly, short nVertices, RECT &rSurface, unsigned int rgbColor, POINT &ptOffset) { _bgmain(0x9B31EE) };
+_n int CVideoMode::FillPoly3d( POINT *pPoly, short nVertices, RECT &rSurface, unsigned int rgbColor, POINT &ptOffset) { _bgmain(0x9EFAA3) };
+_n int CVideoMode::DrawLine3d(int nXFrom, int nYFrom, int nXTo, int nYTo, const RECT &rSurface, unsigned int rgbColor){ _bgmain(0x9EE7EA) };
 
 //CVidCell::~CVidCell() {
 //    if (this->bam.pBam)

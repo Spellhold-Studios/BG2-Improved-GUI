@@ -4,6 +4,9 @@
 #include "win32def.h"
 #include "resref.h"
 
+extern const char* months[];
+extern const char* days[];
+
 class Log;
 extern Log L;
 extern Log LD;

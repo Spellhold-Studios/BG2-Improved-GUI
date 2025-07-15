@@ -7,6 +7,9 @@
 
 #include "ExceptionHandler.h"
 
+const DWORD g_nPEAddressDefault = 0x400000;
+#define DLL_INTERNAL_NAME "TobEx.dll\0"
+
 void Init() {
 
 	char* lpVersion = NULL;

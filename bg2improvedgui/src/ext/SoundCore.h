@@ -51,6 +51,8 @@ void CSound_SetVolume_Log2_asm();
 void CSound_ResetVolume_Log2_asm();
 void CSoundMixer_Initialize_Log3_asm();
 void CInfGame_LoadGame_ReActivateArea_asm();
+void CGameDialogEntry_Display_ClearChannel_asm();
+void CScreenWorld_EndDialog_ClearChannel_asm();
 
 
 

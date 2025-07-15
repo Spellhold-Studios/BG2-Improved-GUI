@@ -7,6 +7,7 @@
 #include "log.h"
 #include "InfGameCommon.h"
 #include "Animation5000.h"
+#include "EngineCommon.h"
 
 #define OR ||
 
@@ -1432,6 +1433,15 @@ CCreativeObject_SetCurrentAction_SetREADY(CCreatureObject& Cre, Action& action) 
 }
 
 
+void static __stdcall
+CAnimationHumans_SetBG1Speed(CAnimation &anim) {
+    if (IsBG1Part()) {
+        anim.nMovementRateCurrent = 6;
+        anim.nMovementRateDefault = 6;
+    }
+}
+
+
 void __declspec(naked)
 CItem_TranslateAnimationType_CheckMageAnimation_asm()
 {
@@ -2094,5 +2104,46 @@ CCreativeObject_SetCurrentAction_SetREADY_Abort:
     add     esp, 4
     push   08FA627h // Skip SetSequence()
     ret
+}
+}
+
+
+void __declspec(naked)
+CAnimation6400_PatchSpeed_asm()
+{
+__asm {
+	push    ecx
+	push    edx
+    push    eax
+
+    push    [ebp-79Ch]  // Animation
+    call    CAnimationHumans_SetBG1Speed
+
+    pop     eax
+	pop     edx
+	pop     ecx
+
+    mov     ecx, [ebp-79Ch] // stolen bytes
+	ret
+}
+}
+
+void __declspec(naked)
+CAnimation5000_PatchSpeed_asm()
+{
+__asm {
+	push    ecx
+	push    edx
+    push    eax
+
+    push    [ebp-220h]  // Animation
+    call    CAnimationHumans_SetBG1Speed
+
+    pop     eax
+	pop     edx
+	pop     ecx
+
+    mov     edx, [ebp-220h] // stolen bytes
+	ret
 }
 }

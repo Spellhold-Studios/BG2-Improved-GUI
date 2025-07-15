@@ -760,15 +760,14 @@ CScreenChar_UpdateMainPanel_AddNewInfo(CScreenRecord& Screen, CUITextArea& pText
     short intox =       Cre.GetDerivedStats().intoxication;
     short fatigue =     Cre.GetDerivedStats().fatigue;
     short luck =        Cre.GetDerivedStats().luck;
-    short mentalSpeed = Cre.GetDerivedStats().mentalSpeed;
+    short mentalSpeed   = Cre.GetDerivedStats().mentalSpeed;
+    short physicalSpeed = Cre.GetDerivedStats().physicalSpeed;
 
-    /*
     int   movement;
     if (Cre.animation.pAnimation)
         movement = Cre.animation.pAnimation->nMovementRateCurrent;
     else
         movement = 0;
-    */
 
     if (!pGameOptionsEx->bUI_ExtendedRecordScreenText_Threshold ||
         luck != 0) {
@@ -776,9 +775,9 @@ CScreenChar_UpdateMainPanel_AddNewInfo(CScreenRecord& Screen, CUITextArea& pText
         IECString sValue;
         sValue.Format("%d", luck);
         if (luck > 0)
-            CEngine_UpdateText(Screen, pTextArea, "%s : +%s", (LPCTSTR)sluck, (LPCTSTR)sValue);
+            CEngine_UpdateText(Screen, pTextArea, "%s: +%s", (LPCTSTR)sluck, (LPCTSTR)sValue);
         else
-            CEngine_UpdateText(Screen, pTextArea, "%s : %s", (LPCTSTR)sluck, (LPCTSTR)sValue);
+            CEngine_UpdateText(Screen, pTextArea, "%s: %s", (LPCTSTR)sluck, (LPCTSTR)sValue);
     }
 
     if (!pGameOptionsEx->bUI_ExtendedRecordScreenText_Threshold ||
@@ -786,7 +785,7 @@ CScreenChar_UpdateMainPanel_AddNewInfo(CScreenRecord& Screen, CUITextArea& pText
         IECString sIntox = GetTlkString(14087);     // ~Intoxication~
         IECString sValue;
         sValue.Format("%d", intox);
-        CEngine_UpdateText(Screen, pTextArea, "%s : %s", (LPCTSTR)sIntox, (LPCTSTR)sValue);
+        CEngine_UpdateText(Screen, pTextArea, "%s: %s", (LPCTSTR)sIntox, (LPCTSTR)sValue);
     }
 
     if (!pGameOptionsEx->bUI_ExtendedRecordScreenText_Threshold ||
@@ -794,7 +793,7 @@ CScreenChar_UpdateMainPanel_AddNewInfo(CScreenRecord& Screen, CUITextArea& pText
         IECString sfatigue = GetTlkString(14086);   // ~Fatigue~
         IECString sValue;
         sValue.Format("%d", fatigue);
-        CEngine_UpdateText(Screen, pTextArea, "%s : %s", (LPCTSTR)sfatigue, (LPCTSTR)sValue);
+        CEngine_UpdateText(Screen, pTextArea, "%s: %s", (LPCTSTR)sfatigue, (LPCTSTR)sValue);
     }
 
     if (!pGameOptionsEx->bUI_ExtendedRecordScreenText_Threshold ||
@@ -803,12 +802,67 @@ CScreenChar_UpdateMainPanel_AddNewInfo(CScreenRecord& Screen, CUITextArea& pText
         IECString sValue;
         sValue.Format("%d", mentalSpeed);
         if (mentalSpeed > 0)
-            CEngine_UpdateText(Screen, pTextArea, "%s : +%s", (LPCTSTR)smentalSpeed, (LPCTSTR)sValue);
+            CEngine_UpdateText(Screen, pTextArea, "%s: +%s", (LPCTSTR)smentalSpeed, (LPCTSTR)sValue);
         else
-            CEngine_UpdateText(Screen, pTextArea, "%s : %s", (LPCTSTR)smentalSpeed, (LPCTSTR)sValue);
+            CEngine_UpdateText(Screen, pTextArea, "%s: %s", (LPCTSTR)smentalSpeed, (LPCTSTR)sValue);
     }
 
-    /*
+    if (!pGameOptionsEx->bUI_ExtendedRecordScreenText_Threshold) {
+        // WSPECIAL.2da
+        short nRow;
+        short ItemSpeed;
+        short nCol = 2;             // SPEED
+        int   bonus;
+	    IECString sHit;
+        CItem*  Item = Cre.Inventory.items[Cre.Inventory.nSlotSelected];
+        short   launcherSlot;
+
+        if (Item) {
+            Item->Demand();
+
+            ItmFileAbility* ItemAbility = Item->GetAbility(Cre.Inventory.nAbilitySelected);
+            CItem* ItemLauncher = Cre.GetFirstEquippedLauncherOfAbility(ItemAbility, launcherSlot);
+
+            if (ItemLauncher) {
+                ItemLauncher->Demand();
+
+                ItmFileAbility* ItemLauncherAbility = ItemLauncher->GetAbility(Cre.Inventory.nAbilitySelected);
+                nRow = Cre.GetProficiencyInItem(*ItemLauncher);
+                if (ItemLauncherAbility)
+                    ItemSpeed = ItemLauncherAbility->speed;    // ignore ammo speed
+                else
+                    ItemSpeed = ItemAbility->speed;            // failed ability, use ammo speed
+
+                ItemLauncher->Release();
+            }
+            else {
+                nRow = Cre.GetProficiencyInItem(*Item);
+                ItemSpeed = ItemAbility->speed;
+            }
+
+	        if (nCol  < g_pChitin->pGame->WSPECIAL.nCols &&
+		        nRow  < g_pChitin->pGame->WSPECIAL.nRows &&
+		        nCol  >= 0 &&
+		        nRow  >= 0) {
+		        sHit  = *((g_pChitin->pGame->WSPECIAL.pDataArray) + (g_pChitin->pGame->WSPECIAL.nCols * nRow  + nCol));
+	        } else {
+		        sHit  = g_pChitin->pGame->WSPECIAL.defaultVal;
+	        }
+	        sscanf_s((LPCTSTR)sHit,  "%d", &bonus); // Value is negative
+            bonus = -bonus;
+
+            IECString sphysicalSpeed = GetTlkString(6553); // ~Weapon speed~
+            IECString sValue;
+            sValue.Format("%d", ItemSpeed - physicalSpeed - bonus);
+            if (ItemSpeed - physicalSpeed - bonus > 0)
+                CEngine_UpdateText(Screen, pTextArea, "%s: %s", (LPCTSTR)sphysicalSpeed, (LPCTSTR)sValue);
+            else
+                CEngine_UpdateText(Screen, pTextArea, "%s: 0", (LPCTSTR)sphysicalSpeed);
+
+            Item->Release();
+        }
+    }
+
     if (movement != 0) {
         IECString smovement = GetTlkString(14119); // ~Movement Rate~
         IECString sValue;
@@ -819,7 +873,6 @@ CScreenChar_UpdateMainPanel_AddNewInfo(CScreenRecord& Screen, CUITextArea& pText
         sValue.Format("%d", movement);
         CEngine_UpdateText(Screen, pTextArea, "%s : %s", (LPCTSTR)smovement, (LPCTSTR)sValue);
     }
-    */
 }
 
 

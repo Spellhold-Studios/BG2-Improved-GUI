@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~DOUBLE_PROJECTILE~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/double_projectile/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

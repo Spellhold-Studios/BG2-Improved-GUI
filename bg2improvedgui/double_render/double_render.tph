@@ -10,4 +10,11 @@ ACTION_IF (%option% = 1) BEGIN
     BUT_ONLY
 END
 
+ACTION_IF ((%option% = 1) OR (%option% = 2)) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/double_render/files/TobEx_ini_scroll.txt"
+    BUT_ONLY
+END
+
+
 END  //DEFINE_ACTION_FUNCTION

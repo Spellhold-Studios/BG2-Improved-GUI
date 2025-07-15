@@ -208,6 +208,7 @@ struct CGameOptionsEx {
     BOOL bUI_ShowHitPointsOnPortrait;
     BOOL bUI_ShowHitPointsOnPortrait_Always;
     BOOL bUI_ShowActionOnPortrait;
+    BOOL bUI_ShowActionOnPortraitWeapon;
     BOOL bUI_ShowActionOnPortrait_Always;
     BOOL bUI_YellowBorderOnPortraitIfTooFar;
 
@@ -242,6 +243,7 @@ struct CGameOptionsEx {
     BOOL bEngine_CpuIdle;
     BOOL bUI_DoubleRenderRate;
     BOOL bUI_DoubleRenderRate_MouseOnlyMode;
+    BOOL bUI_DoubleRenderRate_Scroll;
     BOOL bUI_FastProgressBarScreen;
     BOOL bVideo_FlickeringCursorFix;
     BOOL bEff_OverTargetVisualEffectFixes;
@@ -300,7 +302,7 @@ struct CGameOptionsEx {
     BOOL bUI_MoraleBreakIcon;
     BOOL bSound_RobeArmor;
     BOOL bAnimation_SEQ_READY_AfterWeaponChange;
-    BOOL bEngine_WSPECIAl_SPEED;
+    BOOL bEngine_WSPECIAL_SPEED;
     //BOOL bEngine_InvisibilityRenderFix;
     BOOL bEngine_PartyBumpableInMoving;
     BOOL bEngine_EnemyCanBumpParty;
@@ -313,9 +315,20 @@ struct CGameOptionsEx {
     BOOL bEngine_FakeDiskFreeSpace;
     BOOL bVideo_7313_PaletteFix;
     BOOL bEngine_LimitXP;
-    BOOL bSound_DSOAL;
+    //BOOL bSound_DSOAL;
     BOOL bSound_44KhzMixer;
     BOOL bSound_FreezeOnPause;
+    BOOL bEngineAutoPauseCastingFix;
+    BOOL bEngine_DisableAutoSaveGame;
+    BOOL bVideo_ProjectileFullTicks;
+    BOOL bEngine_BlindVisualRangeFix;
+    BOOL bEngine_SequencerOrderFix;
+    int bEngine_BGTMovementSpeed;
+    BOOL bUI_SyncDialogSound;
+    BOOL bKeepWizardQuickSpells;
+    BOOL bKeepModalWhenSwitchingWeapon;
+
+
 
 protected:
     void Init();

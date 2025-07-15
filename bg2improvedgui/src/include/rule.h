@@ -21,15 +21,20 @@ const unsigned char ALIGN_CHAOTIC_MASK      = 0x30;
 
 //ACTION.IDS
 const short ACTION_NO_ACTION                = 0;
+const short ACTION_ATTACK                   = 3;
 const short ACTION_SET_GLOBAL               = 30;
 const short ACTION_SPELL                    = 31;
 const short ACTION_USEITEM                  = 34;
 const short ACTION_SET_INTERRUPT            = 86;
+const short ACTION_GROUPATTACK              = 94;
 const short ACTION_SPELL_POINT              = 95;
 const short ACTION_USEITEM_POINT            = 97;
+const short ACTION_ATTACKNOSOUND            = 98;
+const short ACTION_ATTACKONEROUND           = 105;
 const short ACTION_FORCESPELL               = 113;
 const short ACTION_FORCESPELL_POINT         = 114;
 const short ACTION_INCREMENT_GLOBAL         = 109;
+const short ACTION_ATTACKREEVALUATE         = 134;
 const short ACTION_BREAK_INSTANTS           = 178;
 const short ACTION_SPELL_NO_DEC             = 191;
 const short ACTION_SPELL_POINT_NO_DEC       = 192;

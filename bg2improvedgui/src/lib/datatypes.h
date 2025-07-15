@@ -273,33 +273,34 @@ struct EffFileData { //size 108h
 
 //Itm
 struct ItmFileAbility { //Size 38h
-	char   attackType;  //0h
-	char   idReq;       //1h
-	char   loc;         //2h
-	char   u3;
-	ResRef useIcon;     //4h
-	char   targetType;  //ch
-	char   targetCnt;   //dh
-	short  range;       //eh
-	short  projType;    //10h
-	short  speed;       //12h
-	short  toHitBonus;  //14h
-	char   sizeDice;    //16h
-	char   nType1;      //17h
-	char   nDice;       //18h
-	char   nType2;      //19h
-	short  damBonus;    //1ah
-	short  damType;     //1ch
-	short  nEffects;    //1eh
-	short  offEffects;  //20h
-	short  charges;     //22h
-	short  chargeType;  //24h
-	uint   flags;       //26h
-	short  projIdx;     //2ah
-	short  meleeIdx[3]; //2ch
-	short  isArrow;     //32h
-	short  isBolt;      //34h
-	short  isMiscProj;  //36h
+	ushort attackType;      //0h
+	uchar  quickSlotType;   //2h
+	uchar  largeDamageDice; //3h
+	ResRef useIcon;         //4h
+	uchar  targetType;      //ch
+	uchar  targetCnt;       //dh
+	ushort range;           //eh
+    uchar  launcherType;    //10h
+    uchar  largeDamageDiceCount;//11h
+	uchar  speed;           //12h
+    uchar  largeDamageDiceBonus;//13h
+	short  toHitBonus;      //14h
+	uchar   sizeDice;       //16h
+	uchar   nType1;         //17h
+	uchar   nDice;          //18h
+	uchar   nType2;         //19h
+	short  damBonus;        //1ah
+	ushort  damType;        //1ch
+	ushort  nEffects;       //1eh
+	ushort  offEffects;     //20h
+	ushort  charges;        //22h
+	ushort  chargeType;     //24h
+	uint    flags;          //26h
+	ushort  missileType;    //2ah
+	ushort  meleeIdx[3];    //2ch
+	ushort  isArrow;        //32h
+	ushort  isBolt;         //34h
+	ushort  isMiscProj;     //36h
 };
 
 struct ITEM_EFFECT {            //Size 30h, ItmFileEffect, SplFileEffect

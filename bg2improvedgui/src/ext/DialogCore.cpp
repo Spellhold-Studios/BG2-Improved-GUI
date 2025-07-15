@@ -77,7 +77,7 @@ CheckBG1Chapter() {
         }
 
 		if (&bg1done_marker != NULL) {
-			BG2afterBG1 = bg1done_marker.nValue > 0 ? true : false;
+			BG2afterBG1 = bg1done_marker.intValue > 0 ? true : false;
         } else {
             BG2afterBG1 = false;
         }
@@ -88,6 +88,34 @@ CheckBG1Chapter() {
         else
             return FALSE;
     }
+}
+
+
+BOOL __stdcall 
+GameSprite_PlayerDialog_DisplaySayNothing(CCreatureObject &Cre) {
+    if (Cre.BaseStats.soundset[62] != 0 && // DIALOG_DEFAULT
+        Cre.BaseStats.soundset[62] != 0xFFFFFFFF)
+        return FALSE;
+    else
+        return TRUE;
+}
+
+
+ushort __stdcall 
+CCreatureObject_PlaySound_CheckJoinable(CCreatureObject &Cre, ushort nums) {
+
+    // check PDIALOG.2da for joinable char
+    CRuleTable* pRuleTable = NULL;
+    pRuleTable = &g_pChitin->pGame->PDIALOG;
+    int nCol = 0;
+    for (int nRow = 0; nRow < pRuleTable->nRows; nRow++) {
+        IECString& rowHeader = *(pRuleTable->pRowHeaderArray + nRow);
+        if (!rowHeader.CompareNoCase(Cre.szScriptName)) {
+            return 0;   // return num=0 sounds
+        }
+    }
+
+    return nums;
 }
 
 
@@ -183,6 +211,45 @@ __asm {
     pop     eax
     mov     edx, [ebp+8]                ; Stolen bytes
     mov     eax, [edx]
+    ret
+}
+}
+
+
+void  __declspec(naked)
+GameSprite_PlayerDialog_DisplaySayNothing_asm() {
+__asm {
+
+    push    [ebp+8]     // CreTarget
+    call    GameSprite_PlayerDialog_DisplaySayNothing
+    test    eax, eax
+    jz      GameSprite_PlayerDialog_DisplaySayNothing_asm_exit
+
+    mov     eax, 0x8D42AA
+    jmp     eax
+
+
+GameSprite_PlayerDialog_DisplaySayNothing_asm_exit:
+    ret     0x10
+}
+}
+
+
+void  __declspec(naked)
+CCreatureObject_PlaySound_CheckJoinable_asm() {
+__asm {
+    push    edx
+    push    ecx
+
+    push    eax
+    push    [ebp-218h]      //Cre
+    call    CCreatureObject_PlaySound_CheckJoinable
+    // ax = num existance sounds
+
+    pop     ecx
+    pop     edx
+
+    mov     [ebp-0A4h], ax  // stolen bytes
     ret
 }
 }

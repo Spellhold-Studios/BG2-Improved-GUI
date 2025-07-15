@@ -167,7 +167,11 @@ Upgrade_APR_Nightmare(CDerivedStats& cds, CreFileData& stats) {
 
 
 void DETOUR_CDerivedStats::DETOUR_Reload(CreFileData& stats, CreFileMemorizedSpellLevel** memArrayMage, CreFileMemorizedSpellLevel** memArrayPriest) {
-	DWORD nSize = pRuleEx->m_nStats - 200;
+ //   DWORD Eip;
+	//GetEip(Eip);
+ //   console.writef("CDS.reload() eip=%X \n", Eip);
+
+    DWORD nSize = pRuleEx->m_nStats - 200;
 
 	int* pStatsEx = NULL;
 	if (animationRemoval) {
@@ -823,3 +827,75 @@ char CDerivedStats_GetEffectiveClericLevelNoAssertion(CDerivedStats& cds, char n
 	}
 	return 0;
 }
+
+
+float
+CDerivedStats_GetAverageLevelFloat(CDerivedStats &cds, char nClass)
+{
+    float   ret;
+
+    switch ( nClass ) {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 11:
+    case 12:
+    case 19:
+    case 20:
+        ret = cds.levelPrimary;
+        break;
+    case 7:
+    case 8:
+    case 9:
+    case 13:
+    case 14:
+    case 15:
+    case 16:
+    case 18:
+        ret = ((float)(cds.levelSecondary + cds.levelPrimary)) / 2;
+        break;
+    case 10:
+    case 17:
+        ret = ((float)(cds.levelTertiary + cds.levelSecondary + cds.levelPrimary)) / 3;
+        break;
+    default:
+        if ( cds.levelPrimary )
+            ret = cds.levelPrimary;
+        else
+            ret = cds.levelSecondary;
+        break;
+    }
+
+    return ret;
+}
+
+
+void static __stdcall
+CGameSprite_CheckStatsChange_Blindness(CCreatureObject &cre) {
+    // 3, 5, 7, 9, 13
+    // 0, 1, 1, 2, 3
+    uchar foot = (cre.animation.pAnimation->nFootCircleSize)/4;
+    cre.cdsCurrent.visualRange = 2 + foot;
+}
+
+void  __declspec(naked)
+CGameSprite_CheckStatsChange_Blindness_asm() {
+__asm {
+    push    eax
+    push    ecx
+    push    edx
+
+    push    [ebp-9B8h]  // cre
+    call    CGameSprite_CheckStatsChange_Blindness
+
+    pop     edx
+    pop     ecx
+    pop     eax
+
+    ret
+}
+}
+

@@ -305,8 +305,11 @@ ReConfigOffHand(CCreatureObject& Cre, CItem* const pItem, int const nSlotSelecte
     bool REMOVE          = false;
     bool AnimOK          = false;
 
+    DEBUG_hand(" reconf() prev=%d \n", Cre.u6753)
+
     if (!pOffHandItem || !pItem) {
         // Skip, one hand is free
+        DEBUG_hand(" reconf return: no offhand, prev=%d \n", Cre.u6753)
         return;
     }
 
@@ -435,37 +438,48 @@ _finish:
              Full	   | Full      | skip, Full
         */
 
-        //console.write_debug(" reconfig, restore offhand, anim=%d prev=%d %s ", bAnimationOnly, Cre.u6753, pItem->itm.name.GetResRefNulled());
+        DEBUG_hand(" reconf: restore offhand, anim=%d prev=%d itm=%s ", bAnimationOnly, Cre.u6753, pItem->itm.name.GetResRefNulled());
 
         if (bAnimationOnly) {   // main hand equipping anim only
             // main hand anim equipping, restore off hand
             if (Cre.u6753 == OffHand_Effects) {  // Effects + Anim -> Full
+                DEBUG_hand(" call orig_Equip(SLOT_SHIELD, 1) call=%d \n", debug_callnum);
                 (pOffHandItem->*Tramp_CItem_Equip)(Cre, SLOT_SHIELD, 1);   // anim only
+                DEBUG_hand(" return orig_Equip(SLOT_SHIELD, 1) call=%d \n", debug_callnum++);
                 Cre.u6753 = OffHand_Full;
             } else
             if (Cre.u6753 == OffHand_OFF) {
+                DEBUG_hand(" call orig_Equip(SLOT_SHIELD, 1) call=%d \n", debug_callnum);
                 (pOffHandItem->*Tramp_CItem_Equip)(Cre, SLOT_SHIELD, 1);   // anim only
+                DEBUG_hand(" return orig_Equip(SLOT_SHIELD, 1) call=%d \n", debug_callnum++);
                 Cre.u6753 = OffHand_Anim;
             }
         } else {
             // main hand full equipping, restore off hand
             if (Cre.u6753 == OffHand_Effects) {  // Effects + Anim -> Full
+                DEBUG_hand(" call orig_Equip(SLOT_SHIELD, 1) call=%d \n", debug_callnum);
                 (pOffHandItem->*Tramp_CItem_Equip)(Cre, SLOT_SHIELD, 1);   // anim only
+                DEBUG_hand(" return orig_Equip(SLOT_SHIELD, 1) call=%d \n", debug_callnum++);
                 Cre.u6753 = OffHand_Full;
             } else
             if (Cre.u6753 == OffHand_OFF) {  // Off -> Full
+                DEBUG_hand(" call Equip(SLOT_SHIELD, %d) call=%d \n", bSpecialCaller ? 0xA6 : 0xA5, debug_callnum);
                 pOffHandItem->Equip(Cre, SLOT_SHIELD, bSpecialCaller ? 0xA6 : 0xA5); // full equip, bypass mode
+                DEBUG_hand(" return Equip(SLOT_SHIELD, x) call=%d \n", debug_callnum++);
                 Cre.u6753 = OffHand_Full;
             } else
             if (Cre.u6753 == OffHand_Anim) { // Anim only -> Full
                 //(pOffHandItem->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only
+                DEBUG_hand(" call Equip(SLOT_SHIELD, %d) call=%d \n", bSpecialCaller ? 0xA6 : 0xA5, debug_callnum);
                 pOffHandItem->Equip(Cre, SLOT_SHIELD, bSpecialCaller ? 0xA6 : 0xA5); // full equip, bypass mode
+                DEBUG_hand(" return Equip(SLOT_SHIELD, x) call=%d \n", debug_callnum++);
                 Cre.u6753 = OffHand_Full;
             }
         }
 
-        //console.write_debug("new=%d \n", Cre.u6753);
+        DEBUG_hand(" reconf: new=%d \n", Cre.u6753);
     } else
+
     if (REMOVE && !isOffHandDisabled(Cre)) {        // off hand was enabled, need change
         /*        Equiping Main hand conflict:
                 Main hand | PrevState | Result
@@ -481,29 +495,42 @@ _finish:
                 Full	  | Full      | unequip(full), Off
         */
 
-        //console.write_debug(" reconfig, remove offhand, anim=%d prev=%d %s ", bAnimationOnly, Cre.u6753, pItem->itm.name.GetResRefNulled());
+        DEBUG_hand(" reconf: remove offhand, anim=%d prev=%d itm=%s \n", bAnimationOnly, Cre.u6753, pItem->itm.name.GetResRefNulled());
 
         if (bAnimationOnly) {   // main hand equipping anim only 
             if (Cre.u6753 == OffHand_Anim) {    // Anim only -> Off
+                DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, 0, 1) \n");
                 (pOffHandItem->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only 
+                DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, 0, 1) \n");
                 Cre.u6753 = OffHand_OFF;
             } else
             if (Cre.u6753 == OffHand_Full) {    // Full -> Effects
+                DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, 0, 1) \n");
                 (pOffHandItem->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only 
+                DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, 0, 1) \n");
                 Cre.u6753 = OffHand_Effects;
             }
         } else {
             if (Cre.u6753 == OffHand_Anim) {    // Anim only -> Off
+                DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, 0, 1) \n");
                 (pOffHandItem->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only 
+                DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, 0, 1) \n");
                 Cre.u6753 = OffHand_OFF;
             } else {                            // Effects OR Full -> Off
+                DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, 1, 0) \n");
                 (pOffHandItem->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 1, 0);   // full remove
+                DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, 1, 0) \n");
                 Cre.u6753 = OffHand_OFF;
             }
         }
 
-        //console.write_debug("new=%d \n", Cre.u6753);
+        DEBUG_hand(" reconf: new=%d \n", Cre.u6753);
+    } else {
+
+        DEBUG_hand(" reconf: no changes, prev=%d \n", Cre.u6753);
     }
+
+    DEBUG_hand(" reconf return new=%d \n", Cre.u6753)
 }
 
 
@@ -515,6 +542,14 @@ DETOUR_CItem::DETOUR_UnEquip(CCreatureObject& Cre, int const nSlot, BOOL const b
     //  UnequipAll()         Eip
     //  unequip main 	   0x8CA7F9
     //  unequip offhand    0x8CA6A3
+    //  unequip Launcher   0x8CA86D
+
+    DEBUG_hand("CItem::UnEquip(recalc=%d anim=%d itm=%s) nSlot=%d IP=%X \n",
+                        bRecalculateEffects,
+                        bAnimationOnly,
+                        this->itm.name.GetResRefNulled(),
+                        nSlot,
+                        Eip)
 
     CItem* const  pOffHandItem  = Cre.Inventory.items[SLOT_SHIELD];
     char         nSlotSelected  = Cre.Inventory.nSlotSelected;
@@ -524,54 +559,72 @@ DETOUR_CItem::DETOUR_UnEquip(CCreatureObject& Cre, int const nSlot, BOOL const b
     switch (nSlot) {
     case SLOT_SHIELD:
         if (!IsCreatureAllowed(Cre)) {
+            DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, %d) \n", bRecalculateEffects, bAnimationOnly);
             (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, bRecalculateEffects, bAnimationOnly);
+            DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, x) \n");
             return;
         }
 
         if (!isOffHandDisabled(Cre)) {
-         /*            Unequip Off hand:
+         /*
+            #define OffHand_OFF         0
+            #define OffHand_Effects     1
+            #define OffHand_Anim        2
+            #define OffHand_Full        3
+         
+                        Unequip Off hand:
                   Type     | PrevState | Result
                 --------------------------------
-                 Anim	   | Off       | skip, Off
-                 Anim      | Effects   | error, Effects
-                 Anim      | AnimOnly  | unequip(anim), Off
-                 Anim	   | Full      | unequip(anim), Effects
+                 Anim	   | Off       | skip, Off                  *
+                 Anim      | Effects   | error, Effects             *
+                 Anim      | AnimOnly  | unequip(anim), Off         OffHand_Anim    ->  OffHand_OFF
+                 Anim	   | Full      | unequip(anim), Effects     OffHand_Full    ->  OffHand_Effects
 
-                 Full	   | Off       | skip, Off
-                 Full      | Effects   | unequip(full), Off
-                 Full      | AnimOnly  | unequip(anim), Off
-                 Full	   | Full      | unequip(full), Off
+                 Full	   | Off       | skip, Off                  *
+                 Full      | Effects   | unequip(full), Off         OffHand_Effects ->  OffHand_OFF
+                 Full      | AnimOnly  | unequip(anim), Off         OffHand_Anim    ->  OffHand_OFF    
+                 Full	   | Full      | unequip(full), Off         OffHand_Full    ->  OffHand_OFF
          */
             if (Cre.u6753 == OffHand_Effects && bAnimationOnly)
-                console.writef("unequip Off hand error, Anim | Effects | error, Effects %s %s \n", (LPTSTR)Cre.GetLongName(), this->itm.name.GetResRefNulled());
+                console.writef("unequip Off hand error, Anim | Effects | error, Effects %s itm=%s \n", (LPTSTR)Cre.GetLongName(), this->itm.name.GetResRefNulled());
 
-            //console.write_debug("unequip offhand, anim=%d, prev=%d %s ", bAnimationOnly, Cre.u6753, this->itm.name.GetResRefNulled());
+            DEBUG_hand("unequip offhand, prev=%d itm=%s \n", Cre.u6753, this->itm.name.GetResRefNulled());
 
             if (bAnimationOnly) {
                 if (Cre.u6753 == OffHand_Anim) {    // Anim only -> Off
-                    (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only 
+                    DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, 1) \n", bRecalculateEffects);
+                    (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, bRecalculateEffects, 1);   // remove anim only 
+                    DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, 1) \n");
                     Cre.u6753 = OffHand_OFF;
                 } else
                 if (Cre.u6753 == OffHand_Full) {    // Full -> Effects
-                    (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only 
+                    DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, 1) \n", bRecalculateEffects);
+                    (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, bRecalculateEffects, 1);   // remove anim only 
+                    DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, 1) \n");
                     Cre.u6753 = OffHand_Effects;
                 }
             } else {
                 if (Cre.u6753 == OffHand_Anim) {    // Anim only -> Off
-                    (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only 
+                    DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, 1) \n", bRecalculateEffects);
+                    (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, bRecalculateEffects, 1);   // remove anim only 
+                    DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, 1) \n");
                     Cre.u6753 = OffHand_OFF;
                 } else {    // Effects, Full - > Off
+                    DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, %d) \n", bRecalculateEffects, bAnimationOnly);
                     (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, bRecalculateEffects, bAnimationOnly); // anim or full remove
+                    DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, x) \n");
                     Cre.u6753 = OffHand_OFF;
                 }
             }
 
-            //console.write_debug("new=%d \n", Cre.u6753);
+            DEBUG_hand("unEquip new=%d \n", Cre.u6753);
         } else {    // already disabled
-            //console.write_debug("unequip offhand, already disabled anim=%d, prev=%d %s new=0 \n", bAnimationOnly, Cre.u6753, this->itm.name.GetResRefNulled());
+            DEBUG_hand("unequip offhand, already disabled, prev=%d itm=%s new=0 \n", Cre.u6753, this->itm.name.GetResRefNulled());
 
             // remove anim from slot with already empty anim, just for safe
-            (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only
+            DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, 1) \n", bRecalculateEffects);
+            (this->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, bRecalculateEffects, 1);   // remove anim only
+            DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, 1) \n");
         }
         break;
 
@@ -581,7 +634,9 @@ DETOUR_CItem::DETOUR_UnEquip(CCreatureObject& Cre, int const nSlot, BOOL const b
     case SLOT_WEAPON3:
     case SLOT_FIST:
     case SLOT_MISC19: // magic weapon
+        DEBUG_hand(" call orig_UnEquip(nSlot=%d, %d, %d) \n", nSlot, bRecalculateEffects, bAnimationOnly);
         (this->*Tramp_CItem_UnEquip)(Cre, nSlot, bRecalculateEffects, bAnimationOnly);
+        DEBUG_hand(" return orig_UnEquip(nSlot=%d, x, x) \n", nSlot);
 
         if (!IsCreatureAllowed(Cre))
             {return;}
@@ -591,50 +646,61 @@ DETOUR_CItem::DETOUR_UnEquip(CCreatureObject& Cre, int const nSlot, BOOL const b
                     Unequip Main hand:
                       Type     | PrevState | Result
                     --------------------------------
-                     Anim	   | Off       | equip(anim), AnimOnly
-                     Anim      | Effects   | equip(anim), Full
-                     Anim      | AnimOnly  | skip, AnimOnly
-                     Anim	   | Full      | skip, Full
+                     Anim	   | Off       | equip(anim), AnimOnly              OffHand_Full    ->  OffHand_OFF
+                     Anim      | Effects   | equip(anim), Full                  OffHand_Effects ->  OffHand_Full
+                     Anim      | AnimOnly  | skip, AnimOnly                     *
+                     Anim	   | Full      | skip, Full                         *
 
-                     Full	   | Off       | equip(full), Full
-                     Full      | Effects   | equip(anim), Full
-                     Full      | AnimOnly  | uneqip(anim)?, equip(full), Full
-                     Full	   | Full      | skip, Full
+                     Full	   | Off       | equip(full), Full                  OffHand_OFF     ->  OffHand_Full
+                     Full      | Effects   | equip(anim), Full                  OffHand_Effects ->  OffHand_Full
+                     Full      | AnimOnly  | uneqip(anim)?, equip(full), Full   OffHand_Anim    ->  OffHand_Full
+                     Full	   | Full      | skip, Full                         *
             */
-            //console.write_debug("unequip main, restore offhand, anim=%d, prev=%d %s ", bAnimationOnly, Cre.u6753, this->itm.name.GetResRefNulled());
+            DEBUG_hand("unequip main, restore offhand, prev=%d itm=%s \n", Cre.u6753, this->itm.name.GetResRefNulled());
 
             if (bAnimationOnly) {
-                if (Eip != 0x8CA7F9) {  // don't restore offhand if called from CGameSprite::UnequipAll()
+                if (Eip != 0x8CA7F9 &&    // don't restore offhand if called from CGameSprite::UnequipAll()
+                    Eip != 0x8CA86D) {
                     if (Cre.u6753 == OffHand_Effects) {  // Effects + Anim -> Full
+                        DEBUG_hand(" call orig_Equip(SLOT_SHIELD, 1) \n");
                         (pOffHandItem->*Tramp_CItem_Equip)(Cre, SLOT_SHIELD, 1);   // anim only
+                        DEBUG_hand(" return orig_Equip(SLOT_SHIELD, 1) \n");
                         Cre.u6753 = OffHand_Full;
                     } else
                     if (Cre.u6753 == OffHand_OFF) {
+                        DEBUG_hand(" call orig_Equip(SLOT_SHIELD, 1) \n");
                         (pOffHandItem->*Tramp_CItem_Equip)(Cre, SLOT_SHIELD, 1);   // anim only
+                        DEBUG_hand(" return orig_Equip(SLOT_SHIELD, 1) \n");
                         Cre.u6753 = OffHand_Anim;
                     }
                 } else {
-                    //console.write_debug("UnequipAll(), skip offhand ");
+                    DEBUG_hand("UnequipAll(), skip offhand  \n");
                 }
             } else {
                 if (Cre.u6753 == OffHand_Effects) {  // Effects + Anim -> Full
+                    DEBUG_hand(" call orig_Equip(SLOT_SHIELD, 1) \n");
                     (pOffHandItem->*Tramp_CItem_Equip)(Cre, SLOT_SHIELD, 1);   // anim only
+                    DEBUG_hand(" return orig_Equip(SLOT_SHIELD, 1) \n");
                     Cre.u6753 = OffHand_Full;
                 } else
                 if (Cre.u6753 == OffHand_Anim) {     // Anim only -> Full
                     //(pOffHandItem->*Tramp_CItem_UnEquip)(Cre, SLOT_SHIELD, 0, 1);   // remove anim only
+                    DEBUG_hand(" call Equip(SLOT_SHIELD, 0xA5) \n");
                     pOffHandItem->Equip(Cre, SLOT_SHIELD, 0xA5);    // full equip, bypass mode
+                    DEBUG_hand(" return Equip(SLOT_SHIELD, 0xA5) \n");
                     Cre.u6753 = OffHand_Full;
                 } else
                 if (Cre.u6753 == OffHand_OFF) {
+                    DEBUG_hand(" call Equip(SLOT_SHIELD, 0xA5) \n");
                     pOffHandItem->Equip(Cre, SLOT_SHIELD, 0xA5);    // full equip, bypass mode
+                    DEBUG_hand(" return Equip(SLOT_SHIELD, 0xA5) \n");
                     Cre.u6753 = OffHand_Full;
                 }
             }
 
-            //console.write_debug("new=%d \n", Cre.u6753);
+            DEBUG_hand("unEquip new=%d \n", Cre.u6753);
         } else {
-            //console.write_debug("unequip main, offhand already enabled/non-exist anim=%d, prev=%d %s eip=%X \n", bAnimationOnly, Cre.u6753, this->itm.name.GetResRefNulled(), Eip);
+            DEBUG_hand("unequip main, offhand already enabled/non-exist, prev=%d itm=%s eip=%X \n", Cre.u6753, this->itm.name.GetResRefNulled(), Eip);
         }
         break;
 
@@ -645,7 +711,9 @@ DETOUR_CItem::DETOUR_UnEquip(CCreatureObject& Cre, int const nSlot, BOOL const b
     //case SLOT_AMMO3:
 
     default:
+        DEBUG_hand(" default call orig_UnEquip(nSlot=%d, %d, %d) \n",nSlot, bRecalculateEffects, bAnimationOnly);
         (this->*Tramp_CItem_UnEquip)(Cre, nSlot, bRecalculateEffects, bAnimationOnly);
+        DEBUG_hand(" return default orig_UnEquip(SLOT_SHIELD, x, x) \n");
         break;
     }
 }

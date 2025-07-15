@@ -36,8 +36,8 @@ BOOL DETOUR_CVariableMap::DETOUR_Add(CVariable& var) {
 				pArray[nHash] = var;
 				if (pGameOptionsEx->bDebugVerbose) {
 					LPCTSTR lpsz = "DETOUR_CVariableMap::DETOUR_Add(): Map[0x%X]->%s(id=%d)=%d\r\n";
-					L.appendf(lpsz, (DWORD)this, (LPCTSTR)sName, nHash, var.nValue);
-					console.writef(lpsz, (DWORD)this, (LPCTSTR)sName, nHash, var.nValue);
+					L.appendf(lpsz, (DWORD)this, (LPCTSTR)sName, nHash, var.intValue);
+					console.writef(lpsz, (DWORD)this, (LPCTSTR)sName, nHash, var.intValue);
 				}
 			} else { //collision
 				if (nHash == nHashEnd) {

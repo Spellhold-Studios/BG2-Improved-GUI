@@ -61,3 +61,23 @@ __asm {
 	ret     
 }
 }
+
+
+
+void __declspec(naked)
+CBaldurChitinInit_asm()
+{
+__asm {
+    lea     ecx, [ebp-7210h]    //CBaldurChitin
+
+    push    0720Ch              // size
+    push    0                   // fill
+    push    ecx                 // ptr
+    mov     eax, 0A3C020h       // __cdecl _memset()
+    call    eax
+    add     esp, 0Ch
+
+    lea     ecx, [ebp-7210h]    // Stolen bytes
+	ret     
+}
+}

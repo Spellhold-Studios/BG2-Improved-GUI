@@ -17,4 +17,17 @@ struct CMessageRemoveAreaAirEffectSpecificM {
 	ResRef rResource; //8h
 };
 
+
+void CMessageHandler_AsynchronousUpdate_Log_asm();
+void CCreativeObject_AddEffect_Log_asm();
+void CGameAIBase_FireSpell_ProjectileAddEffect_Log_asm();
+void __stdcall CMessageHandler_AsynchronousUpdate_Log(IECPtrList &list);
+void CMessageHandler_AddMessage_Log_asm();
+void CProjectileBAM_AIUpdate_Log_asm();
+void CProjectileArea_AIUpdate_Log1_asm();
+void CProjectileArea_AIUpdate_Log2_asm();
+void CProjectileBAM_CProjectileBAM_PatchSpeed_asm();
+
+
+
 #endif //MESSAGEEXT_H

@@ -18,6 +18,7 @@ void CScreenPriestSpell_IconAssign_asm();
 void CScreenPriestSpell_UpdateInfoPanel_GetGenericName_asm();
 void CScreenPriestSpell_UpdateInfoPanel_GetDescription_asm();
 void CScreenPriestSpell_LoadIconSpell_asm();
-
+void CInfButtonArray_PostRenderButton_asm();
+void CInfButtonArray_UpdateButtons_HideWizardSpellFromQuickList_asm();
 
 #endif //INFBUTTONARRAY_H

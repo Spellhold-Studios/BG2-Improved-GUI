@@ -291,6 +291,49 @@ CChitin_AsynchronousUpdate_SwitchScrollBar() {
                 }
             }
         }
+
+        // Container
+        if (g_pChitin->pEngineActive == g_pChitin->pScreenWorld) {
+            CPanel& panel = g_pChitin->pScreenWorld->manager.GetPanel(8);  // Container
+            if (panel.bEnabled) {
+                CUIScrollBar** ppScrollActive = & g_pChitin->pScreenWorld->pScrollActive;
+
+
+                CUIControl& but0 = panel.GetUIControl(0);  // x..
+                                                           // ...   
+                CUIControl& but1 = panel.GetUIControl(52); // ...x
+                                                           // ...x
+                RECT RightScroll   = {  but0.pos.x,
+                                        but0.pos.y,
+                                        but1.pos.x + but1.width,
+                                        but1.pos.y + but1.height};
+                OffsetRect(&RightScroll, panel.pt2.x, panel.pt2.y);
+
+                CUIControl& but2 = panel.GetUIControl(10); // x..
+                                                           // ...   
+                CUIControl& but3 = panel.GetUIControl(53); // ...x
+                                                           // ...x
+                                    //  388,  51, 472+16, 92+42
+                RECT LeftScroll    = {  but2.pos.x,
+                                        but2.pos.y,
+                                        but3.pos.x + but3.width,
+                                        but3.pos.y + but3.height};
+                OffsetRect(&LeftScroll, panel.pt2.x, panel.pt2.y);
+
+                if (PtInRect(&RightScroll, MousePt)) {
+                    CUIScrollBar& Scrollbar = (CUIScrollBar &) panel.GetUIControl(52);
+                    if (*ppScrollActive != &Scrollbar)
+                        *ppScrollActive = &Scrollbar;
+                }
+
+                if (PtInRect(&LeftScroll, MousePt)) {
+                    CUIScrollBar& Scrollbar = (CUIScrollBar &) panel.GetUIControl(53);
+                    if (*ppScrollActive != &Scrollbar)
+                        *ppScrollActive = &Scrollbar;
+                }
+            }
+        }
+
     }
 }
 

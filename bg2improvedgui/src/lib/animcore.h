@@ -120,7 +120,7 @@ public:
     bool bBrightestDesired;         //3d5h
     bool bLightSource;              //3d6h
     ResRef rAniSnd;                 //3d7h, soundRef
-    char u3df;                      //pad
+    char u3df;                      //pad, tobex new, AIUpdate tick trigger
     CAnimationSoundList sequencesoundset[19]; //3e0h, corresponds to rows of anim soundset 2DAs (19 in total)
 };
 

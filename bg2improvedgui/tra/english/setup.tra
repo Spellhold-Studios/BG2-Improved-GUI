@@ -42,7 +42,7 @@
 @920 = ~Static GUI icon + switch by keyboard~
 
 @1000 = ~Smart Hand Off Slot~
-@1010 = ~Disable Equipping Off Hand Weapon for BG1~
+@1010 = ~Disable Equipping Off Hand Weapon for BG1 part~
 
 @1100 = ~Show Character's active effects on right mouse click~
 @1110 = ~Casted spells~
@@ -70,24 +70,26 @@
 @1570 = ~Hit Points (always) + Action ('tab' pressed)~
 @1580 = ~Hit Points ('tab' pressed) + Action (always) (recommended)~
 
+@1590 = ~Show Weapon Action on Portrait~
+
 @1710 = ~Harder Difficulty Modes~
 @1600 = ~Legacy of Bhaal Difficulty Mode, set Stats as ~
 @1610 = ~Enhanced Edition's Legacy of Bhaal (very hard)~
 @1620 = ~Fury of Bhaal (weakened version Legacy of Bhaal)~
 @1630 = ~Icewind Dale's Heart of Fury~
-@1690 = ~Party's Summons get Legacy of Bhaal Bonuses (recommended)~
+@1690 = ~Party's Summons get Legacy of Bhaal Bonuses (summons are equal to enemies)~
 @1700 = ~Additional Experience Points for kills on Legacy of Bhaal difficulty, (200% + 1000)~
 
 @1720 = ~Block Door/Portals/Area Escape if enemy is in sight (area difficulty tweak)~
 
 @1730 = ~Allow enemy to bump invisible/invulnerable party members (difficulty tweak)~
 @1740 = ~Enemy cannot pass Otiluke's Sphere and other Hold effects~
-@1750 = ~Enemy/Party ignores Otiluke's Sphere and other Hold effects (beta)~
+@1750 = ~Enemy/Party ignores Otiluke's Sphere and other Hold effects~
 
 @1800 = ~New Shaman Class and Spell Book~
 
 @1900 = ~BG1 Style Greeting~
-@1910 = ~Apply only on BG1 part of BGT~
+@1910 = ~Apply only on BG1 part~
 @1920 = ~Apply on BG1+BG2~
 
 @2000 = ~Highlight Active Zones/Points~
@@ -98,9 +100,13 @@
 
 @2100 = ~Mouse Cursor 30Hz->60Hz Render Rate~
 @2110 = ~Default render~
+@2115 = ~Default render + Smooth Area Scroll (recommended)~
 @2120 = ~Experimental render, reduced GPU load at Window mode~
 
+@2150 = ~Smooth "fast-moving objects" animation~
+
 @2200 = ~Fast LOAD/SAVE Screen~
+@2210 = ~Disable Auto-Save when transiting areas~
 
 @2300 = ~x2 Scaled Graphics for HD Resolutions (1280x960 and above)~
 @2310 = ~GUI only~
@@ -138,9 +144,9 @@
 
 @3700 = ~Auto Switch Spell Book between Priest and Mage~
 
-@3800 = ~Additional Character Information on Record Screen (intoxication, fatigue, luck, casting speed, thac0 specialization bonus)~
+@3800 = ~Additional Character Information on Record Screen (intoxication, fatigue, luck, casting speed, thac0 specialization bonus, ...)~
 @3810 = ~Show always~
-@3820 = ~Show when above threshold (intoxication >50, fatigue >7, luck >0, casting speed >0)~
+@3820 = ~Show when above threshold (intoxication >50, fatigue >7, luck >0, casting speed >0, ...)~
 
 @3900 = ~Normalize Sound Volume~
 @3910 = ~All sounds, including effects~
@@ -152,7 +158,7 @@
 @4100 = ~Additional Icons on Portrait (improved invisibility, blur/mirror image, morale break)~
 
 @4200 = ~Restore BG1 Casting Sounds~
-@4210 = ~BG1 part of BGT only~
+@4210 = ~BG1 part only~
 @4220 = ~Low level 1-5 spells only, BG1+BG2~
 
 @4280 = ~BG2 clear voice(without background effect/noise) Casting Sounds for Innate Casting~
@@ -160,6 +166,12 @@
 
 @4300 = ~Restore BG1/BG2 XP Limits~
 
-@4400 = ~EAX/DirectSound3D emulation through DSOAL~
-
 @4500 = ~Freeze/Unfreeze sounds when game paused/unpaused~
+
+@4550 = ~Synchronize voice with text in dialogs~
+
+@4600 = ~Restore BG1 human movement speed for BG1 part~
+
+@4700 = ~Alternates Path Search algorithm (Party Bumpable When Moving)~
+
+@4800 = ~Allow switching weapon at Stealh mode~

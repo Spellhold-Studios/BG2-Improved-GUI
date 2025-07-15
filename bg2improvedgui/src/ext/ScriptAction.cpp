@@ -42,12 +42,12 @@ BOOL CGameAIBase_AtomicSetGlobal(CGameAIBase& sprite, Action& a) {
 	if (!sScope.Compare("GLOBAL")) {
 		CVariable& var = g_pChitin->pGame->m_GlobalVariables.Find(sVariable);
 		if (&var != NULL) {
-			var.nValue = bIncrement ? var.nValue + a.m_specificID : a.m_specificID;
-			nNewValue = var.nValue;
+			var.intValue = bIncrement ? var.intValue + a.m_specificID : a.m_specificID;
+			nNewValue = var.intValue;
 		} else {
 			varNew.SetName(sVariable);
-			varNew.nValue = a.m_specificID;
-			nNewValue = varNew.nValue;
+			varNew.intValue = a.m_specificID;
+			nNewValue = varNew.intValue;
 			g_pChitin->pGame->m_GlobalVariables.Add(varNew);
 		}
 
@@ -67,12 +67,12 @@ BOOL CGameAIBase_AtomicSetGlobal(CGameAIBase& sprite, Action& a) {
 		if (pTarget->GetObjectType() == CGAMEOBJECT_TYPE_CREATURE) {
 			CVariable& var = ((CCreatureObject*)pTarget)->pLocalVariables->Find(sVariable);
 			if (&var != NULL) {
-				var.nValue = bIncrement ? var.nValue + a.m_specificID : a.m_specificID;
-				nNewValue = var.nValue;
+				var.intValue = bIncrement ? var.intValue + a.m_specificID : a.m_specificID;
+				nNewValue = var.intValue;
 			} else {
 				varNew.SetName(sVariable);
-				varNew.nValue = a.m_specificID;
-				nNewValue = varNew.nValue;
+				varNew.intValue = a.m_specificID;
+				nNewValue = varNew.intValue;
 				((CCreatureObject*)pTarget)->pLocalVariables->Add(varNew); //64A2E8
 			}
 
@@ -102,12 +102,12 @@ BOOL CGameAIBase_AtomicSetGlobal(CGameAIBase& sprite, Action& a) {
 	if (&area != NULL) {
 		CVariable& var = area.m_AreaVariables.Find(sVariable);
 		if (&var != NULL) {
-			var.nValue = bIncrement ? var.nValue + a.m_specificID : a.m_specificID;
-			nNewValue = var.nValue;
+			var.intValue = bIncrement ? var.intValue + a.m_specificID : a.m_specificID;
+			nNewValue = var.intValue;
 		} else {
 			varNew.SetName(sVariable);
-			varNew.nValue = a.m_specificID;
-			nNewValue = varNew.nValue;
+			varNew.intValue = a.m_specificID;
+			nNewValue = varNew.intValue;
 			area.m_AreaVariables.Add(varNew);
 		}
 

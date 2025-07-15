@@ -107,31 +107,40 @@ CScreenWorld_UnPause(int Mode) {
     POSITION pos;
 
     //console.write_debug("UnPause=%d \n", Mode);
+
     CObList& que = g_pChitin->m_mixer.PlayingNow;
     CArea* pArea = g_pChitin->m_mixer.pArea;
     pos = que.GetHeadPosition();
     while (pos != NULL) {
         CVoice *Voice = (CVoice *) que.GetNext(pos);
-        bool unmute = false;
+        bool unmute = false; // was muted by us
         if (Voice) {
             if (Voice->pSound && Voice->pSound->m_pSoundBuffer) { // if CSound exist
                 CSound *snd = Voice->pSound;
+                if (Mode == 4) {    // Screen store
+                    Voice->bScreenMode = 0;
+                    unmute = true;
+                }
                 if (Mode == 1 && Voice->bPauseMode == 1) {
                     Voice->bPauseMode = 0;
+                    unmute = true;
                     //console.write_debug("Unpause static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                 }
                 if (Mode == 2 && Voice->bTimeStopMode == 1) {
                     Voice->bTimeStopMode = 0;
+                    unmute = true;
                     //console.write_debug("UnTimeStop static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                 }
                 if (Mode == 3 && Voice->bScreenMode == 1) {
                     Voice->bScreenMode = 0;
+                    unmute = true;
                     //console.write_debug("UnScreen static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                 }
 
                 if (Voice->bPauseMode    == 0 &&
                     Voice->bTimeStopMode == 0 &&
                     Voice->bScreenMode   == 0 &&
+                    unmute == true            &&
                     (snd->pArea == NULL || snd->pArea == pArea)) {   // play again only from current area if it is declared
                     LPDIRECTSOUNDBUFFER pDSB = (LPDIRECTSOUNDBUFFER)snd->m_pSoundBuffer;
                     DWORD dwPlay = Voice->DSBufPosition;
@@ -140,28 +149,36 @@ CScreenWorld_UnPause(int Mode) {
                     if (hr == S_OK) {
                         hr = IDirectSoundBuffer_Play(pDSB, 0, 0, 0); // play DS buffer, never looped
                         if (hr == S_OK) {
-                            console.write_debug("Play static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
+                            //console.write_debug("Play static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                         }
                     }
                 }
             } else
             if (Voice->m_pSoundBuffer) { // transferred from CSound to CVoice
+                if (Mode == 4) {    // Screen store
+                    Voice->bScreenMode = 0;
+                    unmute = true;
+                }
                 if (Mode == 1 && Voice->bPauseMode == 1) {
                     Voice->bPauseMode = 0;
+                    unmute = true;
                     //console.write_debug("UnPause temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                 }
                 if (Mode == 2 && Voice->bTimeStopMode == 1) {
                     Voice->bTimeStopMode = 0;
+                    unmute = true;
                     //console.write_debug("UnTimestop temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                 }
                 if (Mode == 3 && Voice->bScreenMode == 1) {
                     Voice->bScreenMode = 0;
+                    unmute = true;
                     //console.write_debug("UnScreen temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                 }
 
                 if (Voice->bPauseMode    == 0 &&
                     Voice->bTimeStopMode == 0 &&
                     Voice->bScreenMode   == 0 &&
+                    unmute == true            &&
                     (Voice->pArea == NULL || Voice->pArea == pArea)) {    // play again only from current area if it is declared
                     LPDIRECTSOUNDBUFFER pDSB = (LPDIRECTSOUNDBUFFER)Voice->m_pSoundBuffer;
                     DWORD dwPlay = Voice->DSBufPosition;
@@ -170,7 +187,7 @@ CScreenWorld_UnPause(int Mode) {
                     if (hr == S_OK) {
                         hr = IDirectSoundBuffer_Play(pDSB, 0, 0, 0); // play DS buffer, never looped
                         if (hr == S_OK) {
-                            console.write_debug("Play temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
+                            //console.write_debug("Play temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                         }
                     }
                 }
@@ -213,6 +230,10 @@ CScreenWorld_Pause(int Mode) {
 
     //console.write_debug("Pause=%d PlayingNow=%d \n", Mode, g_pChitin->m_mixer.PlayingNow.GetCount());
 
+    // don't pause if entered store
+    if (g_pChitin->pEngineActive == g_pChitin->pScreenStore)
+        return;
+
     if (Mode == 2) {    // get playing pos-casting sound
         Enum             Cre_id = g_pChitin->pGame->m_eTimeStopExempt;  // timestop creator
         CCreatureObject* Cre;
@@ -241,7 +262,7 @@ CScreenWorld_Pause(int Mode) {
                 if (isPlay) {
                     // active sound
                     if (snd->bLoop) {   // Remove from PlayingNow & Stop playing
-                        console.write_debug("Remove looped %s \n", snd->wav.soundName.GetResRefNulled());
+                        //console.write_debug("Remove looped %s \n", snd->wav.soundName.GetResRefNulled());
                         THISCALL_1(0xA4F678, &g_pChitin->m_mixer.PlayingNow, curpos ); // CObList.RemoveAt()
                         delete Voice;
                     } else {            // Freeze sound, keep in PlayingNow
@@ -254,7 +275,7 @@ CScreenWorld_Pause(int Mode) {
                             (snd->wav.soundName == GUI1) ||
                             (snd->wav.soundName == GUI2)
                             )
-                            ;   // keep playing
+                            ;   // skip, keep playing
                         else {
                             hr = IDirectSoundBuffer_GetCurrentPosition(pDSB, &dwPlay, &dwWrite);
                             if (hr == S_OK) {
@@ -264,17 +285,17 @@ CScreenWorld_Pause(int Mode) {
                                     Voice->DSBufPosition = dwPlay;
                                     if (Mode == 1) {
                                         Voice->bPauseMode = 1;
-                                        console.write_debug("Freeze Pause static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
+                                        //console.write_debug("Freeze Pause static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                                     }
                                     else
                                     if (Mode == 2) {
                                         Voice->bTimeStopMode = 1;
-                                        console.write_debug("Freeze Timestop static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
+                                        //console.write_debug("Freeze Timestop static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                                     }
                                     else
                                     if (Mode == 3) {
                                         Voice->bScreenMode = 1;
-                                        console.write_debug("Freeze Screen static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
+                                        //console.write_debug("Freeze Screen static %s \t pos=%d \n", snd->wav.soundName.GetResRefNulled(), Voice->DSBufPosition);
                                     }
                                 }
                             }
@@ -309,7 +330,7 @@ CScreenWorld_Pause(int Mode) {
                         (Voice->soundName == GUI1) ||
                         (Voice->soundName == GUI2)
                         )
-                        ;   // keep playing
+                        ;   // skip, keep playing
                     else {
                         hr = IDirectSoundBuffer_GetCurrentPosition(pDSB, &dwPlay, &dwWrite);
                         if (hr == S_OK) {
@@ -318,17 +339,17 @@ CScreenWorld_Pause(int Mode) {
                                 Voice->DSBufPosition = dwPlay;
                                 if (Mode == 1) {
                                     Voice->bPauseMode = 1;
-                                    console.write_debug("Freeze Pause temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
+                                    //console.write_debug("Freeze Pause temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                                 }
                                 else
                                 if (Mode == 2) {
                                     Voice->bTimeStopMode = 1;
-                                    console.write_debug("Freeze TimeStop temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
+                                    //console.write_debug("Freeze TimeStop temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                                 }
                                 else
                                 if (Mode == 3) {
                                     Voice->bScreenMode = 1;
-                                    console.write_debug("Freeze Screen temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
+                                    //console.write_debug("Freeze Screen temp %s pos=%d \n", Voice->soundName.GetResRefNulled(), Voice->DSBufPosition);
                                 }
                             }
                         }
@@ -428,6 +449,14 @@ CheckPause(CSound& sound) {
         return TRUE;    // skip play
 
     return FALSE;
+}
+
+
+void static __stdcall
+CScreenWorld_TogglePauseGame_UnPause() {
+    if (g_pChitin->pScreenWorld) {
+        g_pChitin->pScreenWorld->strrefAutoPause = 0xFFFFFFFF; // clear last strref on unpause
+    }
 }
 
 
@@ -850,7 +879,6 @@ __asm
 }
 }
 
-
 void __declspec(naked)
 TimeStopEnded_asm() {
 __asm
@@ -890,6 +918,48 @@ __asm
     mov     dword ptr [ecx]CVoice.pArea, 0
 
     mov     dword ptr [ecx+4], 0  // Stolen bytes
+    ret
+}
+}
+
+
+void __declspec(naked)
+CScreenStore_Activated_asm() {
+__asm
+{
+    push    ecx
+    push    edx
+    push    eax
+
+    push    4   //  ScreenStore
+    call    CScreenWorld_UnPause
+
+    pop     eax
+    pop     edx
+    pop     ecx
+
+    mov     eax, [ebp-5Ch]  // Stolen bytes
+    mov     ecx, [eax+34h]
+    ret
+}
+}
+
+
+void __declspec(naked)
+CScreenWorld_TogglePauseGame_UnPause_asm() {
+__asm
+{
+    push    ecx
+    push    edx
+    push    eax
+
+    call    CScreenWorld_TogglePauseGame_UnPause
+
+    pop     eax
+    pop     edx
+    pop     ecx
+
+    mov     byte ptr [eax+146h], 0  // Stolen bytes
     ret
 }
 }

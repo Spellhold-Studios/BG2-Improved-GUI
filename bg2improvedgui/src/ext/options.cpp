@@ -212,7 +212,22 @@ CGameOptionsEx::CGameOptionsEx() {
 
     bUI_NightmareMode                   = FALSE;
     bNightmareBonusXP                   = FALSE;
-    bNightmareBonusGold                 = FALSE;
+    bNightmareBonusGold                 = 0;
+    bNightmareBonusGold                 = 0;
+    bNightmareBonusXP_Multiplier        = 0;
+    bNightmareBonusXP_Bonus             = 0;
+    bNightmareBonusTHAC0                = 0;
+    bNightmareBonusArmorClass           = 0;
+    bNightmareBonusLevels               = 0;
+    bNightmareBonusSpawns               = 0;
+    bNightmareBonusAPR                  = 0;
+    bNightmareBonusSavingThrows         = 0;
+    bNightmareBonusHP_Multiplier        = 0;
+    bNightmareBonusHP_Bonus             = 0;
+    bNightmareBonusHPSummon_Multiplier  = 0;
+    bNightmareBonusHPSummon_Bonus       = 0;
+    bNightmareBonusMovementRate         = 0;
+
     bNightmarePartySummon               = FALSE;
 
     bDisableHiddenPatches               = FALSE;
@@ -231,6 +246,7 @@ CGameOptionsEx::CGameOptionsEx() {
     bEngine_CpuIdle                     = FALSE;
     bUI_DoubleRenderRate                = FALSE;
     bUI_DoubleRenderRate_MouseOnlyMode  = FALSE;
+    bUI_DoubleRenderRate_Scroll         = FALSE;
     bUI_FastProgressBarScreen           = FALSE;
     bVideo_FlickeringCursorFix          = FALSE;
     bEff_OverTargetVisualEffectFixes    = FALSE;
@@ -287,7 +303,7 @@ CGameOptionsEx::CGameOptionsEx() {
     bUI_BlockAreaTransitionCombat       = FALSE;
     bSound_RobeArmor                    = FALSE;
     bAnimation_SEQ_READY_AfterWeaponChange  = FALSE;
-    bEngine_WSPECIAl_SPEED              = FALSE;
+    bEngine_WSPECIAL_SPEED              = FALSE;
     bEngine_PartyBumpableInMoving       = FALSE;
     bEngine_EnemyCanBumpParty           = FALSE;
     bEngine_EnemyCanBumpPartyUnmoveable = FALSE;
@@ -299,9 +315,19 @@ CGameOptionsEx::CGameOptionsEx() {
     bEngine_FakeDiskFreeSpace           = FALSE;
     bVideo_7313_PaletteFix              = FALSE;
     bEngine_LimitXP                     = FALSE;
-    bSound_DSOAL                        = FALSE;
+    //bSound_DSOAL                        = FALSE;
     bSound_44KhzMixer                   = FALSE;
     bSound_FreezeOnPause                = FALSE;
+    bEngineAutoPauseCastingFix          = FALSE;
+    bEngine_DisableAutoSaveGame         = FALSE;
+    bVideo_ProjectileFullTicks          = FALSE;
+    bEngine_SequencerOrderFix           = FALSE;
+    bEngine_BlindVisualRangeFix         = FALSE;
+    bEngine_BGTMovementSpeed            = 0;
+    bUI_SyncDialogSound                 = FALSE;
+    bKeepWizardQuickSpells              = FALSE;
+    bKeepModalWhenSwitchingWeapon       = FALSE;
+
 
     Init();
 }
@@ -507,6 +533,7 @@ void CGameOptionsEx::Init() {
     bUI_ShowHitPointsOnPortrait_Always= GetTweakIniValue("Tweak", "UI:Show Hit-Points On Portrait Always");
     bUI_ShowActionOnPortrait =          GetTweakIniValue("Tweak", "UI:Show Action On Portrait");
     bUI_ShowActionOnPortrait_Always =   GetTweakIniValue("Tweak", "UI:Show Action On Portrait Always");
+    bUI_ShowActionOnPortraitWeapon  =   GetTweakIniValue("Tweak", "UI:Show Action On Portrait Weapon");
     bUI_YellowBorderOnPortraitIfTooFar= GetTweakIniValue("Tweak", "UI:Yellow Border On Portrait If Too Far");
     bDisableHiddenPatches =         GetCoreIniValue("Debug",  "Disable Hidden TobEx Patches");
     bDisarmTrapDistanceFix =        GetCoreIniValue("Action", "Disarm Trap Distance Fix");
@@ -541,6 +568,7 @@ void CGameOptionsEx::Init() {
     bEngine_CpuIdle  =                      GetCoreIniValue("Engine", "Cpu Idle");
     bUI_DoubleRenderRate =                  GetTweakIniValue("Tweak", "Video:Double Mouse Render Rate");
     bUI_DoubleRenderRate_MouseOnlyMode =    GetTweakIniValue("Tweak", "Video:Double Mouse Render Rate Lite");
+    bUI_DoubleRenderRate_Scroll =           GetTweakIniValue("Tweak", "Video:Double Mouse Render Rate Scroll");
     bUI_FastProgressBarScreen =             GetTweakIniValue("Tweak", "UI:Fast ProgressBar Screen");
     bVideo_FlickeringCursorFix =            GetCoreIniValue( "Video", "Flickering Cursor Fix");
     bEff_OverTargetVisualEffectFixes =      GetTweakIniValue("Tweak", "Effect Opcodes:Over Target Visual Effect Fixes");
@@ -599,7 +627,7 @@ void CGameOptionsEx::Init() {
     bUI_MoraleBreakIcon           = GetTweakIniValue("Tweak", "UI:Morale Break Icon");
     bSound_RobeArmor              = GetTweakIniValue("Tweak", "Sound:Enable Robe Armor Sound");
     bAnimation_SEQ_READY_AfterWeaponChange = GetTweakIniValue("Tweak", "Animation:Reset Idle Timer After Weapon Equipped");
-    bEngine_WSPECIAl_SPEED        = GetCoreIniValue("Engine", "Weapon Speed Fix");
+    bEngine_WSPECIAL_SPEED        = GetCoreIniValue("Engine", "Weapon Speed Fix");
     //bEngine_InvisibilityRenderFix = GetTweakIniValue("Tweak", "Engine:Keep Invisibility In Attack");
     bEngine_PartyBumpableInMoving   = GetTweakIniValue("Tweak", "Engine:Path Search Party Bumpable When Moving");
     bUI_BlockAreaTransitionCombat = GetTweakIniValue("Tweak", "Engine:Block Area Transition in Combat");
@@ -613,10 +641,19 @@ void CGameOptionsEx::Init() {
     bEngine_FakeDiskFreeSpace     = GetCoreIniValue("Engine", "2TB+ Disk Free Space Fix");
     bVideo_7313_PaletteFix        = GetCoreIniValue("Video", "Small Purple Elemental Palette Fix");
     bEngine_LimitXP               = GetTweakIniValue("Tweak", "Engine:Limit XP");
-    bSound_DSOAL                  = GetTweakIniValue("Tweak", "Sound:EAX Emulation");
+    //bSound_DSOAL                  = GetTweakIniValue("Tweak", "Sound:EAX Emulation");
     bSound_44KhzMixer             = GetCoreIniValue("Sound", "44Khz Mixer");
     bSound_FreezeOnPause          = GetTweakIniValue("Tweak", "Sound:Freeze On Pause");
-
+    bEngineAutoPauseCastingFix    = GetCoreIniValue("Engine", "Auto-Pause Spell Cast Fix");
+    bEngine_DisableAutoSaveGame   = GetTweakIniValue("Tweak", "Engine:Disable Auto-Save Game");
+    bVideo_ProjectileFullTicks    = GetTweakIniValue("Tweak", "Video:Double Projectile Render Rate");
+    bEngine_BlindVisualRangeFix   = GetCoreIniValue("Engine", "Visual Range on Blindness Fix");
+    bEngine_SequencerOrderFix     = GetTweakIniValue("Tweak", "Engine:Keep Sequencer Spell Order");
+    bEngine_BGTMovementSpeed      = GetTweakIniValue("Tweak", "Engine:BG1 Human Movement Speed");
+    bUI_SyncDialogSound           = GetTweakIniValue("Tweak", "Sound:Sync Dialogue Sound");
+    bKeepWizardQuickSpells        = GetTweakIniValue("Tweak", "UI:Keep Wizard QuickSpells on Armor");
+    bKeepModalWhenSwitchingWeapon = GetTweakIniValue("Tweak", "UI:Keep Modal State When Switching Weapon");
+    
 }
 
 int GetCoreIniValue(LPCTSTR szSection, LPCTSTR szKey) {

@@ -2081,6 +2081,9 @@ BOOL DETOUR_CEffectLearnSpell::DETOUR_ApplyEffect(CCreatureObject& creTarget) {
     }
 
     dwKit = creTarget.BaseStats.kitLow | (creTarget.BaseStats.kitHigh << 16);
+    if (dwKit & KIT_TRUECLASS)
+        dwKit = KIT_TRUECLASS;  // convert kit to true class
+
     if (dwKit != KIT_TRUECLASS &&
         dwKit != KIT_WILDMAGE   ) {
         if (g_pChitin->pGame->MapCharacterSpecializationToSchool(creTarget.BaseStats.dwReversedkit) == resSpell.GetSpellSchoolPrimary()) {
@@ -3602,6 +3605,32 @@ CEffectCreateInventoryItem_CheckSimulacrum(CItem& Item, CCreatureObject& Cre) {
 }
 
 
+int __stdcall
+CEffSummonCreatire_Apply(CEffect& eff, int cnt) {
+    if (eff.effect.rResource == "WISH01" || // Wish Djini
+        eff.effect.rResource == "WISH02") { // Wish Djini
+        return 0;                           // force 0 cnt
+    } else
+        return cnt;
+}
+
+
+BOOL __stdcall
+CCreativeObject_AddEffect_CheckAutoPause() {
+    if (g_pChitin->pScreenWorld &&
+        g_pChitin->pScreenWorld->strrefAutoPause  == 31874) // 31874 = ~Auto-Paused: Spell Cast~
+            return 0;   // skip clearing state
+    else
+        return 1;
+}
+
+
+int  __stdcall
+CGameEffectCopySelf_Apply_FixSimulacrum(CDerivedStats& cds, int nClass) {
+    return (int) ceilf(CDerivedStats_GetAverageLevelFloat(cds, nClass) * (float)0.40); // level drain 40%
+}
+
+
 void  __declspec(naked)
 CVisualEffect_AIUpdate_CheckForDeath_asm() {
 __asm {
@@ -3853,3 +3882,64 @@ __asm {
     ret
 }
 }
+
+
+void  __declspec(naked)
+CEffSummonCreatire_Apply_asm() {
+__asm {
+    mov     eax, 06B934Ah   // CInfGame__GetNumSummoned
+    call    eax        
+
+    push    eax         // current summon count
+    push    [ebp-2A4h]  // effect
+    call    CEffSummonCreatire_Apply
+    // eax - return
+    
+    ret
+}
+}
+
+
+void  __declspec(naked)
+CCreativeObject_AddEffect_CheckAutoPause_asm() {
+__asm {
+    push    ecx
+    push    edx
+
+    call    CCreativeObject_AddEffect_CheckAutoPause
+
+    pop     edx
+    pop     ecx
+
+    test    eax,eax
+    jz      CCreativeObject_AddEffect_CheckAutoPause_exit
+
+    mov     ecx, [ebp-4Ch]
+    mov     eax, 08EC1CAh   // CGameSprite__ProcessEffectList
+    call    eax        
+
+CCreativeObject_AddEffect_CheckAutoPause_exit:    
+    ret
+}
+}
+
+
+void  __declspec(naked)
+CGameEffectCopySelf_Apply_FixSimulacrum_asm() {
+__asm {
+    push    edx
+    push    ecx
+    // eax - Class
+    // ecx - cds
+
+    push    eax
+    push    ecx
+    call    CGameEffectCopySelf_Apply_FixSimulacrum
+    // eax - simulacrum level
+
+    pop     ecx
+    pop     edx
+    ret     4
+}
+}
+

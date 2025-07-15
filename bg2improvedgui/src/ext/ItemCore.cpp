@@ -14,6 +14,7 @@ void (CItem::*Tramp_CItem_UnEquip)(CCreatureObject& cre, int nSlot, BOOL bRecalc
 CEffect* (CItem::*Tramp_CItem_GetAbilityEffect)(int, int, CCreatureObject*) =
 	SetFP(static_cast<CEffect* (CItem::*)(int, int, CCreatureObject*)>	(&CItem::GetAbilityEffect),	0x5AB168);
 
+
 void DETOUR_CItem::DETOUR_Equip(CCreatureObject& cre, int nSlot, BOOL bAnimationOnly) { // bAnimationOnly used as int
 	DWORD Eip;
 	GetEip(Eip);
@@ -22,6 +23,19 @@ void DETOUR_CItem::DETOUR_Equip(CCreatureObject& cre, int nSlot, BOOL bAnimation
     // EquipAll() Eip:
     // equip main 	    0x8CAA55
     // equip offhand    0x8CA90F
+
+    if (Eip == 0x5AA9E2) {  // bypass recursive
+        DEBUG_hand(" recursive CItem::Equip(anim=%d itm=%s) nSlot=%d \n", bAnimationOnly, this->itm.name.GetResRefNulled(), nSlot);
+        //(this->*Tramp_CItem_Equip)(cre, nSlot, bAnimationOnly);
+        //return;
+    }
+
+    DEBUG_hand("CItem::Equip(anim=%d itm=%s) nSlot=%d IP=%X \n",
+                        bAnimationOnly,
+                        this->itm.name.GetResRefNulled(),
+                        nSlot,
+                        Eip);
+
 
     if (Eip != 0x8BFEA5 &&  // CGameSpriteEquipment::Unmarshal caller
 	    Eip != 0x8C002D &&
@@ -50,66 +64,78 @@ void DETOUR_CItem::DETOUR_Equip(CCreatureObject& cre, int nSlot, BOOL bAnimation
         switch (nSlot) {
         case SLOT_SHIELD:
             /*
-                          Equip Allowed Off hand:
-                      Type     | PrevState | Result
-                    --------------------------------
-                     Anim	   | Off       | equip(anim), AnimOnly
-                     Anim      | Effects   | equip(anim), Full
-                     Anim      | AnimOnly  | error, AnimOnly
-                     Anim	   | Full      | error, Full
-
-                     Full	   | Off       | equip(full), Full
-                     Full      | Effects   | error, Full
-                     Full      | AnimOnly  | uneqip(anim)?, equip(full), Full
-                     Full	   | Full      | error, Full
+            #define OffHand_OFF         0
+            #define OffHand_Effects     1
+            #define OffHand_Anim        2
+            #define OffHand_Full        3
 
 
-                  Equiping Off hand after conflicted Main hand:
-                     Type      | PrevState | Result
-                    --------------------------------
-                     Anim	   | Off       | skip, Off
-                     Anim      | Effects   | error, Off
-                     Anim      | AnimOnly  | error, Off
-                     Anim	   | Full      | error, Off
+                Equip Allowed Off hand:
+            Type     | PrevState | Result
+        --------------------------------
+            Anim     | Off       | equip(anim), AnimOnly              OffHand_OFF     ->  OffHand_Anim
+            Anim     | Effects   | equip(anim), Full                  OffHand_Effects ->  OffHand_Full
+            Anim     | AnimOnly  | error, AnimOnly                    *
+            Anim	 | Full      | error, Full                        *  
 
-                     Full	   | Off       | skip, Off
-                     Full      | Effects   | error, Off
-                     Full      | AnimOnly  | error, Off
-                     Full	   | Full      | error, Off
+            Full	 | Off       | equip(full), Full                  OffHand_OFF     ->  OffHand_Full
+            Full     | Effects   | error, Full                        *  
+            Full     | AnimOnly  | uneqip(anim)?, equip(full), Full   OffHand_Anim    ->  OffHand_Full
+            Full	 | Full      | error, Full                        *  
+
+
+        Equiping Off hand after conflicted Main hand:
+            Type     | PrevState | Result
+        --------------------------------
+            Anim	 | Off       | skip, Off
+            Anim     | Effects   | error, Off
+            Anim     | AnimOnly  | error, Off
+            Anim	 | Full      | error, Off
+
+            Full	 | Off       | skip, Off
+            Full     | Effects   | error, Off
+            Full     | AnimOnly  | error, Off
+            Full	 | Full      | error, Off
             */
-
-            //if (pGameOptionsEx->bUI_DisableOffHandWeaponBG1part) {
-            //    if (IsBG1Part() && this->GetType() != ITEMTYPE_SHIELD) {   // in BG1 only shield allowed
-            //        cre.u6753 = OffHand_OFF;
-            //        return;                 // abort equip
-            //    }
-            //}
 
             if (IsOffHandAllowed(cre, this)) {
                 if (cre.u6753 == OffHand_Full)
-                    console.writef("equip offhand error, xxx | Full | error, Full %s %s %X \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled(), Eip);
+                    DEBUG_hand("equip offhand error, xxx | Full | error, Full %s %s %X \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled(), Eip);
                 if (cre.u6753 == OffHand_Effects && !bAnimationOnly)
-                    console.writef("equip offhand error, Full | Effects | error, Full %s %s %X \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled(), Eip);
+                    DEBUG_hand("equip offhand error, Full | Effects | error, Full %s %s %X \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled(), Eip);
                 if (cre.u6753 == OffHand_Anim && bAnimationOnly)
-                    console.writef("equip offhand error, Anim | AnimOnly | error, AnimOnly %s %s %X \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled(), Eip);
+                    DEBUG_hand("equip offhand error, Anim | AnimOnly | error, AnimOnly %s %s %X \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled(), Eip);
 
-                //console.write_debug("equip offhand, anim=%d prev=%d %s ", bAnimationOnly, cre.u6753, this->itm.name.GetResRefNulled());
+                DEBUG_hand("equip offhand, prev=%d itm=%s \n", cre.u6753, this->itm.name.GetResRefNulled());
 
+                DEBUG_hand(" call orig_Equip(SLOT_SHIELD, anim=%d) \n", bAnimationOnly);
                 (this->*Tramp_CItem_Equip)(cre, SLOT_SHIELD, bAnimationOnly);
+                DEBUG_hand(" return orig_Equip(SLOT_SHIELD, x) \n");
+
                 if (bAnimationOnly) {
                     cre.u6753 |= OffHand_Anim; // Off -> Anim Only or Effects -> Full
                 } else {
                     cre.u6753 = OffHand_Full; // full enabled
                 }
 
-                //console.write_debug("new=%d \n", cre.u6753);
+                DEBUG_hand("equip new=%d \n", cre.u6753);
             } else {
-                if (cre.u6753 != OffHand_OFF)
-                    console.writef("Equiping Off hand after conflicted Main hand error, xxx | !Full | error, Off %s %s \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled());
+                if (cre.u6753 != OffHand_OFF) {
+                    DEBUG_hand("Equiping Off hand after conflicted Main hand error, xxx | !Full | error, Off %s %s \n", (LPTSTR)cre.GetLongName(), this->itm.name.GetResRefNulled());
 
-                //console.write_debug("equip offhand, forbidden by main, anim=%d prev=%d %s new=0 \n", bAnimationOnly, cre.u6753, this->itm.name.GetResRefNulled());
+                    DEBUG_hand(" call orig_UnEquip(SLOT_SHIELD, %d, 1) \n", 1);
+                    (this->*Tramp_CItem_UnEquip)(cre, SLOT_SHIELD, 1, 0);   // full remove
+                    DEBUG_hand(" return orig_UnEquip(SLOT_SHIELD, x, 0) \n");
+                }
+
+                DEBUG_hand("equip offhand, forbidden by main, prev=%d itm=%s new=0 \n", cre.u6753, this->itm.name.GetResRefNulled());
 
                 cre.u6753 = OffHand_OFF;
+
+                if (Eip == 0x5AA9E2) {
+                    DEBUG_hand(" return recursive CItem::Equip(anim=%d itm=%s) nSlot=%d \n", bAnimationOnly, this->itm.name.GetResRefNulled(), nSlot);
+                }
+
                 return;                 // abort equip
             }
             break;
@@ -120,10 +146,12 @@ void DETOUR_CItem::DETOUR_Equip(CCreatureObject& cre, int nSlot, BOOL bAnimation
         case SLOT_WEAPON3:
         case SLOT_FIST:
         case SLOT_MISC19:   // magic weapon
-            //console.write_debug("equip main anim=%d, wait reconfig prev=%d %s \n", bAnimationOnly, cre.u6753, this->itm.name.GetResRefNulled());
+            DEBUG_hand("equip main, wait reconfig prev=%d itm=%s \n", cre.u6753, this->itm.name.GetResRefNulled());
             ReConfigOffHand(cre, this, nSlot, bAnimationOnly, bSpriteEquipmentUnmarshalCall);
 
+            DEBUG_hand(" call orig_Equip(nSlot=%d, anim=%d) \n", nSlot, bAnimationOnly);
             (this->*Tramp_CItem_Equip)(cre, nSlot, bAnimationOnly);
+            DEBUG_hand(" return orig_Equip(nSlot=%d, anim=%d) \n", nSlot, bAnimationOnly);
             break;
 
         // skip ammo
@@ -133,15 +161,27 @@ void DETOUR_CItem::DETOUR_Equip(CCreatureObject& cre, int nSlot, BOOL bAnimation
         //case SLOT_AMMO3:
 
         default:
+            DEBUG_hand(" call orig_Equip(nSlot=%d, anim=%d) \n", nSlot, bAnimationOnly);
             (this->*Tramp_CItem_Equip)(cre, nSlot, bAnimationOnly);
+            DEBUG_hand(" return orig_Equip(nSlot=%d, anim=%d) \n", nSlot, bAnimationOnly);
             break;
         }
     }
     else {  // bypass Unlimited HandOff Slot/Marker
-        if (bAnimationOnly != 0xA5)     // Normal Mode
+        if (bAnimationOnly != 0xA5) {    // Normal Mode
+            DEBUG_hand(" call orig_Equip(nSlot=%d, anim=%d) \n", nSlot, bAnimationOnly);
             (this->*Tramp_CItem_Equip)(cre, nSlot, bAnimationOnly);
-        else                            // Bypass mode
+            DEBUG_hand(" return orig_Equip(nSlot=%d, anim=%d) \n", nSlot, bAnimationOnly);
+        }
+        else {                           // Bypass mode
+         DEBUG_hand(" call orig_Equip(nSlot=%d, anim=0) \n", nSlot);
          (this->*Tramp_CItem_Equip)(cre, nSlot, 0); // full equip
+         DEBUG_hand(" return orig_Equip(nSlot=%d, anim=00) \n", nSlot);
+        }
+    }
+
+    if (Eip == 0x5AA9E2) {
+        DEBUG_hand(" return recursive CItem::Equip(anim=%d itm=%s) nSlot=%d \n", bAnimationOnly, this->itm.name.GetResRefNulled(), nSlot);
     }
 
     if (pGameOptionsEx->bEffApplyEffItemFix ||
@@ -152,6 +192,9 @@ void DETOUR_CItem::DETOUR_Equip(CCreatureObject& cre, int nSlot, BOOL bAnimation
 		    if (itm.name.IsEmpty()) return;
 		    if (itm.pRes == NULL) return;
 		    if (bAnimationOnly) return;
+
+            //if (nSlot == SLOT_FIST) // force cds.reload when switching to fist
+            //    cre.cdsCurrent.Reload(cre.BaseStats, cre.MemorizedLevelWizard, cre.MemorizedLevelPriest);
 
 		    cre.bInEquipItem = TRUE;
 		

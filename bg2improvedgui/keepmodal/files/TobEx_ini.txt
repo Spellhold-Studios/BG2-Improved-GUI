@@ -1,0 +1,1 @@
+UI:Keep Modal State When Switching Weapon=1

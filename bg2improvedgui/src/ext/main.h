@@ -3,6 +3,9 @@
 
 #include "stdafx.h"
 
+extern const char* months[];
+extern const char* days[];
+
 void Init();
 void Deinit();
 BOOL DllGetVersion(char** lplpsz);

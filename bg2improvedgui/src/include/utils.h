@@ -16,6 +16,7 @@
 }
 
 #define SetVT(obj, vt) (*(DWORD*)(obj) = (vt))
+#define GetVT(obj) (*(DWORD*)(obj))
 #define IENew new(0)
 #define IENewA new[](0)
 

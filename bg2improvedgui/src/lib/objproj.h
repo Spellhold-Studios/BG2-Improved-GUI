@@ -30,12 +30,12 @@ public:
     virtual void DeliverEffects() {}    //v70
 
 	short nMissileId; //42h, MISSILE.IDS
-	char bSparkTrail; //44h, area list to put this object, bit5 not set = 0, bit5 set = 1
+	char bAddToListType; //44h, bSparkTrail, area list to put this object, bit5 not set = 0, bit5 set = 1
 	char u45; //pad?
 	short nSpeed; //46h
-	Enum u48; //a party member (source)
+	Enum eSource; //a party member (source)
 	Enum eTarget; //4ch
-	Enum u50;
+	Enum callBackProjectile; //50
 	CEffectList effects; //54h, to apply on target affected by this (Preset target effects from SPL)
 	
 	short nSparkleColour; //80h
@@ -53,14 +53,13 @@ public:
 	//11: MAGENTA (10)
 	//12: ORANGE (11)
 
-	POINT u82; //calculation from location of Enum source
-	POINT u8a; //smoke
-	int u92;
-	int u96;
-	POINT u9a;
-	POINT ua2;
-	int uaa;
-	POINT uae; //location to travel to (target)
+	POINT posExact; //82 //calculation from location of Enum source
+	POINT posDelta; //8a //smoke
+	POINT startDelta; //92
+	POINT minRandomSpeed; //96
+	POINT maxRandomSpeed; //a2
+	int startSpeed; //aa;
+	POINT posDest; //ae location to travel to (target)
 	TerrainTable ub6;
 	short uc6;
 	BOOL bShowSparkles; //c8h

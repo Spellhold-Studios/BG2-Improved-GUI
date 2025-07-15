@@ -38,6 +38,7 @@ void CSoundMixer_TransferBuffer_asm();
 void CMessage_TimeStop_asm();
 void TimeStopEnded_asm();
 void CVoice_CVoice_asm();
-
+void CScreenStore_Activated_asm();
+void CScreenWorld_TogglePauseGame_UnPause_asm();
 
 #endif //ENGINEWORLD_H

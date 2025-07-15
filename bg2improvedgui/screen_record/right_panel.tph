@@ -3,6 +3,7 @@ DEFINE_ACTION_FUNCTION ~RIGHT_PANEL~ INT_VAR option = 0 BEGIN
 STRING_SET 3725 @3725   // ~Casting speed~
 STRING_SET 6551 @6551   // ~Specialization THAC0~
 STRING_SET 6552 @6552   // ~Off hand Specialization THAC0~
+STRING_SET 6553 @6553   // ~Weapon speed~
 
 COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
     APPEND_FILE "bg2improvedgui/screen_record/files/TobEx_ini.txt"

@@ -111,7 +111,7 @@ void ParseStatement(unsigned int nIndex, int nType, IECString s, CGameAIBase& sp
 				CArea& area = g_pChitin->pGame->GetLoadedArea(sScope);
 				if (&area != NULL) pVar = &area.m_AreaVariables.Find(sVariable);
 			}
-			vars.SetInt(nIndex, pVar ? pVar->nValue : 0);
+			vars.SetInt(nIndex, pVar ? pVar->intValue : 0);
 		
 		} else if (sType.CompareNoCase("ts") == 0) {
 			//table by string "t[NAME.COL.ROW]"

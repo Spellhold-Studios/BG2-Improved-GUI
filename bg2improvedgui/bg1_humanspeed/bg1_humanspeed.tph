@@ -1,0 +1,13 @@
+DEFINE_ACTION_FUNCTION ~BG1_HUMANSPEED~ INT_VAR option = 0 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/bg1_humanspeed/files/TobEx_ini.txt"
+BUT_ONLY
+
+ACTION_IF (%option% = 1) BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/bg1_humanspeed/files/TobEx_ini_BG2.txt"
+    BUT_ONLY
+END
+
+END  //DEFINE_ACTION_FUNCTION

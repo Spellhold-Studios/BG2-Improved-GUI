@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~KEEPMODAL~ BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/keepmodal/files/TobEx_ini.txt"
+BUT_ONLY
+
+END

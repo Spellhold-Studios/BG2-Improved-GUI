@@ -1,0 +1,1 @@
+UI:Show Action On Portrait Weapon=1

@@ -1,0 +1,7 @@
+DEFINE_ACTION_FUNCTION ~DISABLEAUTOSAVE~ INT_VAR option = 0 BEGIN
+
+COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+        APPEND_FILE "bg2improvedgui/fast_progressbar/files/TobEx_ini_dis_autosave.txt"
+BUT_ONLY
+
+END  //DEFINE_ACTION_FUNCTION

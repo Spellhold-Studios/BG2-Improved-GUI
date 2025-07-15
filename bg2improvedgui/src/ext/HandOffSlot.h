@@ -85,4 +85,16 @@ void CreatureRMClick_asm();
 #define OffHand_Anim        2
 #define OffHand_Full        3
 
+#define write_shield 0
+
+extern uint    debug_line;
+extern uint    debug_callnum;
+
+#define DEBUG_hand(x, ...)                      \
+    if (write_shield) {                         \
+        console.writef("%d ", debug_line++);    \
+        console.writef(x, __VA_ARGS__);         \
+    }
+
+
 #endif //HandOffSlot_H

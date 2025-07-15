@@ -23,8 +23,6 @@
 
 #include "options.h"
 
-#define DLL_INTERNAL_NAME "TobEx.dll\0"
-
 typedef unsigned long STRREF;
 typedef          long Enum;     //index to CGameObjectArrayHandler element
 
@@ -36,9 +34,5 @@ typedef IECPtrList CResRefList; //AA6334
 typedef IECPtrList CGameObjectList; //AA7128
 
 const Enum ENUM_INVALID_INDEX = UINT_MAX;
-extern const char* months[];
-extern const char* days[];
-
-const DWORD g_nPEAddressDefault = 0x400000;
 
 #endif //STDAFX_H

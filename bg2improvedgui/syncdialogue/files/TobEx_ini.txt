@@ -1,0 +1,1 @@
+Sound:Sync Dialogue Sound=1

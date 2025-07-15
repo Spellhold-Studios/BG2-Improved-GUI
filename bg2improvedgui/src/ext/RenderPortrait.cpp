@@ -136,6 +136,12 @@ RenderPortrait(CCreatureObject& Cre, RECT& rInside, RECT *rClipIn, int bDoubleRe
 
         short opcode = action->opcode;
         switch ( opcode ) {
+         case ACTION_ATTACK:
+         case ACTION_GROUPATTACK:
+         case ACTION_ATTACKNOSOUND:
+         case ACTION_ATTACKONEROUND:
+         case ACTION_ATTACKREEVALUATE:
+
          case ACTION_SPELL:
          case ACTION_SPELL_POINT:
          case ACTION_SPELL_NO_DEC:
@@ -182,13 +188,45 @@ RenderPortrait(CCreatureObject& Cre, RECT& rInside, RECT *rClipIn, int bDoubleRe
                 }
             }
 
-            if (opcode == ACTION_USEITEM  || opcode == ACTION_USEITEM_POINT) {
+            if (opcode == ACTION_USEITEM  ||
+                opcode == ACTION_USEITEM_POINT) {
                 if (action->m_specificID != -1) {
-                    CItem& pItem = * Cre.Inventory.items[action->m_specificID];
-                    if (&pItem) {
-                        pItem.Demand();
-                        IconRes = pItem.itm.pRes->pFile->m_rItemIcon;
-                        pItem.Release();
+                    CItem& Item = * Cre.Inventory.items[action->m_specificID];
+                    if (&Item) {
+                        Item.Demand();
+                        IconRes = Item.itm.pRes->pFile->m_rItemIcon;
+                        Item.Release();
+                    }
+                }
+            }
+
+            if (pGameOptionsEx->bUI_ShowActionOnPortraitWeapon) {
+                if (opcode ==  ACTION_ATTACK ||
+                    opcode ==  ACTION_GROUPATTACK ||
+                    opcode ==  ACTION_ATTACKNOSOUND ||
+                    opcode ==  ACTION_ATTACKONEROUND ||
+                    opcode ==  ACTION_ATTACKREEVALUATE) {
+                    CItem&  Item = * Cre.Inventory.items[Cre.Inventory.nSlotSelected];
+                    if (&Item) {
+                        short   launcherSlot;
+                        Item.Demand();
+
+                        ItmFileAbility* ItemAbility = Item.GetAbility(Cre.Inventory.nAbilitySelected);
+                        if (ItemAbility) {
+                            CItem* ItemLauncher = Cre.GetFirstEquippedLauncherOfAbility(ItemAbility, launcherSlot);
+                            if (ItemLauncher) {
+                                ItemLauncher->Demand();
+                                IconRes = ItemLauncher->itm.pRes->pFile->m_rItemIcon;
+                                ItemLauncher->Release();
+                            } else {
+                                //IconRes = ItemAbility->useIcon;
+                                IconRes = Item.itm.pRes->pFile->m_rItemIcon;
+                            }
+                        } else {
+                            IconRes = Item.itm.pRes->pFile->m_rItemIcon;
+                        }
+
+                        Item.Release();
                     }
                 }
             }

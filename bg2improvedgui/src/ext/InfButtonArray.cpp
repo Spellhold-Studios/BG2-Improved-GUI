@@ -175,7 +175,7 @@ SummonPriestInfoPanel(ResRef* Name, int ToolBarType, CButtonData* ButtonData) {
                 for (int abil_idx = 0; abil_idx <= nAbilityIdx; abil_idx++) {
                     ItmFileAbility* ability = Item->GetAbility(abil_idx);
                     if (&ability) {
-                        if (ability->loc == 3) { // item location
+                        if (ability->quickSlotType == 3) { // item location
                             AbilityColumn++;
                         }
                     }
@@ -415,6 +415,121 @@ CScreenPriestSpell_UpdateInfoPanel_ChangeTittle(CScreenPriestBook& screen, CPane
 }
 
 
+void static __stdcall
+PostRender(uint ButtonIndex, POINT &Location, RECT &ClipControl) {
+    CButtonArray* ButtonArray = & g_pChitin->pGame->m_CButtonArray;
+    int bDoubleResolution = g_pChitin->bDoubleResolution;
+    int i;
+    //POINT Rhomb2[4];
+
+    //if (ButtonIndex != 5)
+    //    return;
+
+    if (ButtonArray->nButtonIdx[ButtonIndex] != 11) // Hide in Shadow
+        return;
+
+    //if (ButtonArray->buttons[ButtonIndex].bDisabled)
+    //    return;
+
+    if (!ButtonArray->buttons[ButtonIndex].bEnabled)
+        return;
+
+    console.write_debug("Render ButtonIndex=%d \n", ButtonIndex);
+    console.write_debug("Render nButtonIdx=%d \n", ButtonArray->nButtonIdx[ButtonIndex]);
+    console.write_debug("Render nButtonArrayTypeCurrentIdx=%d \n", ButtonArray->nButtonArrayTypeCurrentIdx);
+    console.write_debug("Render nActiveButtonIdx=%d \n", ButtonArray->nActiveButtonIdx);
+
+    CVideoMode* pVideoMode;
+
+    if ( g_pChitin->pEngineActive )
+        pVideoMode = g_pChitin->pEngineActive->pVideoMode;
+    else
+        pVideoMode = NULL;
+
+    POINT offset;
+    offset.x = 0;
+    offset.y = 0;
+
+    #define ICON_SIZE_Y 36
+    #define ICON_SIZE_X 36
+
+    //    Rhomb2[0].x = Location.x + (1 + bDoubleResolution)*2;      
+    //    Rhomb2[1].x = Location.x + (1 + bDoubleResolution)*2 + ICON_SIZE_X; 
+    //    Rhomb2[2].x = Location.x + (1 + bDoubleResolution)*2 + ICON_SIZE_X;
+    //    Rhomb2[3].x = Location.x + (1 + bDoubleResolution)*2;      
+
+    //    Rhomb2[0].y = Location.y + (1 + bDoubleResolution)*2;
+    //    Rhomb2[1].y = Location.y + (1 + bDoubleResolution)*2;
+    //    Rhomb2[2].y = Location.y + (1 + bDoubleResolution)*2 + ICON_SIZE_Y;
+    //    Rhomb2[3].y = Location.y + (1 + bDoubleResolution)*2 + ICON_SIZE_Y;
+
+    //pVideoMode->FillPoly3d(
+    //    Rhomb2,
+    //    4,
+    //    ClipControl,
+    //    0x008000,
+    //    offset);
+
+    for (i = ICON_SIZE_Y; i > 18; i --) {
+        //  0---1
+        //  |   |   36*36
+        //  |   |
+        //  3---2
+        //Rhomb2[0].x = Location.x + (1 + bDoubleResolution)*2;      
+        //Rhomb2[1].x = Location.x + (1 + bDoubleResolution)*2 + ICON_SIZE_X; 
+        //Rhomb2[2].x = Location.x + (1 + bDoubleResolution)*2 + ICON_SIZE_X;
+        //Rhomb2[3].x = Location.x + (1 + bDoubleResolution)*2;      
+
+        //Rhomb2[0].y = Location.y + (1 + bDoubleResolution)*2 + i - 1;
+        //Rhomb2[1].y = Location.y + (1 + bDoubleResolution)*2 + i - 1;
+        //Rhomb2[2].y = Location.y + (1 + bDoubleResolution)*2 + i;
+        //Rhomb2[3].y = Location.y + (1 + bDoubleResolution)*2 + i;
+
+        //pVideoMode->OutlinePoly(
+        //    Rhomb2,
+        //    4,
+        //    ClipControl,
+        //    0x00a000,
+        //    offset);
+
+        pVideoMode->DrawLine3d(
+            Location.x + (1 + bDoubleResolution)*2,                 // x0
+            Location.y + (1 + bDoubleResolution)*2 + i,             // y0
+            Location.x + (1 + bDoubleResolution)*2 + ICON_SIZE_X,   // x1
+            Location.y + (1 + bDoubleResolution)*2 + i,             // y1
+            ClipControl,
+            0x00a000);
+    }
+}
+
+
+void  __stdcall
+CInfButtonArray_UpdateButtons_HideWizardSpellFromQuickList(CButtonArray& ba, int nButton, CButtonData* Button) {
+
+	if (g_pChitin->pGame->m_PartySelection.memberList.GetCount() == 0)
+        return;
+
+	Enum e = g_pChitin->pGame->m_PartySelection.GetFirstSelected();
+	CCreatureObject* Cre = NULL;
+	
+	char nResult;
+	do {
+		nResult = g_pChitin->pGame->m_GameObjectArrayHandler.GetGameObjectShare(e, THREAD_ASYNCH, &Cre, INFINITE);
+	} while (nResult == OBJECT_SHARING || nResult == OBJECT_DENYING);
+    if (nResult == OBJECT_SUCCESS) {
+        ResRef tmp = Button->abilityId.rSpellName;
+        tmp.MakeUpper();
+        if (Cre->cdsCurrent.ButtonDisableSpl[0] == 1 && // wizard spells disabled
+            memcmp(tmp.GetResRef(), "SPWI", 4) == 0) {
+            ba.buttons[nButton].bDisabled = 1;
+        }
+
+        g_pChitin->pGame->m_GameObjectArrayHandler.FreeGameObjectShare(e, THREAD_ASYNCH, INFINITE);
+    }
+
+}
+
+
 void __declspec(naked)
 CInfButtonArray_UpdateButtons_CheckInnateList_asm() {
 __asm
@@ -600,6 +715,45 @@ __asm
 CScreenPriestSpell_LoadIconSpell_asm_EmptyString:
     add     esp, 4
     push    078A2D3h        // skip  CString::SetAt()
+    ret
+}
+}
+
+
+void __declspec(naked)
+CInfButtonArray_PostRenderButton_asm() {
+__asm
+{
+    push    eax
+    push    edx
+    push    ecx
+
+    push    [ebp+0Ch]   ; ClipControl
+    push    [ebp+8]     ; RenderLocation
+    push    [ebp+14h]   ; ButtonNum
+    call    PostRender
+
+    pop     ecx
+    pop     edx
+    pop     eax
+
+    lea     ecx, [ebp-0F4h]  // stolen bytes
+    ret
+}
+}
+
+
+void  __declspec(naked)
+CInfButtonArray_UpdateButtons_HideWizardSpellFromQuickList_asm() {
+__asm {
+
+    lea     eax, [ebp-98h]  // Spell resref   
+    push    eax
+    push    [ebp-9Ch]       // nButton
+    push    [ebp-0A34h]     // ButtonArray
+    call    CInfButtonArray_UpdateButtons_HideWizardSpellFromQuickList
+
+    mov     edx, [ebp-600h]  // stolen bytes
     ret
 }
 }

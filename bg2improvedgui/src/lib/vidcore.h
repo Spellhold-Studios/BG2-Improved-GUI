@@ -319,6 +319,9 @@ public:
 class CVideoMode : public CVideoModeBase { //Size 732h
 //Constructor: 0x9B68C5
 public:
+    int OutlinePoly(POINT *pPoly, short nVertices, RECT &rSurface, unsigned int rgbColor, POINT &ptOffset);
+    int FillPoly3d( POINT *pPoly, short nVertices, RECT &rSurface, unsigned int rgbColor, POINT &ptOffset);
+    int DrawLine3d(int nXFrom, int nYFrom, int nXTo, int nYTo, const RECT &rSurface, unsigned int rgbColor);
 	//AB9238
 	struct DDSURFACEDESC {
 		int dwSize; //f4h

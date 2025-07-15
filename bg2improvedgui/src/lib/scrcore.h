@@ -68,13 +68,13 @@ struct CVariable { //Size 54h
 	CVariable& OpAssign(CVariable& var) { return *this; } //dummy
 	IECString GetName();
 
-	char szName[32]; //0h
-	short u20; //unused
-	short u22; //unused
-	int nValue2; //24h, dmPt.Y
-	int nValue; //28h, dmPt.X
-	int u2c[2]; //unused
-	char szDMArea[32]; //34h, for Store Local Variable, = res1 + res2 + res3 (associated with deathmatch?)
+	char    szName[32]; //0h
+	ushort type;        //20
+	ushort resRefType;  //22
+	ulong  dWValue;     //24h, dmPt.Y
+	long   intValue;    //28h, dmPt.X
+	double floatValue;  //2c
+	char   stringValue[32]; //34h, for Store Local Variable, = res1 + res2 + res3 (associated with deathmatch?)
 };
 
 extern CVariable& (CVariable::*CVariable_Construct)();
@@ -82,7 +82,7 @@ extern void (CVariable::*CVariable_SetName)(IECString);
 extern CVariable& (CVariable::*CVariable_OpAssign)(CVariable&);
 extern IECString (CVariable::*CVariable_GetName)();
 
-struct CVariableMap { //Size 8h
+struct CVariableMap { //Size 8h CVariableHash
 	CVariableMap(int nSize);
 	CVariableMap& Construct(int nSize) { return *this; } //dummy
 

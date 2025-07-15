@@ -175,7 +175,7 @@ public:
 	int         nPlayerNetworkId; //36h, m_remotePlayerID
 	Enum        nObjectNetworkId; //3ah, m_remoteObjectID
 	
-	//which modulus of the tick depends on m_nAIUpdateInterval & e == m_nAIUpdateInterval & nChitinUpdates
+	//which modulus of the tick depends on nAIUpdateInterval & e == nAIUpdateInterval & nChitinUpdates
 	//0: every tick
 	//1: every 2nd tick (default)
 	//3: every 4th tick

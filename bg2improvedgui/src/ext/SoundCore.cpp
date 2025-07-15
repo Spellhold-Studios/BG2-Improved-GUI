@@ -93,343 +93,423 @@ CResWave_CopyWaveData_Normalize(short* PCM, unsigned long Len, DWORD* Stack, Res
         return;
     }
 
-    if (pGameOptionsEx->bSound_NormalizeCreOnly) {   // Creatures only
-        //       CSound::Play(4 args)
+    //       CSound::Play(4 args)
+    // Normal: CSound::Play->CSound::ExclusivePlay->CopyData->CopyWaveData
+    // EAX:    CSound::Play--------------------->CopyDataEAX->CopyWaveData
+    if (Stack[1] == 0x9DD5B3 ||                 // CopyData
+        Stack[1] == 0x9FA151) {                 // CopyDataEAX
+        StackPrev = (DWORD*) Stack[0];
+        if (StackPrev[1] == 0x9DDC59 ||         // CSound::ExclusivePlay
+            StackPrev[1] == 0x9DE332) {         // CSound::Play for EAX
 
-        // Normal: CSound::Play->CSound::ExclusivePlay->CopyData->CopyWaveData
-        // EAX:    CSound::Play--------------------->CopyDataEAX->CopyWaveData
-        if (Stack[1] == 0x9DD5B3 ||                 // CopyData
-            Stack[1] == 0x9FA151) {                 // CopyDataEAX
-            StackPrev = (DWORD*) Stack[0];
-            if (StackPrev[1] == 0x9DDC59 ||         // CSound::ExclusivePlay
-                StackPrev[1] == 0x9DE332) {         // CSound::Play for EAX
+            char* EBP = (char*) ((DWORD) StackPrev[0]);
+            CSound* SoundObj;
+            if (StackPrev[1] == 0x9DDC59) {
+                SoundObj = (CSound*) *((DWORD*)(EBP - 0x10));   // CSound inside CSound::ExclusivePlay
+                gSndChannel = SoundObj->nChannelIdx;
+            }
 
-                char* EBP = (char*) ((DWORD) StackPrev[0]);
-                CSound* SoundObj;
-                if (StackPrev[1] == 0x9DDC59) {
-                    SoundObj = (CSound*) *((DWORD*)(EBP - 0x10));   // CSound inside CSound::ExclusivePlay
-                    gSndChannel = SoundObj->nChannelIdx;
-                }
+            if (StackPrev[1] != 0x9DE332) {
+                StackPrev = (DWORD*) StackPrev[0];
+            }
 
-                if (StackPrev[1] != 0x9DE332) {
-                    StackPrev = (DWORD*) StackPrev[0];
-                }
-                if (StackPrev[1] == 0x9DE416 ||      // CSound::Play
-                    StackPrev[1] == 0x9DE332) {      // CSound::Play for EAX   
-                    StackPrev = (DWORD*) StackPrev[0];
+            if (StackPrev[1] == 0x9DE416 ||      // CSound::Play
+                StackPrev[1] == 0x9DE332) {      // CSound::Play for EAX   
+                StackPrev = (DWORD*) StackPrev[0];
 
-                    ////////////////////////////////////////////////////////////////
-                    // CSound::Play
-                    if (StackPrev[1] == 0x8A4522 ||     // CGameSprite::PlaySound
-                        StackPrev[1] == 0x8A418E ||
-                        StackPrev[1] == 0x8A4979) {
-                        enabled = true;
+                ////////////////////////////////////////////////////////////////
+                // CSound::Play
+                if (StackPrev[1] == 0x8A4522 ||     // CGameSprite::PlaySound
+                    StackPrev[1] == 0x8A418E ||
+                    StackPrev[1] == 0x8A4979) {
+                    enabled = true;
 
-                        EBP = (char*) ((DWORD) StackPrev[0]);
-                        uchar SoundSetIdx = *(EBP + 8);
-                        if (SoundSetIdx == SOUNDSET_SELECT_COMMON)
+                    EBP = (char*) ((DWORD) StackPrev[0]);
+                    uchar SoundSetIdx = *(EBP + 8);
+                    if (SoundSetIdx == SOUNDSET_SELECT_COMMON)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::Play CRE.SEL_COMMON \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_SELECT_ACTION)
+                    else
+                    if (SoundSetIdx == SOUNDSET_SELECT_ACTION)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::Play CRE.SEL_ACTION \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_INITIAL_MEETING)
+                    else
+                    if (SoundSetIdx == SOUNDSET_INITIAL_MEETING)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::Play CRE.INIT_MEET \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_DAMAGE)
+                    else
+                    if (SoundSetIdx == SOUNDSET_DAMAGE)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::Play CRE.DAMAGE \t");                            
                         
-                        else
+                    else
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::Play SoundSet=%d\t", SoundSetIdx);
 
-                    } else
-                    if (StackPrev[1] == 0x92cd59 ||    // CGameSprite::LeaveAreaName
-                        StackPrev[1] == 0x92C7AD ||
-                        StackPrev[1] == 0x92D0E8 ||
-                        StackPrev[1] == 0x92D20E) {
+                } else
+                if (StackPrev[1] == 0x92cd59 ||    // CGameSprite::LeaveAreaName
+                    StackPrev[1] == 0x92C7AD ||
+                    StackPrev[1] == 0x92D0E8 ||
+                    StackPrev[1] == 0x92D20E) {
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::LeaveAreaName \t\t"); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x92B969 ||    // CGameSprite::LeaveArea
-                        StackPrev[1] == 0x92BEEE ||
-                        StackPrev[1] == 0x92C27D ||
-                        StackPrev[1] == 0x92C38E) {
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x92B969 ||    // CGameSprite::LeaveArea
+                    StackPrev[1] == 0x92BEEE ||
+                    StackPrev[1] == 0x92C27D ||
+                    StackPrev[1] == 0x92C38E) {
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::LeaveArea \t\t"); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x5c1d04) {   // CMessageDisplayTextRef::Apply   
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x5c1d04) {   // CMessageDisplayTextRef::Apply   
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("MessageDisplayText \t\t"); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x6D1F51) {   // CScreenChapter::TimerAsynchronousUpdate
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x6D1F51) {   // CScreenChapter::TimerAsynchronousUpdate
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("ScreenChapter::TimerAsyncUpdate "); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x4e7004 ||   // CGameDialogEntry::Display
-                        StackPrev[1] == 0x4e7745 ||
-                        StackPrev[1] == 0x4E78F9 ||
-                        StackPrev[1] == 0x4E8229 ) {
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x4e7004 ||   // CGameDialogEntry::Display
+                    StackPrev[1] == 0x4e7745 ||
+                    StackPrev[1] == 0x4E78F9 ||
+                    StackPrev[1] == 0x4E8229 ) {
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("DialogEntry::Display \t\t"); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x8A5069) {   // CGameSprite::VerbalConstant
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x8A5069) {   // CGameSprite::VerbalConstant
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::VerbalConstant \t"); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x4A8D93 ||
-                        StackPrev[1] == 0x4A9281) {   // CGameAIBase::DisplayStringWait
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x4A8D93 ||
+                    StackPrev[1] == 0x4A9281) {   // CGameAIBase::DisplayStringWait
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("CGameAIBase::DisplayStringWait \t"); 
-                            enabled = true;
-                    } else
-                    if (StackPrev[1] == 0x43b595)
+                        enabled = true;
+                } else
+                if (StackPrev[1] == 0x43b595)
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("PlayGUISound \t\t\t");
-                    else
-                    if (StackPrev[1] == 0x673ee1)
+                else
+                if (StackPrev[1] == 0x673ee1)
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("SetCursor \t\t\t"); 
-                    else
-                    if (StackPrev[1] == 0x74192d)
+                else
+                if (StackPrev[1] == 0x74192d)
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("InventoryMsg \t\t\t"); 
-                    else
-                    if (StackPrev[1] == 0x57564D)
+                else
+                if (StackPrev[1] == 0x57564D)
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("AreaGameSound \t\t\t"); 
-                    else
-                    if (StackPrev[1] == 0x9DEAB5) {
+                else
+                if (StackPrev[1] == 0x9DEAB5) {
+                    StackPrev = (DWORD*) StackPrev[0];
+                    if (StackPrev[1] == 0x9DF3E3) {
                         StackPrev = (DWORD*) StackPrev[0];
-                        if (StackPrev[1] == 0x9DF3E3) {
-                            StackPrev = (DWORD*) StackPrev[0];
-                            if (StackPrev[1] == 0x9E1ABA)
+                        if (StackPrev[1] == 0x9E1ABA)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SndMixer::UpdateSoundList1 loop\t");
-                            else
-                            if (StackPrev[1] == 0x4d1567)
+                        else
+                        if (StackPrev[1] == 0x4d1567)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetDay loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4d1911)
+                        else
+                        if (StackPrev[1] == 0x4d1911)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetNight loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4d2a68 ||
-                                StackPrev[1] == 0x4D262E)
+                        else
+                        if (StackPrev[1] == 0x4d2a68 ||
+                            StackPrev[1] == 0x4D262E)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetDusk loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4d1d7d ||
-                                StackPrev[1] == 0x4d21b7)
+                        else
+                        if (StackPrev[1] == 0x4d1d7d ||
+                            StackPrev[1] == 0x4d21b7)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetDawn loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4b8eea ||
-                                StackPrev[1] == 0x4b8f1b)
+                        else
+                        if (StackPrev[1] == 0x4b8eea ||
+                            StackPrev[1] == 0x4b8f1b)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("ApplyWindToAmbients loop \t");
 
-                            else
-                                console.write_debug("SetVolume loop \t\t\t"); 
-                        }
                         else
-                        if (StackPrev[1] == 0x9DEB45) {
-                            StackPrev = (DWORD*) StackPrev[0];
-                            if (StackPrev[1] == 0x9E1ABA)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
+                                console.write_debug("SetVolume loop \t\t\t"); 
+                    }
+                    else
+                    if (StackPrev[1] == 0x9DEB45) {
+                        StackPrev = (DWORD*) StackPrev[0];
+                        if (StackPrev[1] == 0x9E1ABA)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SndMixer::UpdateSoundList2 loop\t"); 
-                            else
-                            if (StackPrev[1] == 0x9e1e79)
+                        else
+                        if (StackPrev[1] == 0x9e1e79)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("UpdateSoundPositions1 loop \t"); 
 
-                            else
-                                console.write_debug("ResetVolume1 loop \t\t");
-                        }
                         else
-                        if (StackPrev[1] == 0x9E1B68)
-                            console.write_debug("SndMixer::UpdateSoundList3 loop\t");
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
+                                console.write_debug("ResetVolume1 loop \t\t");
                     }
                     else
-                    if (StackPrev[1] == 0x574F85)
+                    if (StackPrev[1] == 0x9E1B68)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
+                            console.write_debug("SndMixer::UpdateSoundList3 loop\t");
+                }
+                else
+                if (StackPrev[1] == 0x574F85)
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("CGameSound::DoAIUpdate \t\t"); 
 
-                    else
+                else
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("unknow CSound::Play caller %X \t", StackPrev[1]);
-                    // CSound::Play
-                    ////////////////////////////////////////////////////////////////
+                // CSound::Play
+                ////////////////////////////////////////////////////////////////
 
-                } else 
-                if (StackPrev[1] == 0x9dea2c) {       // CSound::Play_AtCoordinates
-                    StackPrev = (DWORD*) StackPrev[0];
-                    ////////////////////////////////////////////////////////////////
-                    // CSound::Play_AtCoordinates
-                    if (StackPrev[1] == 0x9401DA ) {  // CGameSprite::ApplyCastingEffect
+            } else 
+            if (StackPrev[1] == 0x9dea2c ||       // CSound::Play_AtCoordinates
+                StackPrev[1] == 0x9DE628) {
+                StackPrev = (DWORD*) StackPrev[0];
+                ////////////////////////////////////////////////////////////////
+                // CSound::Play_AtCoordinates
+                if (StackPrev[1] == 0x9401DA ) {  // CGameSprite::ApplyCastingEffect
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::ApplyCastingEffect \t");
-                        enabled = true;
-                    } else 
-                    if (StackPrev[1] == 0x643060 ) {     // CSequenceSoundList::PlaySound
-                        enabled = true;
+                    enabled = true;
+                } else 
+                if (StackPrev[1] == 0x643060 ) {     // CSequenceSoundList::PlaySound
+                    enabled = true;
+                    StackPrev = (DWORD*) StackPrev[0];
+                    if (StackPrev[1] == 0x7f9e46 ) { // CGameAnimationType::PlaySound
                         StackPrev = (DWORD*) StackPrev[0];
-                        if (StackPrev[1] == 0x7f9e46 ) { // CGameAnimationType::PlaySound
-                            StackPrev = (DWORD*) StackPrev[0];
-                            if (gTobexSoundCaller)
-                                gSoundFileName = resname;
-                            else
+                        if (gTobexSoundCaller)
+                            gSoundFileName = resname;
+                        else
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("Animation::PlayXY \t\t");
-                        } else
-                        if (StackPrev[1] == 0x8a1ccf)
-                            console.write_debug("Creature::PlayXY 2DA.Batt_Cry \t");
-                        else
-                        if (StackPrev[1] == 0x8a268e)
-                            console.write_debug("Creature::PlayXY Selection \t");
-                        else
-                            if (gTobexSoundCaller)
-                                gSoundFileName = resname;
-                            else
-                                console.write_debug("unknow SequenceSoundList::PlayXY caller %X \t", StackPrev[1]);
                     } else
-                    if (StackPrev[1] == 0x8a475d) { // CCreatureObject::PlaySound
-                        enabled = true;
+                    if (StackPrev[1] == 0x8a1ccf)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
+                            console.write_debug("Creature::PlayXY 2DA.Batt_Cry \t");
+                    else
+                    if (StackPrev[1] == 0x8a268e)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
+                            console.write_debug("Creature::PlayXY Selection \t");
+                    else
+                        if (gTobexSoundCaller)
+                            gSoundFileName = resname;
+                        else
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
+                                console.write_debug("unknow SequenceSoundList::PlayXY caller %X \t", StackPrev[1]);
+                } else
+                if (StackPrev[1] == 0x8a475d) { // CCreatureObject::PlaySound
+                    enabled = true;
 
-                        //__asm {int 3}
-                        EBP = (char*) ((DWORD) StackPrev[0]);
-                        uchar SoundSetIdx = *(EBP + 8);
-                        if (SoundSetIdx == SOUNDSET_ATTACK)
+                    //__asm {int 3}
+                    EBP = (char*) ((DWORD) StackPrev[0]);
+                    uchar SoundSetIdx = *(EBP + 8);
+                    if (SoundSetIdx == SOUNDSET_ATTACK)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.ATTACK \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_DAMAGE)
+                    else
+                    if (SoundSetIdx == SOUNDSET_DAMAGE)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.DAMAGE \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_BATTLE_CRY)
+                    else
+                    if (SoundSetIdx == SOUNDSET_BATTLE_CRY)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.BATT_CRY \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_DYING)
+                    else
+                    if (SoundSetIdx == SOUNDSET_DYING)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.DYING \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_SELECT_COMMON)
+                    else
+                    if (SoundSetIdx == SOUNDSET_SELECT_COMMON)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.SEL_COMMON \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_SELECT_ACTION)
+                    else
+                    if (SoundSetIdx == SOUNDSET_SELECT_ACTION)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.SEL_ACTION \t");
-                        else
-                        if (SoundSetIdx == SOUNDSET_EXISTANCE)
+                    else
+                    if (SoundSetIdx == SOUNDSET_EXISTANCE)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY CRE.EXISTANCE \t");
-                        else
+                    else
 
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
                             console.write_debug("Creature::PlayXY SoundSetLine=%d\t", SoundSetIdx);
 
-                    } else
-                    if (StackPrev[1] == 0x892ff1) {
+                } else
+                if (StackPrev[1] == 0x892ff1) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::AIUpdateWalk \t\t");
-                    } else
-                    if (StackPrev[1] == 0x892a02) {
+                } else
+                if (StackPrev[1] == 0x892a02) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::AIUpdateWalk \t\t");
-                    } else 
-                    if (StackPrev[1] == 0x5079de) {
+                } else 
+                if (StackPrev[1] == 0x5079de) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("EffectDamage \t\t\t");
-                    } else
-                    if (StackPrev[1] == 0x941efe) {
+                } else
+                if (StackPrev[1] == 0x941efe) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::Swing CRE.Attack\t");
-                    } else
-                    if (StackPrev[1] == 0x895571) {
+                    enabled = true;
+                } else
+                if (StackPrev[1] == 0x895571) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::ArmorSound \t\t");
-                    } else
-                    if (StackPrev[1] == 0x8ADB81) {
+                } else
+                if (StackPrev[1] == 0x8ADB81) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::ArmorSound \t\t");
-                    } else
-                    if (StackPrev[1] == 0x8ADF84) {
+                } else
+                if (StackPrev[1] == 0x8ADF84) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::Death/Fall \t\t");
-                    } else
-                    if (StackPrev[1] == 0x4FFF54) {
+                    enabled = true;
+                } else
+                if (StackPrev[1] == 0x4FFF54) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("CGameEffect::PlaySound \t\t");
-                    } else
-                    if (StackPrev[1] == 0x9412F8) {
+                } else
+                if (StackPrev[1] == 0x9412F8) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::ApplyCastingEffPost \t");
-                    } else
-                    if (StackPrev[1] == 0x64ec3e) {
+                } else
+                if (StackPrev[1] == 0x64ec3e) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("VEFVidCell::PlaySound \t\t");
-                    } else
-                    if (StackPrev[1] == 0x4f08eb ||
-                        StackPrev[1] == 0x4F1501) {
+                } else
+                if (StackPrev[1] == 0x4f08eb ||
+                    StackPrev[1] == 0x4F1501) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("CreakingDoor \t\t\t");
-                    } else
-                    if (StackPrev[1] == 0x60416c) {
+                } else
+                if (StackPrev[1] == 0x60416c) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Projectile \t\t\t");
-                    } else
-                    if (StackPrev[1] == 0x54528e) {
+                } else
+                if (StackPrev[1] == 0x54528e) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("EffectDeath \t\t\t");
-                    } else
-                    if (StackPrev[1] == 0x8AE35F ||
-                        StackPrev[1] == 0x887A20) {
+                } else
+                if (StackPrev[1] == 0x8AE35F ||
+                    StackPrev[1] == 0x887A20) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Creature::SetSequence READY \t");
-                    } else
-                    if (StackPrev[1] == 0x496A74) {
+                } else
+                if (StackPrev[1] == 0x496A74) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("Script PlaySound() \t\t");
-                    } else
-                    if (StackPrev[1] == 0x5CC48A) {
+                } else
+                if (StackPrev[1] == 0x5CC48A) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("MessagePlaySound \t\t");
-                    } else
-                    if (StackPrev[1] == 0x56A067) {
+                } else
+                if (StackPrev[1] == 0x56A067) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("CGameFireball3d \t\t");
-                    } else
-                    if (StackPrev[1] == 0x8BD8B1) {
+                } else
+                if (StackPrev[1] == 0x8BD8B1) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("CGameTemporal \t\t\t");
-                    } else
-                    if (StackPrev[1] == 0x9DEAA9) {
+                } else
+                if (StackPrev[1] == 0x9DEAA9) {
+                    StackPrev = (DWORD*) StackPrev[0];
+                    if (StackPrev[1] == 0x9DF3E3) {
                         StackPrev = (DWORD*) StackPrev[0];
-                        if (StackPrev[1] == 0x9DF3E3) {
-                            StackPrev = (DWORD*) StackPrev[0];
-                            if (StackPrev[1] == 0x9E1ABA)
+                        if (StackPrev[1] == 0x9E1ABA)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SndMixer::UpdateSoundList4 loop\t");
-                            else
-                            if (StackPrev[1] == 0x4d1567)
+                        else
+                        if (StackPrev[1] == 0x4d1567)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetDay loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4d1911)
+                        else
+                        if (StackPrev[1] == 0x4d1911)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetNight loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4d2a68 ||
-                                StackPrev[1] == 0x4D262E)
+                        else
+                        if (StackPrev[1] == 0x4d2a68 ||
+                            StackPrev[1] == 0x4D262E)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetDusk loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4d1d7d ||
-                                StackPrev[1] == 0x4d21b7)
+                        else
+                        if (StackPrev[1] == 0x4d1d7d ||
+                            StackPrev[1] == 0x4d21b7)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SetDawn loop \t\t\t");
-                            else
-                            if (StackPrev[1] == 0x4b8eea ||
-                                StackPrev[1] == 0x4b8f1b)
+                        else
+                        if (StackPrev[1] == 0x4b8eea ||
+                            StackPrev[1] == 0x4b8f1b)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("ApplyWindToAmbients loop \t");
 
-                            else
-                                console.write_debug("SetVolume loop \t\t\t"); 
-                        }
                         else
-                        if (StackPrev[1] == 0x9DEB45) {
-                            StackPrev = (DWORD*) StackPrev[0];
-                            if (StackPrev[1] == 0x9E1ABA)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
+                                console.write_debug("SetVolume loop \t\t\t"); 
+                    }
+                    else
+                    if (StackPrev[1] == 0x9DEB45) {
+                        StackPrev = (DWORD*) StackPrev[0];
+                        if (StackPrev[1] == 0x9E1ABA)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("SndMixer::UpdateSoundList5 loop\t"); 
-                            else
-                            if (StackPrev[1] == 0x9e1e79)
+                        else
+                        if (StackPrev[1] == 0x9e1e79)
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
                                 console.write_debug("UpdateSoundPositions2 loop \t"); 
 
-                            else
-                                console.write_debug("ResetVolume2 loop \t\t");
-                        }
                         else
-                        if (StackPrev[1] == 0x9E1B68)
-                            console.write_debug("SndMixer::UpdateSoundList6 loop\t");
-                    } else
-                    if (StackPrev[1] == 0x91EF7A) {
-                        console.write_debug("JumpToPoint \t\t\t");
-                    } else
-                    if (StackPrev[1] == 0x574FB0 ||
-                        StackPrev[1] == 0x57566F) {
-                        console.write_debug("CGameSound::DoAIUpdate \t\t");
+                            if (pGameOptionsEx->bSound_NormalizePrintResname)
+                                console.write_debug("ResetVolume2 loop \t\t");
                     }
+                    else
+                    if (StackPrev[1] == 0x9E1B68)
+                        if (pGameOptionsEx->bSound_NormalizePrintResname)
+                            console.write_debug("SndMixer::UpdateSoundList6 loop\t");
+                } else
+                if (StackPrev[1] == 0x91EF7A) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
+                        console.write_debug("JumpToPoint \t\t\t");
+                } else
+                if (StackPrev[1] == 0x574FB0 ||
+                    StackPrev[1] == 0x57566F) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
+                        console.write_debug("CGameSound::DoAIUpdate \t\t");
+                } else
+                if (StackPrev[1] == 0x8B4D3A) {
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
+                        console.write_debug("Creature::UpdateSpriteEffect \t");
+                }                
 
-                    else
-                    // default
-                    if (gTobexSoundCaller)
-                        gSoundFileName = resname;
-                    else
+                else
+                // default
+                if (gTobexSoundCaller)
+                    gSoundFileName = resname;
+                else
+                    if (pGameOptionsEx->bSound_NormalizePrintResname)
                         console.write_debug("unknow CSound::Play_At_XY caller %X \t", StackPrev[1]);
-                    // CSound::Play_AtCoordinates
-                    ////////////////////////////////////////////////////////////////
-                }
+                // CSound::Play_AtCoordinates
+                ////////////////////////////////////////////////////////////////
             }
         }
-    } else {    // All sounds
-        enabled = true;
     }
 
+    if (!pGameOptionsEx->bSound_NormalizeCreOnly) {  // Creatures only
+        enabled = true;
+    }
 
     #ifndef _DEBUG
         gSoundFileName.Clean(); // for Release disable post-poned print 
@@ -547,7 +627,7 @@ CCreatureObject_PlaySound_COMMON(CCreatureObject& Cre, CStrRef** pCStrRef, int* 
                 int     offset;
 
                 availablesounds =      Cre.GetNumSounds(26, 6); // orig offsets
-                available_ext_sounds = Cre.GetNumSounds(95, 3); // ext offsets
+                available_ext_sounds = Cre.GetNumSounds(95, 5); // ext offsets
                 if (availablesounds == 6 && // avoid gap in orig entries
                     available_ext_sounds > 0) {
                     int curslot = Cre.nSelectionCountCommon % (availablesounds + available_ext_sounds);
@@ -627,7 +707,7 @@ CCreatureObject_PlaySound_ACTION(CCreatureObject& Cre, CStrRef** pCStrRef, int* 
         int     offset;
 
         availablesounds =      Cre.GetNumSounds(32, 7); // orig offsets
-        available_ext_sounds = Cre.GetNumSounds(98, 2); // ext offsets
+        available_ext_sounds = Cre.GetNumSounds(39, 5); // ext offsets
         if (availablesounds == 7 &&
             available_ext_sounds > 0) {
             int curslot = Cre.nSelectionCountAction % (availablesounds + available_ext_sounds);
@@ -635,7 +715,7 @@ CCreatureObject_PlaySound_ACTION(CCreatureObject& Cre, CStrRef** pCStrRef, int* 
             if (curslot <= 6)
                 offset = 32 + curslot;       // orig slots
             else
-                offset = 98 + (curslot - 7); // new slots
+                offset = 39 + (curslot - 7); // new slots
 
             STRREF ref = Cre.BaseStats.soundset[offset];
             g_pChitin->m_TlkTbl.GetTlkString(ref, StrRefObj);
@@ -832,12 +912,14 @@ CGameSprite_DecodeSwingSound_DisableExclusive(
         Sound.PlayAtCoord(Cre.currentLoc.x, Cre.currentLoc.y, 0, 0);
 
         if (!gSoundFileName.IsEmpty()) {
-            console.write_debug("Creature::Swing Weapon \t\tsound: %s", gSoundFileName.GetResRefNulled());
-            console.write_debug("\t ch:%d", gSndChannel);
-            if (gNormalizeAmplLastValue)
-                console.write_debug("\t +%.3f dB \n", gNormalizeAmplLastValue);
-            else
-                console.write_debug("\n");
+            if (pGameOptionsEx->bSound_NormalizePrintResname) {
+                console.write_debug("Creature::Swing Weapon \t\tsound: %s", gSoundFileName.GetResRefNulled());
+                console.write_debug("\t ch:%d", gSndChannel);
+                if (gNormalizeAmplLastValue)
+                    console.write_debug("\t +%.3f dB \n", gNormalizeAmplLastValue);
+                else
+                    console.write_debug("\n");
+            }
         }
 
         gSoundFileName = "";
@@ -909,7 +991,12 @@ uint static __stdcall
 CGameSprite_ApplyCastingEffectPost_PatchAnimId(CCreatureObject& Cre, ResSplContainer& Spl, IECString& sPrefix, uint AnimID) {
     if (strcmp(gCastVoiceFilePrefix, "NWN_") == 0) {
         int random = IERand(5); // 0-4
-        switch (random) { // 01234 -> 43572, see 0x93FEDC
+
+        if (AnimID == 0)    // Necromancy NWN_**06.wav
+            return AnimID = 6;
+
+        else
+        switch (random) { // 01234567 -> 43572601, see 0x93FEDC
         case 0:
             AnimID = 4;
             break;
@@ -2293,6 +2380,54 @@ __asm {
     pop     ecx
 
     mov     dword ptr [ebp-28h], 0 // stolen bytes
+    ret     
+}
+}
+
+
+void __declspec(naked)
+CGameDialogEntry_Display_ClearChannel_asm()
+{
+__asm {
+    push    ecx
+    push    edx
+    push    eax
+
+    push    6                   // dialog channel
+    mov     ecx, 0xB8CF64       // g_pSoundMixer
+    mov     ecx, [ecx]
+    mov     eax, 0x9E0EB8       // CSoundMixer::ClearChannel
+    call    eax
+   
+    pop     eax
+    pop     edx
+    pop     ecx
+
+    mov     edx, [ebp-288h] // stolen bytes
+    ret     
+}
+}
+
+
+void __declspec(naked)
+CScreenWorld_EndDialog_ClearChannel_asm()
+{
+__asm {
+    push    ecx
+    push    edx
+    push    eax
+
+    push    6                   // dialog channel
+    mov     ecx, 0xB8CF64       // g_pSoundMixer
+    mov     ecx, [ecx]
+    mov     eax, 0x9E0EB8       // CSoundMixer::ClearChannel
+    call    eax
+   
+    pop     eax
+    pop     edx
+    pop     ecx
+
+    mov     ecx, [ebp-204h] // stolen bytes
     ret     
 }
 }

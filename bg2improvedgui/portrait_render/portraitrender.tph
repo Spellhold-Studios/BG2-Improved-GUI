@@ -65,3 +65,10 @@ INCLUDE ~bg2improvedgui/keyboard_shortcuts/keyboard_shortcuts.tph~
 LAUNCH_ACTION_FUNCTION  ~SHORTCUTS~ END
 
 END
+
+
+DEFINE_ACTION_FUNCTION ~PORTRAITRENDERWEAPON~ BEGIN
+    COPY "TobEx_ini/TobExTweak.ini" "TobEx_ini/TobExTweak.ini"
+            APPEND_FILE "bg2improvedgui/portrait_render/files/TobEx_ini_weapon.txt"
+    BUT_ONLY
+END

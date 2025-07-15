@@ -3,6 +3,9 @@
 const char* months[] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 const char* days[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 
+uint    debug_line = 0;
+uint    debug_callnum = 0;
+
 static _naked void* __cdecl _New(size_t)   { _bgmain(0xA50608) };
 static _naked void  __cdecl _Delete(void*) { _bgmain(0xA50631) };
 static _naked int   __cdecl _Rand()        { _bgmain(0xA39100) }; // (0 - 32767)

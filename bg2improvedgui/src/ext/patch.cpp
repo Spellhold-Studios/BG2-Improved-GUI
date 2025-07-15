@@ -47,6 +47,8 @@
 #include "SoundCore.h"
 #include "ObjectCore.h"
 #include "ItemCore.h"
+#include "ObjectStats.h"
+#include "MessageExt.h"
 
 CRuleTable** ClassAbilityTable;
 HMODULE DSOAL_DLL;
@@ -55,6 +57,7 @@ HMODULE DSOAL_DLL;
 uchar DamageTypeACModText[] = " +DamageTypeACMod:%d";
 extern CRITICAL_SECTION gCriticalSectionSetAnimationSequence;
 extern bool             gX2Render;
+extern DWORD orig_SleepEx;
 
 typedef unsigned int    uint;
 typedef unsigned char   uchar;
@@ -724,7 +727,11 @@ void InitPatches() {
 
     // zeroing new allocated objects
     if (!pGameOptionsEx->bDisableHiddenPatches) {
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+
         JumpInject(0xA50608, Malloc_asm); // malloc() + memset()
+        CallInject(0x431D15, CBaldurChitinInit_asm, bytes6);
 
         //RelativeInject(0x435D64, CAlloc_asm); // 1) CInfGame
         //RelativeInject(0x680AE4, CAlloc_asm); // 2) CArea
@@ -3379,21 +3386,10 @@ void InitPatches() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    // Improved GUI
+    // Tobex AfterLife
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
@@ -3648,7 +3644,7 @@ void InitPatches() {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    // extended combat text fixes
+    // Extended combat text mistypos
     if (!pGameOptionsEx->bDisableHiddenPatches) {
         // +Hand bonus:%d for main hand
         uchar bytes1[] = { 0xE6 };
@@ -3748,8 +3744,7 @@ void InitPatches() {
     // Infinity Animation patches:
     //  Remove hardcoded check for mage animation X2XX, usefull with BG1 Mage
     //  BG1+BG2 Mage Armor Sound
-    //  0x10XX Ready Sound
-    //  0xA0XX Ready Sound
+    //  Infinity Animation 0x10XX/0xA0XX Ready Sound
     if (!pGameOptionsEx->bDisableHiddenPatches) {
         // call InventoryScreen_CheckMageAnimation_asm 
         uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -3774,6 +3769,9 @@ void InitPatches() {
         COMMIT_vDataList;
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    // Enable Off Hand Weapon BG1 0x6400 Animation
     if (pGameOptionsEx->bBG1AnimationOffhandWeapon) {
 
         uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -4124,7 +4122,7 @@ void InitPatches() {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////
-    // Unlimit Hand Off Slot
+    // Smart Hand off slot
     if (pGameOptionsEx->bUI_UnlimitedHandOffSlot) {
 
         // remove original checks
@@ -4214,7 +4212,7 @@ void InitPatches() {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    // LogActiveBuffs
+    // Show NPC's active effects on right mouse click
     if (pGameOptionsEx->bUI_LogActiveBuffs) {
 
         LogActiveBuffs_Init();
@@ -4909,6 +4907,16 @@ void InitPatches() {
         CallInject(0x4365D6, CBaldurChitin_MainAIThread_TriggerDisplaySync_asm, bytes10);
         CallInject(0x43658B, CBaldurChitin_MainAIThread_DoubleRateFrame_asm, bytes7);
 
+        //CallInject(0x6C86F2, CInfinity_Render_Log_asm, bytes6);
+        //CallInject(0x4D0587, CGameArea_Render_Log_asm, bytes6);
+
+        if (pGameOptionsEx->bUI_DoubleRenderRate_Scroll) {
+            CallInject(0x6CD89B, AdjustViewPosition_ContinueScroll_asm, bytes6);
+            CallInject(0x6CD8F9, AdjustViewPosition_GetScrollSpeed_asm, bytes6);
+            CallInject(0x6CD983, AdjustViewPosition_Dividex2_asm, bytes6);
+            //CallInject(0x6CC45B, Scroll_Log_asm, bytes6);
+        }
+
         if (pGameOptionsEx->bUI_DoubleRenderRate_MouseOnlyMode) {
             CallInject(0x9A64F7, CChitin_SynchronousUpdate_CheckScreen_asm, bytes6);
         }
@@ -4947,6 +4955,7 @@ void InitPatches() {
                            0x90, 0x90, 0x90, 0x90, 0x90,
                            0x90, 0x90, 0xEB };
 
+
         CreateWinMainSyncEvent();
         CallInject(0x9A8D81, CChitin_WinMain_AddWaitForEvent_asm, bytes7);
         CallInject(0x9A8DBE, CChitin_WinMain_AddDisplayDoneEvent_asm, bytes10);
@@ -4960,9 +4969,6 @@ void InitPatches() {
 
         vDataList.push_back( Data(0x68D0F0, sizeof(bytes_10nop), bytes_10nop) );
         CallInject(0x68D100, RenderOneFrame_asm, bytes23);
-
-        vDataList.push_back( Data(0x68CF1A, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x68CF28, SleepEx_Emu_asm, bytes6);
 
         // LoadGame
         CallInject(0x68A068, WaitDisplay_asm, bytes22);
@@ -4996,8 +5002,6 @@ void InitPatches() {
         vDataList.push_back( Data(0x6808FA, sizeof(bytes_10nop), bytes_10nop) );
         CallInject(0x680908, SleepEx_Emu_asm, bytes6);
 
-        // 683245 first sleep, then trigger display, leave original
-
         // DestroyGame
         CallInject(0x67CEED, WaitDisplay_asm, bytes22);
 
@@ -5019,26 +5023,9 @@ void InitPatches() {
         // CScreenWorldMap::EnterArea
         CallInject(0x7F26DF, WaitDisplay_asm, bytes23);
 
-        vDataList.push_back( Data(0x7F4E68, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F4E78, RenderOneFrame_asm, bytes22);
-
-        vDataList.push_back( Data(0x7F65C9, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F65D9, RenderOneFrame_asm, bytes23);
-
-        vDataList.push_back( Data(0x7F2944, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F2952, SleepEx_Emu_asm, bytes6);
-
-        vDataList.push_back( Data(0x7F653A, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F6548, SleepEx_Emu_asm, bytes6);
-        
-        vDataList.push_back( Data(0x7F5E15, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F5E23, SleepEx_Emu_asm, bytes6);
-        
-        vDataList.push_back( Data(0x7F62C7, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F62D5, SleepEx_Emu_asm, bytes6);
-
-        vDataList.push_back( Data(0x7F29CB, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7F29D9, SleepEx_Emu_asm, bytes6);
+        // NewGame
+        vDataList.push_back( Data(0x68B58C, sizeof(bytes_10nop), bytes_10nop) );
+        CallInject(0x68B59C, RenderOneFrame_asm, bytes22);
 
         // CInfTileSet::~CInfTileSet
         vDataList.push_back( Data(0x6C15DF+1, sizeof(bytes_1zero), bytes_1zero) );
@@ -5047,213 +5034,244 @@ void InitPatches() {
         vDataList.push_back( Data(0x99D3C5, sizeof(bytes_10nop), bytes_10nop) );
         CallInject(0x99D3DC, SleepEx_Emu_asm, bytes6);
 
-        // CBaldurMessage::DemandResourceFromServer
-        vDataList.push_back( Data(0x43D369, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x43D377, SleepEx_Emu_asm, bytes6);
 
-        // CBaldurMessage::UpdateDemandCharacters
-        vDataList.push_back( Data(0x4439F3, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x443A01, SleepEx_Emu_asm, bytes6);
+        // Disabled:
+        if (0) {
+            vDataList.push_back( Data(0x7F4E68, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F4E78, RenderOneFrame_asm, bytes22);
 
-        vDataList.push_back( Data(0x443C7C, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x443C8A, SleepEx_Emu_asm, bytes6);
+            vDataList.push_back( Data(0x7F65C9, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F65D9, RenderOneFrame_asm, bytes23);
 
-        // CInfGame::Unmarshal
-        vDataList.push_back( Data(0x685CE2, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x685CF0, SleepEx_Emu_asm, bytes6);
+            vDataList.push_back( Data(0x7F2944, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F2952, SleepEx_Emu_asm, bytes6);
 
-        vDataList.push_back( Data(0x685468, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x685476, SleepEx_Emu_asm, bytes6);
+            vDataList.push_back( Data(0x7F653A, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F6548, SleepEx_Emu_asm, bytes6);
         
-        // NewGame
-        vDataList.push_back( Data(0x68B58C, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x68B59C, RenderOneFrame_asm, bytes22);
+            vDataList.push_back( Data(0x7F5E15, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F5E23, SleepEx_Emu_asm, bytes6);
+        
+            vDataList.push_back( Data(0x7F62C7, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F62D5, SleepEx_Emu_asm, bytes6);
 
-        // CScreenWorld::AsynchronousUpdate
-        vDataList.push_back( Data(0x7D3B15, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7D3B23, SleepEx_Emu_asm, bytes6);
+            vDataList.push_back( Data(0x7F29CB, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7F29D9, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B1B86
-        vDataList.push_back( Data(0x6B1B86, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B1B94, SleepEx_Emu_asm, bytes6);
+            // CBaldurMessage::DemandResourceFromServer
+            vDataList.push_back( Data(0x43D369, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x43D377, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B36F3
-        vDataList.push_back( Data(0x6B36F3, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B3701, SleepEx_Emu_asm, bytes6);
+            // CBaldurMessage::UpdateDemandCharacters
+            vDataList.push_back( Data(0x4439F3, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x443A01, SleepEx_Emu_asm, bytes6);
 
-        // unknow 70B902
-        vDataList.push_back( Data(0x70B902, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x70B912, RenderOneFrame_asm, bytes23);
+            vDataList.push_back( Data(0x443C7C, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x443C8A, SleepEx_Emu_asm, bytes6);
 
-        // unknow 70BC0B
-        vDataList.push_back( Data(0x70BC0B, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x70BC1B, RenderOneFrame_asm, bytes23);
+            // CInfGame::Unmarshal
+            vDataList.push_back( Data(0x685CE2, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x685CF0, SleepEx_Emu_asm, bytes6);
 
-        // unknow 710A13
-        vDataList.push_back( Data(0x710A13, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x710A23, RenderOneFrame_asm, bytes23);
+            vDataList.push_back( Data(0x685468, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x685476, SleepEx_Emu_asm, bytes6);
+        
+            vDataList.push_back( Data(0x68CF1A, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x68CF28, SleepEx_Emu_asm, bytes6);
 
-        // unknow 778875
-        vDataList.push_back( Data(0x778875, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x778883, SleepEx_Emu_asm, bytes6);
+            // CScreenWorld::AsynchronousUpdate
+            vDataList.push_back( Data(0x7D3B15, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7D3B23, SleepEx_Emu_asm, bytes6);
 
-        // unknow 43FC82
-        vDataList.push_back( Data(0x43FC82, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x43FC90, SleepEx_Emu_asm, bytes6);
+            // unknow 6B1B86
+            vDataList.push_back( Data(0x6B1B86, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B1B94, SleepEx_Emu_asm, bytes6);
 
-        // unknow 44E782
-        vDataList.push_back( Data(0x44E782, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x44E7A1, SleepEx_Emu_asm, bytes6);
+            // unknow 6B36F3
+            vDataList.push_back( Data(0x6B36F3, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B3701, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B5398
-        vDataList.push_back( Data(0x6B5398, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B53A8, RenderOneFrame_asm, bytes22);
+            // unknow 70B902
+            vDataList.push_back( Data(0x70B902, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x70B912, RenderOneFrame_asm, bytes23);
 
-        // unknow 6B6328
-        vDataList.push_back( Data(0x6B6328, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B6336, SleepEx_Emu_asm, bytes6);
+            // unknow 70BC0B
+            vDataList.push_back( Data(0x70BC0B, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x70BC1B, RenderOneFrame_asm, bytes23);
 
-        // unknow 6B67DA
-        vDataList.push_back( Data(0x6B67DA, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B67E8, SleepEx_Emu_asm, bytes6);
+            // unknow 710A13
+            vDataList.push_back( Data(0x710A13, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x710A23, RenderOneFrame_asm, bytes23);
 
-        // unknow 6B6A30
-        vDataList.push_back( Data(0x6B6A30, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B6A3E, SleepEx_Emu_asm, bytes6);
+            // unknow 778875
+            vDataList.push_back( Data(0x778875, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x778883, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6D45FA
-        vDataList.push_back( Data(0x6D45FA, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6D4606, SleepEx_Emu_asm, bytes6);
+            // unknow 43FC82
+            vDataList.push_back( Data(0x43FC82, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x43FC90, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B6AC0
-        vDataList.push_back( Data(0x6B6AC0, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B6AD0, RenderOneFrame_asm, bytes22);
+            // unknow 44E782
+            vDataList.push_back( Data(0x44E782, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x44E7A1, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6D5420
-        vDataList.push_back( Data(0x6D5420, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6D5430, RenderOneFrame_asm, bytes22);
+            // unknow 6B5398
+            vDataList.push_back( Data(0x6B5398, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B53A8, RenderOneFrame_asm, bytes22);
 
-        // 708103 CD-ROM screen
+            // unknow 6B6328
+            vDataList.push_back( Data(0x6B6328, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B6336, SleepEx_Emu_asm, bytes6);
 
-        // unknow 76EE01
-        vDataList.push_back( Data(0x76EE01, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x76EE0F, SleepEx_Emu_asm, bytes6);
+            // unknow 6B67DA
+            vDataList.push_back( Data(0x6B67DA, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B67E8, SleepEx_Emu_asm, bytes6);
 
-        // unknow 772BC2
-        vDataList.push_back( Data(0x772BC2, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x772BD0, SleepEx_Emu_asm, bytes6);
+            // unknow 6B6A30
+            vDataList.push_back( Data(0x6B6A30, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B6A3E, SleepEx_Emu_asm, bytes6);
 
-        // unknow 772C43
-        vDataList.push_back( Data(0x772C43, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x772C51, SleepEx_Emu_asm, bytes6);
+            // unknow 6D45FA
+            vDataList.push_back( Data(0x6D45FA, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6D4606, SleepEx_Emu_asm, bytes6);
 
-        // unknow 772D93
-        vDataList.push_back( Data(0x772D93, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x772DA1, SleepEx_Emu_asm, bytes6);
+            // unknow 6B6AC0
+            vDataList.push_back( Data(0x6B6AC0, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B6AD0, RenderOneFrame_asm, bytes22);
 
-        // unknow 772E14
-        vDataList.push_back( Data(0x772E14, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x772E22, SleepEx_Emu_asm, bytes6);
+            // unknow 6D5420
+            vDataList.push_back( Data(0x6D5420, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6D5430, RenderOneFrame_asm, bytes22);
 
-        // unknow 773227
-        vDataList.push_back( Data(0x773227, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x773235, SleepEx_Emu_asm, bytes6);
+            // 708103 CD-ROM screen
 
-        // unknow 77394A
-        vDataList.push_back( Data(0x77394A, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x77395B, SleepEx_Emu_asm, bytes6);
-        CallInject(0x773967, WaitDisplay_asm, bytes22);
+            // unknow 76EE01  MultiPlayer1
+            vDataList.push_back( Data(0x76EE01, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x76EE0F, SleepEx_Emu_asm, bytes6);
 
-        // unknow 4464D0
-        vDataList.push_back( Data(0x4464D0, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x4464DE, SleepEx_Emu_asm, bytes6);
+            // unknow 772BC2  MultiPlayer2
+            vDataList.push_back( Data(0x772BC2, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x772BD0, SleepEx_Emu_asm, bytes6);
 
-        // unknow 44A9B6
-        vDataList.push_back( Data(0x44A9B6, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x44A9C4, SleepEx_Emu_asm, bytes6);
+            // unknow 772C43  MultiPlayer2
+            vDataList.push_back( Data(0x772C43, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x772C51, SleepEx_Emu_asm, bytes6);
 
-        // unknow 5AF7C8
-        vDataList.push_back( Data(0x5AF7C8, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x5AF7D6, SleepEx_Emu_asm, bytes6);
+            // unknow 772D93  MultiPlayer2
+            vDataList.push_back( Data(0x772D93, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x772DA1, SleepEx_Emu_asm, bytes6);
 
-        // unknow 5C71EE
-        vDataList.push_back( Data(0x5C71EE, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x5C71FC, SleepEx_Emu_asm, bytes6);
+            // unknow 772E14  MultiPlayer2
+            vDataList.push_back( Data(0x772E14, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x772E22, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B1C0D
-        vDataList.push_back( Data(0x6B1C0D, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B1C1B, SleepEx_Emu_asm, bytes6);
+            // unknow 773227  MultiPlayer2
+            vDataList.push_back( Data(0x773227, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x773235, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B28DD
-        vDataList.push_back( Data(0x6B28DD, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B28EC, RenderOneFrame_asm, bytes23);
+            // unknow 77394A  MultiPlayer2
+            vDataList.push_back( Data(0x77394A, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x77395B, SleepEx_Emu_asm, bytes6);
+            CallInject(0x773967, WaitDisplay_asm, bytes22);
 
-        // unknow 6B2D61
-        vDataList.push_back( Data(0x6B2D61, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B2D6F, SleepEx_Emu_asm, bytes6);
+            // unknow 4464D0  NetworkHandleBlockingMessages
+            vDataList.push_back( Data(0x4464D0, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x4464DE, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B2EAA
-        vDataList.push_back( Data(0x6B2EAA, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B2EB8, SleepEx_Emu_asm, bytes6);
+            // unknow 44A9B6
+            vDataList.push_back( Data(0x44A9B6, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x44A9C4, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B1C0D
-        vDataList.push_back( Data(0x6B1C0D, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B1C1B, SleepEx_Emu_asm, bytes6);
+            // unknow 5AF7C8
+            vDataList.push_back( Data(0x5AF7C8, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x5AF7D6, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B2F37
-        vDataList.push_back( Data(0x6B2F37, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B2F46, RenderOneFrame_asm, bytes23);
+            // unknow 5C71EE  FractionalBrightness
+            vDataList.push_back( Data(0x5C71EE, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x5C71FC, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6B377A
-        vDataList.push_back( Data(0x6B377A, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6B3788, SleepEx_Emu_asm, bytes6);
+            // unknow 6B1C0D
+            vDataList.push_back( Data(0x6B1C0D, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B1C1B, SleepEx_Emu_asm, bytes6);
 
-        // unknow 6D43FB
-        vDataList.push_back( Data(0x6D43FB, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6D4409, SleepEx_Emu_asm, bytes6);
+            // unknow 6B28DD
+            vDataList.push_back( Data(0x6B28DD, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B28EC, RenderOneFrame_asm, bytes23);
 
-        // unknow 6D5063
-        vDataList.push_back( Data(0x6D5063, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x6D5071, SleepEx_Emu_asm, bytes6);
+            // unknow 6B2D61
+            vDataList.push_back( Data(0x6B2D61, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B2D6F, SleepEx_Emu_asm, bytes6);
 
-        // unknow 70BB66
-        vDataList.push_back( Data(0x70BB66, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x70BB75, RenderOneFrame_asm, bytes23);
+            // unknow 6B2EAA
+            vDataList.push_back( Data(0x6B2EAA, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B2EB8, SleepEx_Emu_asm, bytes6);
 
-        // unknow 710C0E
-        vDataList.push_back( Data(0x710C0E, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x710C1D, RenderOneFrame_asm, bytes23);
+            // unknow 6B1C0D
+            vDataList.push_back( Data(0x6B1C0D, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B1C1B, SleepEx_Emu_asm, bytes6);
 
-        // unknow 72776D
-        vDataList.push_back( Data(0x72776D, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x72778C, SleepEx_Emu_asm, bytes6);
+            // unknow 6B2F37
+            vDataList.push_back( Data(0x6B2F37, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B2F46, RenderOneFrame_asm, bytes23);
 
-        // unknow 76EC68
-        vDataList.push_back( Data(0x76EC68, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x76EC77, RenderOneFrame_asm, bytes23);
+            // unknow 6B377A
+            vDataList.push_back( Data(0x6B377A, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6B3788, SleepEx_Emu_asm, bytes6);
 
-        // unknow 772E6E
-        vDataList.push_back( Data(0x772E6E, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x772E7D, RenderOneFrame_asm, bytes23);
+            // unknow 6D43FB
+            vDataList.push_back( Data(0x6D43FB, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6D4409, SleepEx_Emu_asm, bytes6);
 
-        // unknow 773587
-        vDataList.push_back( Data(0x773587, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x773596, RenderOneFrame_asm, bytes23);
+            // unknow 6D5063
+            vDataList.push_back( Data(0x6D5063, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x6D5071, SleepEx_Emu_asm, bytes6);
 
-        // unknow 7737A3
-        vDataList.push_back( Data(0x7737A3, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x7737B1, SleepEx_Emu_asm, bytes6);
+            // unknow 70BB66
+            vDataList.push_back( Data(0x70BB66, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x70BB75, RenderOneFrame_asm, bytes23);
 
-        // unknow 778448
-        vDataList.push_back( Data(0x778448, sizeof(bytes_10nop), bytes_10nop) );
-        CallInject(0x778456, SleepEx_Emu_asm, bytes6);
+            // unknow 710C0E
+            vDataList.push_back( Data(0x710C0E, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x710C1D, RenderOneFrame_asm, bytes23);
+
+            // unknow 72776D
+            vDataList.push_back( Data(0x72776D, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x72778C, SleepEx_Emu_asm, bytes6);
+
+            // unknow 76EC68
+            vDataList.push_back( Data(0x76EC68, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x76EC77, RenderOneFrame_asm, bytes23);
+
+            // unknow 772E6E
+            vDataList.push_back( Data(0x772E6E, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x772E7D, RenderOneFrame_asm, bytes23);
+
+            // unknow 773587
+            vDataList.push_back( Data(0x773587, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x773596, RenderOneFrame_asm, bytes23);
+
+            // unknow 7737A3    MultiPlayer2
+            vDataList.push_back( Data(0x7737A3, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x7737B1, SleepEx_Emu_asm, bytes6);
+
+            // unknow 778448
+            vDataList.push_back( Data(0x778448, sizeof(bytes_10nop), bytes_10nop) );
+            CallInject(0x778456, SleepEx_Emu_asm, bytes6);
+        }
 
         // Skip FlushFileBuffers()
         vDataList.push_back( Data(0xA51873, 1, bytes_jmp) );
 
-        // replace zlib to updated(asm optimized) version
+        // replace zlib 1.1.2 to 1.2.8(asm optimized) version
         RelativeInject(0x99F033, z_uncompress);
         RelativeInject(0x99EFAF, z_compress2);
+
+
+        // SleepEx Log
+        if (0) {
+            orig_SleepEx = * (DWORD *)0xAA530C;
+            PointerInject(0xAA530C, SleepEx_Log_asm);
+        }
 
         COMMIT_vDataList;
     }
@@ -5762,6 +5780,10 @@ void InitPatches() {
         //LevelUp
         vDataList.push_back( Data(0x6E2448, sizeof(bytes_6nop), bytes_6nop) );
 
+        //Container
+        vDataList.push_back( Data(0x7D9151, sizeof(bytes_6nop), bytes_6nop) );
+
+
         CallInject(0x9A355D, CChitin_AsynchronousUpdate_SwitchScrollBar_asm, bytes6);
 
         COMMIT_vDataList;
@@ -6185,6 +6207,7 @@ void InitPatches() {
     // - Fatigue
     // - Luck
     // - Casting Speed
+    // - Weapon Speed
     // - Movement rate (disabled)
     // - Thac penalty when two-weapon specializtion is 0
     if (pGameOptionsEx->bUI_ExtendedRecordScreenText) {
@@ -6211,10 +6234,7 @@ void InitPatches() {
     if (pGameOptionsEx->bSound_Normalize) {
         uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00
                          };
-        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                           0x90 };
-        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                           0x90, 0x90 };
+
         CallInject(0x9889BC, CResWave_CopyWaveData_Normalize_asm, bytes5);
 
         COMMIT_vDataList;
@@ -6237,6 +6257,7 @@ void InitPatches() {
     // Mixed Soundset for BGT
     if (pGameOptionsEx->bSound_BGTSelectionSoundSet) {
 
+        uchar bytes1[] = { 11 };
         uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
                            0x90, 0x90 };
         uchar bytes9[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -6261,6 +6282,7 @@ void InitPatches() {
         CallInject(0x8A2467, CCreatureObject_PlaySound_AREA_NIGHT_asm, bytes7);
         CallInject(0x8A29E2, CCreatureObject_PlaySound_ACTION_asm, bytes7);
         CallInject(0x8A4C3C, CGameSprite_VerbalConstant_asm, bytes9);
+        vDataList.push_back( Data(0x8A28BE+2, sizeof(bytes1), bytes1) );   // rare counter 8->12
 
         COMMIT_vDataList;
     }
@@ -6489,20 +6511,18 @@ void InitPatches() {
     ////////////////////////////////////////////////////////////////////////////
     // CSound:Stop                  logging
     // CSoundMixer::ClearChannel    logging
-    #ifdef _DEBUG
-        if (pGameOptionsEx->bSound_NormalizePrintResname) {
+    if (pGameOptionsEx->bSound_NormalizePrintResname) {
 
-            uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00
-                             };
-            uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                               0x90 };
-            CallInject(0x9DDE38, CSound_Stop_Logging_asm, bytes6);
-            CallInject(0x9DF4E6, CSound_Stop_Logging2_asm, bytes6);
-            CallInject(0x9E0F12, CSoundMixer_ClearChannel_Logging_asm, bytes6);
+        uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00
+                            };
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                            0x90 };
+        CallInject(0x9DDE38, CSound_Stop_Logging_asm, bytes6);
+        CallInject(0x9DF4E6, CSound_Stop_Logging2_asm, bytes6);
+        CallInject(0x9E0F12, CSoundMixer_ClearChannel_Logging_asm, bytes6);
 
-            COMMIT_vDataList;
-        }
-    #endif
+        COMMIT_vDataList;
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -6552,7 +6572,6 @@ void InitPatches() {
 
         COMMIT_vDataList;
     }
-
 
     
     ////////////////////////////////////////////////////////////////////////////
@@ -6687,33 +6706,9 @@ void InitPatches() {
     }
 
 
-    #ifdef _DEBUG
-    {
-        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                           0x90};
-        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                           0x90, 0x90 };
-        uchar bytes10[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
-                            0x90, 0x90, 0x90, 0x90, 0x90 };
-
-        //CallInject (0x8AD66A, CGameSprite_SetSequence_Log_asm, bytes7);
-
-        //CallInject (0x9E011B, CSoundMixer_CleanUp_Log_asm, bytes7);
-        //CallInject (0x9E068E, CSoundMixer_Initialize_Log_asm, bytes7);
-        //CallInject (0x4CC589, CGameArea_OnActivation_Log_asm, bytes6);
-        //CallInject (0x467E47, CCacheStatus_Update_Log_asm, bytes6);
-        //CallInject (0x9E0417, CCacheStatus_Update_Log_asm, bytes6);
-        //CallInject (0x9DF3BB, CSound_SetVolume_Log2_asm, bytes7);
-        //CallInject (0x9DEB29, CSound_ResetVolume_Log2_asm, bytes6);
-
-        //COMMIT_vDataList;
-    }
-    #endif
-
-
     /////////////////////////////////////////////////////////////////////////////////////////////
     //  Apply SPEED bonus from WSPECIAL.2DA
-    if (pGameOptionsEx->bEngine_WSPECIAl_SPEED) {
+    if (pGameOptionsEx->bEngine_WSPECIAL_SPEED) {
 
         uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00
                          }; 
@@ -6724,22 +6719,8 @@ void InitPatches() {
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    // keep MISLEAD invisibility when attacking
-    //if (pGameOptionsEx->bEngine_InvisibilityRenderFix) {
-
-    //    uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00
-    //                     }; 
-
-    //    CallInject (0x8A72A3, CGameSprite_Render_CheckInvisibiltyEffects_asm, bytes5);
-    //    CallInject (0x8A8C3F, CGameSprite_RenderMarkers_CheckInvisibiltyEffects_asm, bytes5);
-
-    //    //90658B - in attack remove illusion !!!
-
-    //    COMMIT_vDataList;
-    //}
-
-
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Path Search Party Bumpable When Moving
     if (pGameOptionsEx->bEngine_PartyBumpableInMoving) {
 
         uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -6791,18 +6772,6 @@ void InitPatches() {
 
         COMMIT_vDataList;
     }
-
-
-    #ifdef _DEBUG
-    // allow loading damaged savegame
-    if (1) {
-        uchar bytes1[] = { 0xEB } ;
-
-        vDataList.push_back( Data(0x068714C, sizeof(bytes1), bytes1) );
-
-        COMMIT_vDataList;
-    }
-    #endif
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -6922,7 +6891,7 @@ void InitPatches() {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    //  Restore XP Limits for BGT
+    //  Restore BG1/BG2 XP Limits
     if (pGameOptionsEx->bEngine_LimitXP) {
         // Savedata[5Ch]:
         // 1 BG1 TotSC
@@ -6953,26 +6922,6 @@ void InitPatches() {
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////
-    //  EAX/DirectSound3D emulation through DSOAL
-    if (pGameOptionsEx->bSound_DSOAL) {
-        void* ptr;
-        DSOAL_DLL = LoadLibrary("dsoal-dsound.dll");
-
-        if (DSOAL_DLL == NULL) {
-            console.writef("dsoal-dsound.dll not found \n");
-        } else {
-            ptr = GetProcAddress(DSOAL_DLL, "DirectSoundCreate");
-            if (ptr == NULL) {
-                console.writef("DirectSoundCreate error in dsoal-dsound.dll \n");
-            } else {
-                PointerInject(0xAA5044, ptr);   // __imp_DirectSoundCreate
-                COMMIT_vDataList;
-            }
-        }
-    }
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
     //  Freeze/Unfreeze sounds when game pause/unpaused
     if (pGameOptionsEx->bSound_FreezeOnPause) {
         uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
@@ -6997,6 +6946,7 @@ void InitPatches() {
         RelativeInject(0x4CC592, CGameArea_OnActivation_asm);   // CGameArea::OnActivation
         CallInject (0x7CF925,  TimeStopEnded_asm, bytes6);
         //RelativeInject(0x7D7C4D, CTimerWorld_StartTime_asm);    // CScreenWorld::EndDialog
+        CallInject (0x79AE56,  CScreenStore_Activated_asm, bytes6);
 
         RelativeInject(0x7D4449, CTimerWorld_HardPause_asm);    // CScreenWorld::TogglePauseGame
         RelativeInject(0x7C61DB, CTimerWorld_StopTime_asm);     // CScreenWorld::EngineDeActivated
@@ -7075,14 +7025,284 @@ void InitPatches() {
     }
 
 
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Allow summon Wish Creature if summon limit reached
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
+        RelativeInject (0x518EC5, CEffSummonCreatire_Apply_asm);
+
+        COMMIT_vDataList;
+    }
+   
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Auto-Pause Spell Cast Fix
+    if (pGameOptionsEx->bEngineAutoPauseCastingFix) {
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+        uchar bytes8[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90, 0x90 };
+        CallInject (0x8F8162, CCreativeObject_AddEffect_CheckAutoPause_asm, bytes8);
+        CallInject (0x7D43C8, CScreenWorld_TogglePauseGame_UnPause_asm, bytes7);
+
+        COMMIT_vDataList;
+    }
+ 
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Simulacrum has 50% of Caster's level, must be 60%
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
+        uchar bytes12[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                            0x90, 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
+        CallInject (0x53E585, CGameEffectCopySelf_Apply_FixSimulacrum_asm, bytes12);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // Disable Auto-Save when transiting areas
+    if (pGameOptionsEx->bEngine_DisableAutoSaveGame) {
+        uchar bytes6[] = { 0xE9, 0x38, 0x01, 0x00, 0x00, 0x90 };
+        vDataList.push_back( Data(0x7EF781, sizeof(bytes6), bytes6) );
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // Hide in shadow cooldown time
+    if (0) {
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+        CallInject(0x67193C, CInfButtonArray_PostRenderButton_asm, bytes6);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // Increase Render ticks to 100% for fast moving objects:
+    if (pGameOptionsEx->bVideo_ProjectileFullTicks) {
+        uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                         };
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+
+        //  Missile
+        //CallInject(0x606B38, CProjectileBAM_AIUpdate_LogTick_asm, bytes6);
+        //CallInject(0x605F71, CProjectileBAM_Render_LogTick_asm, bytes6);
+        CallInject(0x6056D9, CProjectileBAM_CProjectileBAM_asm, bytes6);
+
+        //  Fly
+        CallInject(0x8EE417, CGameSprite_ProcessEffectList_IgnoreFly_asm, bytes5);
+        //CallInject(0x88FFD2, CGameSprite_AIUpdateFly_LogTick_asm, bytes6);
+        //CallInject(0x801956, CAnimation_Render_LogTick_asm, bytes5);
+        CallInject(0x80115F, CAnimationD000_PatchTickRate_asm, bytes7);
+        //CallInject(0x88F9B0, CGameSprite_AIUpdate_IncrementFrame_asm, bytes6);  // SEQ_READY
+        CallInject(0x89020B, CGameSprite_AIUpdate_IncrementFrame_asm, bytes6);  // SEQ_WALK
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // Visual Range on Blindness Fix
+    if (pGameOptionsEx->bEngine_BlindVisualRangeFix) {
+        uchar bytes10[]= { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90, 0x90, 0x90, 0x90 };
+
+        CallInject(0x8CD996, CGameSprite_CheckStatsChange_Blindness_asm, bytes10);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // Sequencer order fix
+    if (pGameOptionsEx->bEngine_SequencerOrderFix) {
+        uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                         };
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+
+        //CallInject(0x5B0E15, CMessageHandler_AsynchronousUpdate_Log_asm, bytes7);
+        //CallInject(0x8F7EC9, CCreativeObject_AddEffect_Log_asm, bytes6);
+        //CallInject(0x4AE431, CGameAIBase_FireSpell_ProjectileAddEffect_Log_asm, bytes6);
+        //CallInject(0x5B9209, CMessageHandler_AddMessage_Log_asm, bytes5);
+        //CallInject(0x60704B, CProjectileBAM_AIUpdate_Log_asm, bytes6);
+        //CallInject(0x60A888, CProjectileArea_AIUpdate_Log1_asm, bytes6);
+        //CallInject(0x60AAB4, CProjectileArea_AIUpdate_Log2_asm, bytes7);
+        CallInject(0x6056AA, CProjectileBAM_CProjectileBAM_PatchSpeed_asm, bytes6);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // BG1 Char movement speed
+    if (pGameOptionsEx->bEngine_BGTMovementSpeed) {
+        uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                         };
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+
+        // see also CInfGame_UnMarshal_LoadGame()
+
+        CallInject(0x858D38, CAnimation6400_PatchSpeed_asm, bytes6);
+        CallInject(0x8439DF, CAnimation5000_PatchSpeed_asm, bytes6);
+
+        //if (pGameOptionsEx->bEngine_BGTMovementSpeed == 2) {
+        //    //восстанавливаем скорость прочих до уровня bg1
+        //}
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    // Sync/Abort pasted dialog sounds
+    if (pGameOptionsEx->bUI_SyncDialogSound) {
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+
+        CallInject(0x4E6FA0, CGameDialogEntry_Display_ClearChannel_asm, bytes6);
+        CallInject(0x7D70FD, CScreenWorld_EndDialog_ClearChannel_asm, bytes6);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Text message "has nothing to say to you" even if DIALOG_DEFAULT exist
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
+
+        RelativeInject (0x93AA02, GameSprite_PlayerDialog_DisplaySayNothing_asm);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Disable existance messages for joinable NPC at slots [69-73] when out of party
+    if (!pGameOptionsEx->bDisableHiddenPatches) {
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+
+        CallInject(0x8A3B56, CCreatureObject_PlaySound_CheckJoinable_asm, bytes7);
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Do not erase wizard spell quickslots when equipping armor
+    if (pGameOptionsEx->bKeepWizardQuickSpells) {
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90 };
+        uchar bytes_nop[] = { 0x90, 0x90, 0x90, 0x90, 0x90, // 27
+                              0x90, 0x90, 0x90, 0x90, 0x90,
+                              0x90, 0x90, 0x90, 0x90, 0x90,
+                              0x90, 0x90, 0x90, 0x90, 0x90,
+                              0x90, 0x90, 0x90, 0x90, 0x90,
+                              0x90, 0x90  };
+
+        CallInject(0x668302, CInfButtonArray_UpdateButtons_HideWizardSpellFromQuickList_asm, bytes6);
+        vDataList.push_back( Data(0x52BCBB, sizeof(bytes_nop), bytes_nop) );
+
+        COMMIT_vDataList;
+    }
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //  Keep Modal State When Switching Weapon
+    if (pGameOptionsEx->bKeepModalWhenSwitchingWeapon) {
+        uchar bytes_nop[] = { 0x90, 0x90, 0x90, 0x90, 0x90, // 12
+                              0x90, 0x90, 0x90, 0x90, 0x90,
+                              0x90, 0x90  };
+
+        vDataList.push_back( Data(0x66F4AA, sizeof(bytes_nop), bytes_nop) );
+
+        COMMIT_vDataList;
+    }    
 
 
 
+    // Я думаю, в TobEx_AfterLife к компоненту Mixed Soundset for BGT надо добавить расширенный SNDSLOT.IDS,
+    // чтобы в скриптах игры акшен SetPlayerSound понимал новые звуковые слоты.
+    // Из iesdp:
+    // 320 SetPlayerSound
+    // This action changes the specified sound reference (SndSlot) on the specified creature to the specified value.
+    // It should be noted that the biography can be changed by this action, as it is listed as a SoundSlot (EXISTANCE5).
+    // Это нужно для тех случаев, когда у персонажа полностью меняется саундсет, например, у Эдвина при
+    // превращении в бабу и обратно...
+    // В игре это работает, проверено...
 
 
-    // show spell cooldown time
-    // show modal state cooldown time
-    // show spell protection remain levels
+    // low priority:
+    //      show spell cooldown time
+    //      show modal state cooldown time
+    //      show spell protection remain levels
+
+
+    // EAX dialog effects from icewind dale 1
+    // disable AoE stacking
+    // 60Hz mouse only render (world scrolling ?)
+    // Add Spellcraft skill like icewinddale2, "NPC Casts TimeStop"
+
+
+
+    #ifdef _DEBUG
+    {
+        uchar bytes6[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90};
+        uchar bytes7[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                           0x90, 0x90 };
+        uchar bytes10[] = { 0xE8, 0x00, 0x00, 0x00, 0x00,
+                            0x90, 0x90, 0x90, 0x90, 0x90 };
+
+        //CallInject (0x8AD66A, CGameSprite_SetSequence_Log_asm, bytes7);
+
+        //CallInject (0x9E011B, CSoundMixer_CleanUp_Log_asm, bytes7);
+        //CallInject (0x9E068E, CSoundMixer_Initialize_Log_asm, bytes7);
+        //CallInject (0x4CC589, CGameArea_OnActivation_Log_asm, bytes6);
+        //CallInject (0x467E47, CCacheStatus_Update_Log_asm, bytes6);
+        //CallInject (0x9E0417, CCacheStatus_Update_Log_asm, bytes6);
+        //CallInject (0x9DF3BB, CSound_SetVolume_Log2_asm, bytes7);
+        //CallInject (0x9DEB29, CSound_ResetVolume_Log2_asm, bytes6);
+
+        //COMMIT_vDataList;
+    }
+
+
+    // allow loading damaged savegame
+    if (0) {
+        uchar bytes1[] = { 0xEB } ;
+
+        vDataList.push_back( Data(0x068714C, sizeof(bytes1), bytes1) );
+
+        COMMIT_vDataList;
+    }
+    #endif
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // keep MISLEAD invisibility when attacking
+    //if (pGameOptionsEx->bEngine_InvisibilityRenderFix) {
+
+    //    uchar bytes5[] = { 0xE8, 0x00, 0x00, 0x00, 0x00
+    //                     }; 
+
+    //    CallInject (0x8A72A3, CGameSprite_Render_CheckInvisibiltyEffects_asm, bytes5);
+    //    CallInject (0x8A8C3F, CGameSprite_RenderMarkers_CheckInvisibiltyEffects_asm, bytes5);
+
+    //    //90658B - in attack remove illusion !!!
+
+    //    COMMIT_vDataList;
+    //}
 
 
 // End of patches

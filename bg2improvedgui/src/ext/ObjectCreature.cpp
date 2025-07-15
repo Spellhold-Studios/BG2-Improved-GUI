@@ -15,6 +15,7 @@
 #include "ObjectStats.h"
 #include "UserMageBook.h"
 #include "UserPriestBook.h"
+#include "MessageExt.h"
 
 CCreatureObject& (CCreatureObject::*Tramp_CCreatureObject_Construct_10)(void*, unsigned int, BOOL, int, int, int, unsigned int, int, int, int) =
     SetFP(static_cast<CCreatureObject& (CCreatureObject::*)(void*, unsigned int, BOOL, int, int, int, unsigned int, int, int, int)>
@@ -1603,9 +1604,12 @@ CGameAIBase_FireSpell_InjectProjectileUpdate(
             // Flush Projectile list, normally it processed by Area::AIUpdate() after messages stuff.
             // AIUpdate() move effects from Area queue to message queue, so all effects with target!=self
             // will be placed immediate after effects with target==self.
-            // This fix fit all spell's effects to message queue as one commit
-            if (ClassObj !=0xAABE54)    // exclude CProjectileInstant, it destroy himself in CProjectileInstant::Fire()
+            // This fix fits all spell's effects to message queue as one commit
+            if (ClassObj !=0xAABE54) {   // exclude CProjectileInstant, it destroy himself in CProjectileInstant::Fire()
                 Projectile->AIUpdate();
+                //console.write_debug("Projectile->AIUpdate \n");
+                //CMessageHandler_AsynchronousUpdate_Log(g_pChitin->messages);
+            }
     }
 
 }
@@ -1762,23 +1766,19 @@ CGameSprite_Swing_FixWeaponSpeed(
         short ItemSpeed) {
 
     short nRow;
-    short TotalSpeed;
 
     if (ItemLauncher) {
         nRow = Cre.GetProficiencyInItem(*ItemLauncher);
         if (ItemLauncherAbility)
-            TotalSpeed = ItemLauncherAbility->speed;    // ignore ammo speed
-        else
-            TotalSpeed = ItemSpeed;                     // failed ability, use ammo speed
+            ItemSpeed = ItemLauncherAbility->speed;    // ignore ammo speed
     }
     else {
         nRow = Cre.GetProficiencyInItem(*Item);
-        TotalSpeed = ItemSpeed;
     }
 
     // WSPECIAL.2da
     short nCol = 2;             // SPEED
-    int Value;
+    int bonus;
 	IECString sHit;
 	if (nCol  < g_pChitin->pGame->WSPECIAL.nCols &&
 		nRow  < g_pChitin->pGame->WSPECIAL.nRows &&
@@ -1788,11 +1788,11 @@ CGameSprite_Swing_FixWeaponSpeed(
 	} else {
 		sHit  = g_pChitin->pGame->WSPECIAL.defaultVal;
 	}
-	sscanf_s((LPCTSTR)sHit,  "%d", &Value); // Value is negative
+	sscanf_s((LPCTSTR)sHit,  "%d", &bonus); // Value is negative
 
-    Value = -Value;
-    if (TotalSpeed - Value > 0)
-        return  (TotalSpeed - Value);
+    bonus = -bonus;
+    if (ItemSpeed - bonus > 0)
+        return  (ItemSpeed - bonus);
     else
         return  0;  // max bonus
 
